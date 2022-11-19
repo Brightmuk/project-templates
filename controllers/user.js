@@ -147,9 +147,9 @@ exports.postStatus = (req, res, next) => {
       database: "hotel"
    });
    var date = req.body.date;
-   //console.log(date)
+   //console.log(date) 
    data = "INSERT INTO bookingstatus " +
-      " VALUES ('" + req.session.mail + "','" + req.body.name + "','" + req.body.type + "','" + req.body.roomWant + "','" + 0 + "','" + date + "','" + req.body.roomNo + "')"
+      " VALUES ('" + req.session.mail + "','" + req.body.name + "','" + req.body.type + "','" + req.body.roomWant + "','" + 0 + "','" + date + "','" + req.body.roomNo + "','" + 0 + "')"
 
    data1 = "SELECT * " + 
       " FROM  bookingstatus " +

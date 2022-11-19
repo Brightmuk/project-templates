@@ -71,8 +71,8 @@
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>
                                         <% if(user.length){ %>
-                                        <li><a href="/category">Category</a></li>
-                                        <li><a href="/showStatus">Status</a></li>
+                                        <li><a href="/category">Book</a></li>
+                                        <li><a href="/showStatus">Reservations</a></li>
                                         <li><a href="/contact">Contact</a></li>
                                         <li><a href="/logout">Logout</a></li>
                                         <%  } else { %>
@@ -100,36 +100,40 @@
 
             <div class="container">
                <div class="row ">
-                 <div class="col-12 mt-5">
+                <div class="col-4 "></div>
+                 <div class="col-lg-4 mt-5">
                    <form action="/status" method="post">
 
-                 <h2 class="text-center text-primary">Category: <%=name%></h2>
-                 <h2 class="text-center text-success">Room Type: <%=type%></h2>
-                 <h2 class="text-center text-info">Room Number: <%=roomNo%></h2>
-                 <h2 class="text-center text-info">Room Cost: <%=cost%></h2>
-</div>
-                <div class="col-lg-4 col-md-12 col-md-12 position">
-                   <input type="hidden" name="name" value="<%=name%>">
-                   <input type="hidden" name="type" value="<%=type%>">
-                   <input type="hidden" name="cost" value="<%=cost%>">
-                   <input type="hidden" name="roomNo" value="<%=roomNo%>">
+                 <h4 class="text-info ">Category </h4>
+                 <input type="text" class="form-control" value="<%=name%>"readonly />
+                 <h4 class="text-info ">Room Type </h4>
+                 <input type="text" class="form-control" value="<%=type%>"readonly />
+                 <h4 class="text-info">Room Number </h4>
+                 <input type="text" class="form-control" value="<%=roomNo%>"readonly />
+                 <h4 class="text-info">Room Cost </h4>
+                 <input type="text" class="form-control" value="<%=cost%>"readonly />
+                 <input type="hidden" name="name" value="<%=name%>">
+                 <input type="hidden" name="type" value="<%=type%>">
+                 <input type="hidden" name="cost" value="<%=cost%>">
+                 <input type="hidden" name="roomNo" value="<%=roomNo%>">
+<hr/>
+                      <div class="boking-tittle  mt-3 mb-3">
+                          <span> Booking Date:</span>
+                          <br>
+                          <input id="date"  min="2015-10-28" type="date" name="date" class="form-control " required />
+                      </div>
+                          <input name="roomWant"  type="hidden" class="form-control" value="1" placeholder="0" />
+                      
 
-                        <div class="boking-tittle text-center mt-3 mb-3">
-                            <span> Booking Date:</span>
-                            <input type="date" name="date" class="form-control text-center" required />
-                        </div>
-
-                        <div class="boking-tittle text-center mt-3 mb-3">
-                            <span> Room Want:</span>
-                            <input name="roomWant"  type="hidden" class="form-control" value="1" placeholder="0" />
-                        </div>
+                </div>
+                <div class="col-lg-4 form-">
 
 
                 </div>
 
-<div class="col-lg-12 col-md-12 col-sm-12">
-  <input type="submit" class="btn btn-info mt-3 mb-5 positionbtn" value="Confirm Booking" >
-</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="submit" class="btn btn-info mt-3 mb-5 positionbtn" value="Confirm Booking" >
+                    </div>
                </form>
 
              </div>
@@ -266,6 +270,8 @@
 		<!-- Jquery Plugins, main Jquery -->
         <script src="./assets/js/plugins.js"></script>
         <script src="./assets/js/main.js"></script>
-
+<script>
+    document.getElementById("date").min = new Date().getFullYear() + "-" +  parseInt(new Date().getMonth() + 1 ) + "-" + new Date().getDate()
+</script>
     </body>
 </html>

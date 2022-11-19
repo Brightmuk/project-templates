@@ -5,6 +5,7 @@ const session=require('express-session');
 
 // login get request
 exports.getLogin = (req, res, next) => {
+    
     if (req.session.admin == undefined) {
         res.render('admin/login', { msg: "", err: "" });
     }
@@ -15,19 +16,47 @@ exports.getLogin = (req, res, next) => {
             password: "@Beatsbydre99",
             database: "hotel"
         });
+
+
+    reservationsQ = "SELECT * " +
+        "FROM  bookingstatus " +
+        "WHERE status = 1 "; 
+
+    guestQuery = "SELECT * " +
+        "FROM  user " +
+        "WHERE name != 'admin'";
+
+    roomQuery = "SELECT * " +
+    "FROM  category " +
+    "WHERE available = 1 "; 
         data1 = "SELECT * " +
             "FROM  bookingstatus " +
             "WHERE status = 0 ";
-        connectDB.query(data1, (err1, result1) => {
-            if (err1) throw err1;
-            else {
-                for (i in result1) {
-                    var a = result1[i].date;
-                    result1[i].date = a.toString().slice(0, 15);
-                }
-                return res.render('admin/index', { msg: "", err: "", data: result1 });
-            }
-        })
+
+                connectDB.query(data1, (err1, result1) => {
+                    if (err1) throw err1;
+                    else {
+                        for (i in result1)  {
+                            var a = result1[i].date;
+                            result1[i].date = a.toString().slice(0, 15);
+                        }
+                        connectDB.query(guestQuery, (err2, guestResult) => {
+                            if (err2) throw err2;
+                            connectDB.query(roomQuery, (err3, roomResult) => {
+                                if (err3) throw err3;
+                                connectDB.query(reservationsQ, (err4, reservations) => {
+                                    if (err3) throw err3;
+                                    return res.render('admin/index', { msg: "", err: "", data: result1, 
+                                    guests:guestResult.length, rooms:roomResult.length, reservations: reservations.length});
+                                })
+                               
+                            })
+                           
+                        })
+                       
+                    }
+                })
+
     }
 
 }
@@ -51,6 +80,18 @@ exports.postLogin = (req, res, next) => {
         "FROM  bookingstatus " +
         "WHERE status = 0 ";
 
+    reservationsQ = "SELECT * " +
+        "FROM  bookingstatus " +
+        "WHERE status = 1 "; 
+
+    guestQuery = "SELECT * " +
+        "FROM  user " +
+        "WHERE name != 'admin'";
+
+    roomQuery = "SELECT * " +
+    "FROM  category " +
+    "WHERE available = 1 "; 
+
     connectDB.query(data, (err, result) => {
         if (err) throw err;
         else {
@@ -63,8 +104,20 @@ exports.postLogin = (req, res, next) => {
                             var a = result1[i].date;
                             result1[i].date = a.toString().slice(0, 15);
                         }
+                        connectDB.query(guestQuery, (err2, guestResult) => {
+                            if (err2) throw err2;
+                            connectDB.query(roomQuery, (err3, roomResult) => {
+                                if (err3) throw err3;
+                                connectDB.query(reservationsQ, (err4, reservations) => {
+                                    if (err3) throw err3;
+                                    return res.render('admin/index', { msg: "", err: "", data: result1, 
+                                    guests:guestResult.length, rooms:roomResult.length, reservations: reservations.length});
+                                })
+                               
+                            })
+                           
+                        })
                        
-                        return res.render('admin/index', { msg: "", err: "", data: result1 });
                     }
                 })
 
@@ -113,9 +166,10 @@ exports.postChangeStatus = (req, res, next) => {
         " AND roomWant = " + mysql.escape(req.body.want)
     }
     
-    data1 = "SELECT * " +
+
+    data = "SELECT * " +
         "FROM  bookingstatus " +
-        "WHERE status = 0 ";
+        "WHERE status = 1 ";
 
     connectDB.query(data, (err, result) => {
         if (err) throw err;
@@ -131,12 +185,12 @@ exports.postChangeStatus = (req, res, next) => {
                                 var a = result1[i].date; 
                                 result1[i].date = a.toString().slice(0, 15);
                             }
-                        }
+                        } 
                     })
 
-                    return res.render('admin/index', { msg: "", err: "", data: result1 });
+                    return res.render('admin/reservations', { msg: "", err: "", data: result1 });
                 }
-            })
+            }) 
         }
     })
 
@@ -342,6 +396,68 @@ exports.viewRoom = (req, res, next) => {
 
 
     })
+}
+
+exports.checkout = (req, res, next) => {
+    
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "hotel"
+    });
+
+    updateRoom = "UPDATE category " +
+        "SET available = 1 " +
+        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
+
+    updateBooking = "UPDATE bookingStatus " +
+        "SET checkout = 1 " +
+        "WHERE roomNo = " + mysql.escape(req.body.roomNo)
+        " AND email = " + mysql.escape(req.body.email);
+ 
+    roomQuery = "SELECT * " + 
+        "FROM category " +
+        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
+
+    bookingQuery = "SELECT * " +
+        "FROM bookingStatus " +
+        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
+    
+    connectDB.query(updateRoom, (err, res) => {
+        if (err) throw err;
+    connectDB.query(updateBooking, (err22, res22) => {
+            if (err22) throw err22;
+    connectDB.query(roomQuery, (err, roomResult) => {
+        if (err) throw err; 
+        
+        else {
+        connectDB.query(bookingQuery, (err, bookingResult) => {
+            if (err) throw err; 
+            if(bookingResult.length>0){
+                userQuery = "SELECT * " +
+                "FROM user " +
+                "WHERE email = " + mysql.escape(bookingResult[0].email);
+    
+                connectDB.query(userQuery, (err, userResult) => {
+                    if (err) throw err;
+                    else{
+                        req.session.info = roomResult[0];
+                        
+                        res.render('admin/viewRoom', { room: roomResult[0] , booking: bookingResult[0] ,user: userResult[0]});
+                    }
+                }) 
+            }else {
+                req.session.info = roomResult[0];
+                        
+                res.render('admin/viewRoom', { room: roomResult[0]});
+            }
+        })
+    } 
+
+})
+    })
+})
 }
 
 //get view room 

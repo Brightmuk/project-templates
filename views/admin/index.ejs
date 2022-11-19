@@ -85,7 +85,26 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-
+      <div class="row">
+        <div class="dash-card reservations">
+          <h2><%=reservations%></h2>
+          <p>Reservations</p>
+        </div>
+        <div class="dash-card pending">
+          <h2><%=data.length%></h2>
+          <p>Pending Bookings</p>
+        </div>
+        <div class="dash-card guests">
+          <h2><%=rooms%></h2>
+          <p>Available Rooms</p>
+        </div>
+        <div class="dash-card rooms">
+          <h2><%=guests%></h2>
+          <p>Guests</p>
+        </div>
+  
+  
+      </div>
       <div class="card mb-3">
         <div class="card-header">
 
@@ -116,7 +135,7 @@
                   <td><%=data[i].roomWant%></td>
                   <td><%=data[i].date%></td>
                   <th>
-                    <form action="/admin/chnagestatus" method="POST">
+                    <form action="/admin/changestatus" method="POST">
                       <input type="hidden" name="mail" value="<%=data[i].email%>">
                       <input type="hidden" name="cat" value="<%=data[i].category%>">
                       <input type="hidden" name="type" value="<%=data[i].type%>">
@@ -133,7 +152,8 @@
             </table>
             <%   } else { %>
               
-              <h3 style="color: #ff304f;" class="text-center">No Data Found</h3>
+
+              <br>
               <thead class="bg-primary text-white">
                 <tr>
                   <th>SL No.</th>
@@ -150,8 +170,10 @@
                 
               </tbody>
             </table>
+
            
             <% } %>
+
            
           </div>
           <!-- eikhane else condition hobe -->
@@ -161,6 +183,7 @@
       </div>
      
     </div>
+
 
     
 

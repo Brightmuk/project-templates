@@ -394,3 +394,39 @@ table{
   justify-content: space-between;
   flex-direction: column;
 }
+.dash-card{
+  width: 200px;
+  height: 100px;
+  margin: 30px;
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  color: white;
+  border-radius: 10px;
+}
+.reservations {
+  background-color: rgb(63, 29, 29);
+  align-items: baseline;
+}
+.guests{
+  background-color: rgb(58, 63, 29);
+  align-items: baseline;
+}
+.pending{
+  background-color: rgb(29, 51, 63);
+  align-items: baseline;
+}
+.rooms{
+  background-color: rgb(63, 29, 60);
+  align-items: baseline;
+}
+.checkoutDialog{
+  border-radius: 10px;
+  border: none;
+  padding: 30px;
+  align-items: center;
+}
+.checkoutDialog input{
+  margin: auto;
+}
+

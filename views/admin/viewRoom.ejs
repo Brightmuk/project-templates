@@ -135,16 +135,28 @@
                 <p>Bookig Date: <%=booking.date%></p>
               <% }%>
               <br/>
-              <form action="/admin/checkout" method="POST">
-                <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
-                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Checkout">
-              </form>
-              
+              <% if(room.available==0){ %>
+             
+                
+               
+                <button class="btn btn-lg btn-success mt-3 add-room-btn" onclick="chekout()">Checkout</button>
+             
+              <% }%>
           </div>
         </div>
 
+
       </div>
     </div>
+    <dialog id="checkoutDialogue" class="checkoutDialog">
+       <form action="/admin/checkout" method="POST">
+        <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
+        <input type="hidden" class="form-control" name="email"  value="<%=user.email%>">
+      <h3>Are you sure you want to checkout this reservation?</h3>
+      <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Checkout">
+       </form>
+      
+    </dialog>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -191,7 +203,11 @@
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
-
+    <script>
+      function chekout() { 
+        document.getElementById("checkoutDialogue").showModal(); 
+      } 
+      </script>
   </body>
 
   </html>
