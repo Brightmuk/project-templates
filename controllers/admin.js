@@ -344,6 +344,58 @@ exports.viewRoom = (req, res, next) => {
     })
 }
 
+//get view room 
+
+exports.viewReservation = (req, res, next) => {
+    
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "hotel"
+    });
+
+    roomQuery = "SELECT * " +
+        "FROM category " +
+        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
+
+
+    bookingQuery = "SELECT * " +
+        "FROM bookingStatus " +
+        "WHERE roomNo = " + mysql.escape(req.body.roomNo)
+        " AND email = " + mysql.escape(req.body.email);
+
+    userQuery = "SELECT * " +
+        "FROM user " +
+        "WHERE email = " + mysql.escape(req.body.email); 
+
+    connectDB.query(roomQuery, (err, roomResult) => {
+        if (err) throw err; 
+        
+        else { 
+        connectDB.query(bookingQuery, (err, bookingResult) => {
+            if (err) throw err;  
+           
+                connectDB.query(userQuery, (err, userResult) => {
+                    if (err) throw err;
+                    else{
+                        req.session.info = roomResult[0];
+                        var today = Date.now()
+
+                        var diff = today - bookingResult[0].date.getTime();
+
+                        var days = (diff / (1000 * 3600 * 24)).toFixed(0);
+                        
+                        res.render('admin/singleReservation', { room: roomResult[0] , booking: bookingResult[0] ,user: userResult[0],days:days,cost:days*roomResult[0].cost});
+                    }
+                }) 
+            
+        }) 
+    } 
+
+    })
+}
+
 //get reserved rooms
 exports.getReservations = (req, res, next) => {
     // console.log(req.body);

@@ -100,7 +100,7 @@
                   <th>Email</th>
                   <th>Category</th>
                   <th>Type</th>
-                  <th>Quantity</th>
+                  
                   <th>Date</th>
                   <th>Status</th>
                 </tr>
@@ -114,18 +114,13 @@
                   <td><%=data[i].email%></td>
                   <td><%=data[i].category%></td>
                   <td><%=data[i].type%></td>
-                  <td><%=data[i].roomWant%></td>
+                  
                   <td><%=data[i].date%></td>
                   <th>
-                    <form action="/admin/chnagestatus" method="POST">
-                      <input type="hidden" name="mail" value="<%=data[i].email%>">
-                      <input type="hidden" name="cat" value="<%=data[i].category%>">
-                      <input type="hidden" name="type" value="<%=data[i].type%>">
-                      <input type="hidden" name="want" value="<%=data[i].roomWant%>">
-                      <input type="hidden" name="date" value="<%=data[i].date%>">
+                    <form action="/admin/viewReservation" method="POST">
+                      <input type="hidden" name="email" value="<%=data[i].email%>">
                       <input type="hidden" name="roomNo" value="<%=data[i].roomNo%>">
-                    <input type="submit" class="btn btn-success btn-ml" name="click" value="Approve">
-                    <input type="submit" class="btn btn-danger btn-ml"  name="click" value="Cancel">
+                    <input type="submit" class="btn btn-primary btn-ml" name="click" value="View">
                     </form> 
                   </th>
                 </tr>

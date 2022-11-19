@@ -34,6 +34,9 @@ router.route('/search')
 
 router.route('/viewRoom')
       .post(adminControler.viewRoom) //view room page
+
+router.route('/viewReservation')
+      .post(adminControler.viewReservation) //view room page
       
 router.route('/updateRoom')
       .post(adminControler.updateRoom) // update prev data      
