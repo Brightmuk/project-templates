@@ -16,7 +16,7 @@ router.route('/createaccount')
        .get(userControler.getCreateAccount)    //get request for create account   
        .post(userControler.postCreateAccount); //post request for create account   
 
-router.route('/category')
+router.route('/category') 
        .get(userControler.authentication,userControler.getCategory) //get request for Category  
        .post(userControler.postCategory) //post request form the category
 router.route('/boooking')

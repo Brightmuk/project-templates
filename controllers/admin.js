@@ -102,7 +102,7 @@ exports.postChnageStatus = (req, res, next) => {
         " AND roomWant = " + mysql.escape(req.body.want)
 
         data2 = "UPDATE category " +
-        "SET available = 0" 
+        "SET available = 0" +
         " WHERE roomNo = " + mysql.escape(req.body.roomNo)
 
     } else {
