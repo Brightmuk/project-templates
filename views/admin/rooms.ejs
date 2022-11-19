@@ -124,12 +124,13 @@
                           <td class="available">Available</td>
                           <%}%> 
                       <th>
-                      <form action="/admin/update" method="POST">
+                      <form action="/admin/viewRoom" method="POST">
                         <input type="hidden" name="cat" value="<%=data[i].name%>">
                         <input type="hidden" name="type" value="<%=data[i].type%>">
                         <input type="hidden" name="cost" value="<%=data[i].cost%>">
+                        <input type="hidden" name="roomNo" value="<%=data[i].roomNo%>">
                         <input type="hidden" name="available" value="<%=data[i].available%>">
-                        <input type="submit" class="btn btn-info btn-ml" name="click" value="Edit">
+                        <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        
                       </form>
                       </th>

@@ -22,7 +22,7 @@ router.route('/rooms')
 
 router.get('/logout',adminControler.logout) //get request   
 
-router.post('/chnagestatus',adminControler.postChnageStatus)// post change status
+router.post('/changeStatus',adminControler.postChangeStatus)// post change status
 
 router.route('/addhotel')
       .get(adminControler.getAddHotel) // get request for hotel add page
@@ -32,11 +32,11 @@ router.route('/search')
       .get(adminControler.getSearch)   // get request   
       .post(adminControler.postSearch) // post request
 
-router.route('/update')
-      .post(adminControler.getUpdate) //get update page for post request
+router.route('/viewRoom')
+      .post(adminControler.viewRoom) //view room page
       
-router.route('/updateData')
-      .post(adminControler.updatePrevData) // update prev data      
+router.route('/updateRoom')
+      .post(adminControler.updateRoom) // update prev data      
 
 
 module.exports = router;

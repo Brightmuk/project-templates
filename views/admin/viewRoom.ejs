@@ -90,32 +90,56 @@
     <div class="content-wrapper">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-4 text-center middleposition">
-           <form action="/admin/updateData" method="POST">
+          
+          <div class="col-lg-4  ">
+            <h2>Room <%=room.roomNo%></h2>
+            <br/>
+           <form class="view-room" action="/admin/updateRoom" method="POST">
             <p>Category</p>
-            <input type="text" class="form-control" name="cat" value="<%=data.name%>" readonly>
+            <input type="text" class="form-control" name="cat" value="<%=room.name%>" readonly>
             <p>Room Type</p>
-            <input type="text" class="form-control" name="type" value="<%=data.type%>">
+            <input type="text" class="form-control" name="type" value="<%=room.type%>" readonly>
             <p>Per Night Cost</p>
-            <input type="number" class="form-control" name="cost" value="<%=data.cost%>">
+            <input type="number" class="form-control" name="cost" value="<%=room.cost%>">
             <p>Room Availablility</p>
-            <% if(data.available==1){ %>
-            <select name="avlvl" class="form-control">
+            <% if(room.available==1){ %>
+            <select name="available" class="form-control">
               <option value="0">Booked</option>
               <option value="1" selected>Available</option>
           </select>
           <% }else{%>
-            <select name="avlvl" class="form-control">
+            <select name="available" class="form-control">
               <option value="0"selected>Booked</option>
               <option value="1" >Available</option>
           </select>
           <% }%>
             
             <p>Add Some Description</p>
-            <input type="text" class="form-control" name="des"  value="<%=data.dec%>">
-            <input type="hidden" name="available" value="<%=data.available%>">
+            <input type="text" class="form-control" name="description"  value="<%=room.dec%>">
+            <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
             <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
         </form>
+          </div>
+          <div class="col-lg-2  "></div>
+          <div class="col-lg-4  occupant">
+            <h2>Occupant</h2>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <% if(room.available==1){ %>
+              <p>No current Occupant</p>
+              <% }else{%>
+                <p>Email: <%=user.email%></p>
+                <p>Phone:<%=user.phone%></p>
+                <p>Bookig Date: <%=booking.date%></p>
+              <% }%>
+              <br/>
+              <form action="/admin/checkout" method="POST">
+                <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
+                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Checkout">
+              </form>
+              
           </div>
         </div>
 

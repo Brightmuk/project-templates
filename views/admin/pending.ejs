@@ -115,7 +115,7 @@
                     <td><%=data[i].roomWant%></td>
                     <td><%=data[i].date%></td>
                   <th>
-                    <form action="/admin/chnagestatus" method="POST">
+                    <form action="/admin/changeStatus" method="POST">
                       <input type="hidden" name="mail" value="<%=data[i].email%>">
                       <input type="hidden" name="cat" value="<%=data[i].category%>">
                       <input type="hidden" name="type" value="<%=data[i].type%>">
