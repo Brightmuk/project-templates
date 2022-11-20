@@ -1,6 +1,66 @@
 //moduler 
 var mysql = require('mysql');
 
+// show the home page
+exports.getHome = (req, res, next) => {
+   return res.render('user/home');
+
+}
+
+//post request of category
+exports.postSearch = (req, res, next) => {
+   //console.log(req.body);
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
+
+   filterQuery = "SELECT * " +
+      " FROM  cars " +
+      " WHERE purpose = " + mysql.escape(req.body.purpose) +
+      " AND type = " + mysql.escape(req.body.type) +
+      " AND fuel = " + mysql.escape(req.body.fuel) +
+      " AND transmission = " + mysql.escape(req.body.transmission) +
+      " AND seats >= " + mysql.escape(req.body.seats); 
+
+   connectDB.query(filterQuery, (filterErr, filterResult) => {
+      if (filterErr) throw filterErr; 
+      else {
+    
+         return res.render('user/showResults', { cars: filterResult })
+      }
+   })
+
+}
+//post request of category
+exports.postCompare = (req, res, next) => {
+   //console.log(req.body);
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
+
+   var cars = req.body.cars;
+   var carList = cars.split(',')
+
+   compareQery = "SELECT * " +
+      " FROM  cars " +
+      " WHERE id IN (" + carList +
+      ")"; 
+
+   connectDB.query(compareQery, (compareErr, compareResult) => {
+      if (compareErr) throw compareErr; 
+      else {
+    
+         return res.render('user/compareResults', { cars: compareResult })
+      }
+   })
+
+}
 
 
 //authentication check
@@ -14,16 +74,7 @@ exports.authentication = (req, res, next) => {
    }
 }
 
-// show the home page
-exports.getHome = (req, res, next) => {
 
-   if (req.session.mail != undefined) {
-      return res.render('user/home', { user: req.session.mail });
-   }
-   else {
-      return res.render('user/home', { user: "" });
-   }
-}
 
 //show the login page
 exports.getLogin = (req, res, next) => {
@@ -97,40 +148,15 @@ exports.postCreateAccount = (req, res, next) => {
 }
 
 //get request for category
-exports.getCategory = (req, res, next) => {
+exports.getSearch = (req, res, next) => {
 
-   res.render('user/category', { user: req.session.mail });
+   res.render('user/search');
 }
 
-//post request of category
-exports.postCategory = (req, res, next) => {
-   //console.log(req.body);
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
-   });
 
-   data = "SELECT * " +
-      " FROM  category " +
-      " WHERE name = " + mysql.escape(req.body.cat) +
-      " AND type = " + mysql.escape(req.body.type) +
-      " AND available = 1";
 
-   connectDB.query(data, (err, result) => {
-      if (err) throw err; //show if error found
-      else {
-         //console.log(result);
-         return res.render('user/showCategory', { user: req.session.mail, rooms: result })
-      }
-   })
 
-}
-
-// get booking data 
 exports.postBooking = (req, res, next) => {
-   // console.log(req.body);
 
    res.render('user/bookingConfirm.ejs', { user: req.session.mail, name: req.body.name, type: req.body.type, cost: req.body.cost,roomNo:req.body.roomNo });
 }

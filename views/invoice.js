@@ -17,11 +17,11 @@ var data = {
     "sender": {
         "company": "Sample Corp",
         "address": "Sample Street 123",
-        "zip": "1234 AB",
+        "zip": "1234 AB", 
         "city": "Sampletown",
         "country": "Samplecountry"
     },
-
+ 
     // Of course we would like to use our own logo and/or background on this invoice. There are a few ways to do this.
     "images": {
         //      Logo:

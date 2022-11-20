@@ -430,3 +430,17 @@ table{
   margin: auto;
 }
 
+.flexer{
+  background-color: red;
+}
+.comparison{
+  background-color: rgb(37, 37, 73);
+  padding: 20px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  align-items: center;
+}
+.btn-warning{
+  background-color: rgb(85, 71, 45);
+}

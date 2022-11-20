@@ -6,7 +6,18 @@ const router = express.Router();
 
 const userControler = require('../controllers/user');
 
-router.get('/',userControler.getHome); //home page 
+router.get('/',userControler.getHome); 
+
+router.route('/search') 
+       .get(userControler.getSearch)  
+       .post(userControler.postSearch)
+
+router.route('/compare')
+       .post(userControler.postCompare) 
+
+ 
+
+ 
 
 router.route('/login')
        .get(userControler.getLogin) // get request for login
@@ -16,9 +27,8 @@ router.route('/createaccount')
        .get(userControler.getCreateAccount)    //get request for create account   
        .post(userControler.postCreateAccount); //post request for create account   
 
-router.route('/category') 
-       .get(userControler.authentication,userControler.getCategory) //get request for Category  
-       .post(userControler.postCategory) //post request form the category
+
+        
 router.route('/boooking')
        .post(userControler.postBooking) //post booking data    
         
