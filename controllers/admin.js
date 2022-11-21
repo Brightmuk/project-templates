@@ -10,55 +10,15 @@ exports.getLogin = (req, res, next) => {
         res.render('admin/login', { msg: "", err: "" });
     }
     else {
-        var connectDB = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "@Beatsbydre99",
-            database: "hotel"
-        });
-
-
-    reservationsQ = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 1 "; 
-
-    guestQuery = "SELECT * " +
-        "FROM  user " +
-        "WHERE name != 'admin'";
-
-    roomQuery = "SELECT * " +
-    "FROM  category " +
-    "WHERE available = 1 "; 
-        data1 = "SELECT * " +
-            "FROM  bookingstatus " +
-            "WHERE status = 0 ";
-
-                connectDB.query(data1, (err1, result1) => {
-                    if (err1) throw err1;
-                    else {
-                        for (i in result1)  {
-                            var a = result1[i].date;
-                            result1[i].date = a.toString().slice(0, 15);
-                        }
-                        connectDB.query(guestQuery, (err2, guestResult) => {
-                            if (err2) throw err2;
-                            connectDB.query(roomQuery, (err3, roomResult) => {
-                                if (err3) throw err3;
-                                connectDB.query(reservationsQ, (err4, reservations) => {
-                                    if (err3) throw err3;
-                                    return res.render('admin/index', { msg: "", err: "", data: result1, 
-                                    guests:guestResult.length, rooms:roomResult.length, reservations: reservations.length});
-                                })
-                               
-                            })
-                           
-                        })
-                       
-                    }
-                })
+        return res.render('/admin/index')
 
     }
 
+} 
+//logout
+exports.logout = (req, res, next) => {
+    req.session.destroy();
+    res.render('admin/login', { msg: "", err: "" });
 }
 
 //login post request
@@ -68,65 +28,58 @@ exports.postLogin = (req, res, next) => {
         host: "localhost",
         user: "root",
         password: "@Beatsbydre99",
-        database: "hotel"
+        database: "cars"
     });
 
     data = "SELECT * " +
-        "FROM admin " +
-        "WHERE name = " + mysql.escape(req.body.name) +
-        "AND pass = " + mysql.escape(req.body.pass);
+        "FROM users " +
+        "WHERE username = " + mysql.escape(req.body.name) +
+        "AND password = " + mysql.escape(req.body.pass);
 
-    data1 = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 0 ";
-
-    reservationsQ = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 1 "; 
-
-    guestQuery = "SELECT * " +
-        "FROM  user " +
-        "WHERE name != 'admin'";
-
-    roomQuery = "SELECT * " +
-    "FROM  category " +
-    "WHERE available = 1 "; 
+    carsQuery = "SELECT * " +
+        "FROM cars";
 
     connectDB.query(data, (err, result) => {
         if (err) throw err;
         else {
             if (result.length) {
-                req.session.admin = result[0].name;
-                connectDB.query(data1, (err1, result1) => {
-                    if (err1) throw err1;
+                req.session.admin = result[0].id;
+                req.session.user = result[0].id;
+                connectDB.query(carsQuery, (err, result) => {
+                    if (err) throw err;
                     else {
-                        for (i in result1) {
-                            var a = result1[i].date;
-                            result1[i].date = a.toString().slice(0, 15);
-                        }
-                        connectDB.query(guestQuery, (err2, guestResult) => {
-                            if (err2) throw err2;
-                            connectDB.query(roomQuery, (err3, roomResult) => {
-                                if (err3) throw err3;
-                                connectDB.query(reservationsQ, (err4, reservations) => {
-                                    if (err3) throw err3;
-                                    return res.render('admin/index', { msg: "", err: "", data: result1, 
-                                    guests:guestResult.length, rooms:roomResult.length, reservations: reservations.length});
-                                })
-                               
-                            })
-                           
-                        })
-                       
+                        return res.render('admin/index', { msg: "", err: "", cars: result });
                     }
                 })
 
-            }
-            else {
+            }else {
                 return res.render('admin/login', { msg: "", err: "Please Check Your Information Again" });
             }
         }
     })
+}
+
+//post request
+exports.getCars = (req, res, next) => {
+    //console.log(req.body);
+
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "cars"
+    });
+
+    carsQuery = "SELECT * " +
+        "FROM cars";
+
+    connectDB.query(carsQuery, (err, result) => {
+        if (err) throw err;
+        else {
+            return res.render('admin/cars', { msg: "", err: "", cars: result });
+        }
+    })
+
 }
 
 
@@ -200,42 +153,63 @@ exports.postChangeStatus = (req, res, next) => {
 
 //get add hotel page
 
-exports.getAddHotel = (req, res, next) => {
-    res.render('admin/addRoom', { msg: "", err: "" });
+exports.getAddCar = (req, res, next) => {
+    res.render('admin/addCar', { msg: "", err: "" });
 }
 
 //add new hotel info
-exports.postAddHotel = (req, res, next) => {
+exports.postAddCar = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "@Beatsbydre99",
-        database: "hotel"
+        database: "cars"
     });
 
     //var
-    var cat = "", type = "", cost = 0, avlvl = 0, des = ""
+   var make = "", model = "", type = "",year = "", price = 0, seats = 0, fuel="",transmission="",purpose=""
+   consumption=0, year=""
+
    var imgPath=""
     var wrong = 0;
 
     new formidable.IncomingForm().parse(req)
         .on('field', (name, field) => {
-            if (name === "cat") {
-                cat = field;
+            if (name === "make") {
+                make = field;
             }
             else if (name === "type") {
                 type = field;
             }
-            else if (name === "cost") {
-                cost = parseInt(field);
+            else if (name === "price") {
+                price = parseInt(field);
             }
-            else if (name === "avlvl") {
-                avlvl = parseInt(field);
+            else if (name === "seats") {
+                seats = parseInt(field);
             }
-            else if (name === "des") {
-                des = field
+            else if (name === "model") {
+                model = field
             }
+            else if (name === "fuel") {
+                fuel = field
+            }
+            else if (name === "year") {
+                year = field
+            }
+            else if (name === "transmission") {
+                transmission = field
+            }
+            else if (name === "purpose") {
+                purpose = field
+            }
+            else if (name === "consumption") {
+                consumption = parseInt(field);
+            }
+            else if (name === "year") {
+                year = field
+            }
+            
 
         })
         .on('file', (name, file) => {
@@ -252,14 +226,14 @@ exports.postAddHotel = (req, res, next) => {
                 ///  console.log(__dirname)
                 //  console.log(a)
                 if (name === "img") {
-                    imgPath = (cat + type + cost + "." + fileType);
+                    imgPath = (make + type + price + "." + fileType);
                 }
-                imgPath ='/assets/img/rooms/' + (cat + type + cost + "." + fileType)
-                file.path = a + '/public/assets/img/rooms/' + (cat + type + cost + "." + fileType); // __dirname
+                imgPath ='/assets/img/cars/' + (make + type + price + "." + fileType)
+                file.path = a + '/public/assets/img/cars' + (make + type + price + "." + fileType); // __dirname
             } else {
                 console.log("Wrong File type")
                 wrong = 1;
-                res.render('admin/addRoom', { msg: "", err: "Wrong File type" });
+                res.render('admin/addCar', { msg: "", err: "Wrong File type" });
             }
         })
         .on('aborted', () => {
@@ -279,15 +253,15 @@ exports.postAddHotel = (req, res, next) => {
 
                 //saveDir = __dirname + '/uploads/';
                 
-                data = "INSERT INTO `category`(`name`, `type`, `cost`, `available`, `img`, `dec`) "+
-                         "VALUES('" +cat + "','" + type + "', '" + cost + "','" +avlvl + "' ,'" + imgPath + "' ,'" + des + "' )"
+                data = "INSERT INTO `cars`(`make`, `model`, `price`,`seats`,`type`,`fuel`,`transmission`, `consumption`,`year`,`purpose`,  `image`, `listing_user`) "+
+                         "VALUES('" +make + "','" + model + "', '" + price + "','" +seats + "','" + type + "', '" + fuel + "','" +transmission + "', '" + consumption + "','" + year + "', '" + purpose + "','" +imgPath + "' ,'" + 1+ "' )"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {
                         throw err;
                     }
                     else {
-                        res.render('admin/addRoom', { msg: "Data Insert Successfuly", err: "" });
+                        res.render('admin/addCar', { msg: "Data Insertion Successfuly", err: "" });
                     }
                 });
             }
@@ -295,7 +269,7 @@ exports.postAddHotel = (req, res, next) => {
 }
 
 //get update page
-exports.getSearch = (req, res, next) => {
+exports.getSearch = (req, res, next) => { 
     res.render('admin/search', { msg: "", err: "" })
 }
 
@@ -322,28 +296,7 @@ exports.postSearch = (req, res, next) => {
     })
 
 }
-//post request
-exports.getRooms = (req, res, next) => {
-    //console.log(req.body);
 
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    data = "SELECT * " +
-        "FROM category";
-
-    connectDB.query(data, (err, result) => {
-        if (err) throw err;
-        else {
-            return res.render('admin/rooms', { msg: "", err: "", data: result });
-        }
-    })
-
-}
 
 //get view room 
 
@@ -599,9 +552,5 @@ exports.updateRoom = (req, res, next) => {
 
 }
 
-//logout
-exports.logout = (req, res, next) => {
-    req.session.destroy();
-    res.render('admin/login', { msg: "", err: "" });
-}
+
 

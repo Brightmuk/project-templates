@@ -17,6 +17,7 @@ exports.postSearch = (req, res, next) => {
       database: "cars"
    });
 
+
    filterQuery = "SELECT * " +
       " FROM  cars " +
       " WHERE purpose = " + mysql.escape(req.body.purpose) +
@@ -24,6 +25,7 @@ exports.postSearch = (req, res, next) => {
       " AND fuel = " + mysql.escape(req.body.fuel) +
       " AND transmission = " + mysql.escape(req.body.transmission) +
       " AND seats >= " + mysql.escape(req.body.seats); 
+
 
    connectDB.query(filterQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
@@ -34,6 +36,8 @@ exports.postSearch = (req, res, next) => {
    })
 
 }
+
+
 //post request of category
 exports.postCompare = (req, res, next) => {
    //console.log(req.body);
@@ -44,19 +48,22 @@ exports.postCompare = (req, res, next) => {
       database: "cars"
    });
 
-   var cars = req.body.cars;
-   var carList = cars.split(',')
+   var carStr = mysql.escape(req.body.cars);
 
-   compareQery = "SELECT * " +
-      " FROM  cars " +
-      " WHERE id IN (" + carList +
+   var carList = carStr.slice(1,-1);
+
+   var toInt = carList.split(',').map(function(car){return parseInt(car)}); 
+
+   compareQery = "SELECT * " + 
+      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+      " WHERE cars.id IN (" + toInt + 
       ")"; 
 
    connectDB.query(compareQery, (compareErr, compareResult) => {
       if (compareErr) throw compareErr; 
       else {
-    
-         return res.render('user/compareResults', { cars: compareResult })
+         console.log(compareResult); 
+         return res.render('user/compareResults', {cars: compareResult});
       }
    })
 
@@ -112,6 +119,8 @@ exports.postLogin = (req, res, next) => {
    })
 
 }
+
+
 
 
 // show create account page

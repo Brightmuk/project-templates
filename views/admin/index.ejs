@@ -44,32 +44,18 @@
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
-        <h5 class ="nav-title">RESERVATIONS</h5>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="/admin/reservations">
+        <h5 class ="nav-title">CAR MANAGAEMENT</h5>
+        <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="/admin/cars">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Reservations</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="/admin/pending">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Pending Bookings</span>
-          </a>
-        </li>
-        
-        <h5 class ="nav-title">ROOM MANAGAEMENT</h5>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="/admin/rooms">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Rooms</span>
+            <span class="nav-link-text">Cars</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/admin/addhotel">
+          <a class="nav-link" href="/admin/addCar">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Add Room</span>
+            <span class="nav-link-text">Add Car</span>
           </a>
         </li>
 
@@ -87,20 +73,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="dash-card reservations">
-          <h2><%=reservations%></h2>
-          <p>Reservations</p>
+          <h2>0</h2>
+          <p>Cars</p>
         </div>
         <div class="dash-card pending">
-          <h2><%=data.length%></h2>
-          <p>Pending Bookings</p>
-        </div>
-        <div class="dash-card guests">
-          <h2><%=rooms%></h2>
-          <p>Available Rooms</p>
-        </div>
-        <div class="dash-card rooms">
-          <h2><%=guests%></h2>
-          <p>Guests</p>
+          <h2>0</h2>
+          <p>SUV</p>
         </div>
   
   
@@ -109,73 +87,7 @@
         <div class="card-header">
 
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered text-center"  id="dataTable" width="100%" cellspacing="0">
-              <% if(data.length) {  %>
-            
-              <thead class="bg-primary text-white">
-                <tr >
-                  <th>SL No.</th>
-                  <th>Email</th>
-                  <th>Category</th>
-                  <th>Type</th>
-                  <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
 
-              <tbody>
-                <% for (i in data) { %>
-                <tr>
-                  <td><%=i%></td>
-                  <td><%=data[i].email%></td>
-                  <td><%=data[i].category%></td>
-                  <td><%=data[i].type%></td>
-                  <td><%=data[i].roomWant%></td>
-                  <td><%=data[i].date%></td>
-                  <th>
-                    <form action="/admin/changestatus" method="POST">
-                      <input type="hidden" name="mail" value="<%=data[i].email%>">
-                      <input type="hidden" name="cat" value="<%=data[i].category%>">
-                      <input type="hidden" name="type" value="<%=data[i].type%>">
-                      <input type="hidden" name="want" value="<%=data[i].roomWant%>">
-                      <input type="hidden" name="date" value="<%=data[i].date%>">
-                    <input type="submit" class="btn btn-success btn-ml" name="click" value="Approve">
-                    <input type="submit" class="btn btn-danger btn-ml"  name="click" value="Cancel">
-                    </form> 
-                  </th>
-                </tr>
-                <% } %>
-                
-              </tbody>
-            </table>
-            <%   } else { %>
-              
-
-              <br>
-              <thead class="bg-primary text-white">
-                <tr>
-                  <th>SL No.</th>
-                  <th>Email</th>
-                  <th>Category</th>
-                  <th>Type</th>
-                  <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                
-              </tbody>
-            </table>
-
-           
-            <% } %>
-
-           
-          </div>
           <!-- eikhane else condition hobe -->
        
         </div>

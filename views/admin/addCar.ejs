@@ -49,31 +49,19 @@
               <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <h5 class ="nav-title">RESERVATIONS</h5>
+
+          <h5 class ="nav-title">CAR MANAGAEMENT</h5>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/reservations">
+            <a class="nav-link" href="/admin/cars">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Reservations</span>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/pending">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Pending Bookings</span>
-            </a>
-          </li>
-          <h5 class ="nav-title">ROOM MANAGAEMENT</h5>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/rooms">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Rooms</span>
+              <span class="nav-link-text">All Cars</span>
             </a>
           </li>
   
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="/admin/addRoom">
+            <a class="nav-link" href="/admin/addCar">
               <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">Add Room</span>
+              <span class="nav-link-text">Add Car</span>
             </a>
           </li>
 
@@ -97,33 +85,61 @@
             <% if(err) { %>
             <h3 style="color: #ff304f;" class="text-center"><%=err%></h3><br>
             <%   } %>
-            <form class="add-room" action="/admin/addhotel" method="POST" enctype="multipart/form-data">
+            <form class="add-room" action="/admin/addCar" method="POST" enctype="multipart/form-data">
               <div class="form-left">
-                <p>Category</p>
-                <select name="cat" class="form-control">
-                  <option value="Business Class">Business Class</option>
-                  <option value="First class">First class</option>
-                  <option value="Seceond class">Seceond class</option>
-              </select>
-                <!-- <input type="text" class="form-control" name="cat" placeholder="Category name"> -->
-                <p>Room Type</p>
+                <p>Purpose</p>
+                <select name="purpose"class="form-control">
+                    <option value="Offroading">Offroading</option>
+                    <option value="cruise">City cruise</option>
+                    <option value="Transporter">Luggage Transporter</option>
+                </select>
+                <br>
+                <p>Type</p>
                 <select name="type" class="form-control">
-                  <option value="Single Bed">Single Bed</option>
-                  <option value="Double Bed">Double Bed</option>
+                  <option value="SUV">SUV</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="Station Wagon">Wagon</option>
               </select>
-              <p>Add Some Description</p>
-              <input type="text" class="form-control" name="des" placeholder="Add Some Description">
+              <br>
+                <p>Transmission</p>
+                <select name="transmission" class="form-control">
+                  <option value="Automatic">Automatic</option>
+                  <option value="Manual">Manual</option>
+                  <option value="CVT">CVT</option>
+              </select>
+              <br>
+              <p>Make</p>
+              <input type="text" class="form-control" name="make" placeholder="Car make">
+              <br>
+              <p>Model</p>
+              <input type="text" class="form-control" name="model" placeholder="Car model">
+
+
+
 
               </div>
 
               <div class="form-right">
-                <p>Add Image</p>
-                <input type="file" class="form-control" name="img" placeholder="Add Image">
-                <p>Per Night Cost</p>
-                <input type="number" class="form-control" name="cost" placeholder="Per Night Cost">
-                <p>Room Available</p>
-                <input type="number" class="form-control" name="avlvl" placeholder="Room Availavle">
-                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Room">
+                <p>Fuel</p>
+                <select name="fuel" class="form-control">
+                  <option value="Petrol">Petrol</option>
+                  <option value="Diesel">Diesel</option>
+                  <option value="Electric">Electric</option>
+              </select>
+              <br>
+                <p>Consumption</p>
+                <input type="number" class="form-control" name="consumption" placeholder="km/ltr">
+                <br>
+                <p>Price</p>
+                <input type="number" class="form-control" name="price" placeholder="ksh">
+                <br>
+                <p>Seats</p>
+                <input type="number" class="form-control" name="seats" placeholder="seats">
+                <br>
+                <p>Image</p>
+                <input type="file" class="form-control" name="image" placeholder="Add Image">
+                
+                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Car">
               </div>
 
               <!-- <input type="text" class="form-control" name="type" placeholder="Room Type"> -->

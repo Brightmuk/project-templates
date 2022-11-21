@@ -40,6 +40,22 @@
     .btn-warning:hover{
         background-color: rgb(122, 83, 9);
     }
+    .compare-view{
+        justify-content: space-between;
+    }
+    .divider{
+        height: 70vh;
+        width: 1px;
+        background-color: rgb(209, 209, 209);
+    }
+    .divider:last-child{
+        display: none;
+    }
+    .car{
+      width: 100px;
+      margin:0px
+    }
+    
 </style>
 <body>
 
@@ -78,9 +94,7 @@
                                         <li><a href="/contact">Cars</a></li>
                                         <li><a href="/showStatus">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
-                                        <form action="/compare" method="POST">
-                                            <input type="text" name="cars" value="" hidden>
-                                        <button class="btn btn-lg comparison">Compare <span id="compares">0</span></button>
+
                                     </form>
                                     </ul>
                                     
@@ -105,22 +119,23 @@
         <!-- Room Start -->
         <section class="room-area">
             <div class="container">
-                <div class="row">
+                <div class="row compare-view">
                     <div class="col-lg-12 col-lg-12 col-sm-12 col-12">
                         <!--font-back-tittle  -->
                         <div class="font-back-tittle mb-45">
                             <div class="archivment-front">
-                                <h3>Results</h3>
+                                <h3>Compare</h3>
                             </div>
-                            <h3 class="archivment-back">Popular matches</h3>
+                            <h3 class="archivment-back">Best Match</h3>
                         </div>
                     </div>
 
                     <% if(cars.length) { %>
+                        
                     <% for(i=0;i<cars.length;i++){  %>
 
 
-                    <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                    <div class="col-3  car">
                         <!-- Single Room -->
                         <form action="/boooking" method="POST">
                             <input type="text" name="name" value="<%=cars[i].name%>" hidden>
@@ -129,8 +144,8 @@
                             <input type="text" name="roomNo" value="<%=cars[i].roomNo%>" hidden>
                             <input id="carId" type="text" name="roomNo" value="<%=cars[i].id%>" hidden>
 
-                            <div class="single-room mb-50">
-                                <div class="room-img p-2">        
+                            <div class="single-room mb-10">
+                                <div class="room-img p-1">        
                                         <a href="#"><img src="<%=cars[i].image%>" alt="" height="200px"></a>
                                 </div>
                                 <div class="room-caption text-center">
@@ -147,8 +162,13 @@
 
                     
                     </form>
+                    <hr>
+                    
                 </div>
+                <div class="divider"></div>
+                
                     <% } %>
+           
                     <% } else{  %>
                       <br>
                 <div class="col-lg-12 col-md-12 col-sm-12">

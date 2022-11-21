@@ -71,7 +71,7 @@
                         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                             <!-- main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
-                                <form action="/compare" method="POST">
+                                <form action="/compare" method="POST" id="compareForm">
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                       
@@ -81,7 +81,7 @@
                                         <li><a href="/contact">Contact</a></li>
                                         
                                             <input id="compare-values" type="text" name="cars" value="" hidden>
-                                        <button class="btn btn-lg comparison">Compare <span id="compares">0</span></button>
+                                        <button onclick="compare()" type="button" class="btn btn-lg comparison">Compare <span id="compares">0</span></button>
                                     
                                     </ul>
                                     
@@ -124,12 +124,12 @@
 
                     <div class="col-xl-4 col-lg-4 col-md-12 col-12">
                         <!-- Single Room -->
-                        <form id="carForm" action="/boooking" method="POST">
+                        <form action="/compare" method="POST">
                             <input type="text" name="name" value="<%=cars[i].name%>" hidden>
                             <input type="text" name="type" value="<%=cars[i].type%>" hidden>
                             <input type="text" name="cost" value="<%=cars[i].cost%>" hidden>
                             <input type="text" name="roomNo" value="<%=cars[i].roomNo%>" hidden>
-                            
+
                             <input id="carId" type="text" name="id" value="<%=cars[i].id%>" hidden>
 
                             <div class="single-room mb-50">
@@ -143,8 +143,8 @@
                                     <div class="per-night">
                                         <span>ksh. <%=cars[i].price%></span>
                                     </div>
-                                    <input type="submit" class="btn btn-danger" value="View">
-                                    <button type="button" onclick="addComparison()" class="btn btn-warning">Compare</button>
+                                    <!-- <input type="submit" class="btn btn-danger" value="View"> -->
+                                    <button type="button" onclick="addComparison('<%- JSON.stringify(cars[i].id) %>' )" class="btn btn-warning">Compare</button>
                                 </div>
                             </div>
 
@@ -295,27 +295,28 @@
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
-       
+ 
         var count = 0;
+        var cars= [];
 
-        function addComparison(){
-            
-            const form  = document.getElementById('carForm');
-            console.log(form.elements['id'].value);
-            
-           
-        //     var initialValue = document.getElementById("compare-values").value;
-            
-        //     if(initialValue.length>0){
-        //         document.getElementById("compare-values").value=initialValue+","+carId;
-        //     }else{
-        //         document.getElementById("compare-values").value=carId;
-        //     }
-        //     var afterValue = document.getElementById("compare-values").value;
-            
-        //    console.log(afterValue);
-        //    document.getElementById("compares").innerHTML=count+=1;
+        function addComparison(carId){
+            var id =JSON.parse(carId)
+            cars.push(id);
+            console.log("Added car: "+id+" to comparison");
+           document.getElementById("compares").innerHTML=count+=1;
         }
+
+        function compare(){
+            var compareForm = document.getElementById("compareForm");
+            var inputField = document.getElementById("compare-values");
+            inputField.value = cars;
+            console.log(inputField.value);
+            compareForm.submit();
+        }
+        
+
+        
+
     </script>
 
 </body>

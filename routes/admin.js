@@ -11,22 +11,29 @@ router.route('/')
    .get(adminControler.getLogin) //get request
    .post(adminControler.postLogin) // post request
 
-router.route('/reservations')
-.get(adminControler.getReservations)//get reservations
+router.route('/cars') 
+      .get(adminControler.getCars)//get pending
+
+
+router.get('/logout',adminControler.logout) //get request 
+
+router.route('/addCar')
+      .get(adminControler.getAddCar) // get request for hotel add page
+      .post(adminControler.postAddCar) // post request for hotel add to db
+ 
+
+
+
 
 router.route('/pending')
-.get(adminControler.getPending)//get pending
+      .get(adminControler.getPending)//get pending
 
-router.route('/rooms')
-.get(adminControler.getRooms)//get pending
-
-router.get('/logout',adminControler.logout) //get request   
+router.route('/reservations')
+      .get(adminControler.getReservations)//get reservations
 
 router.post('/changeStatus',adminControler.postChangeStatus)// post change status
 
-router.route('/addhotel')
-      .get(adminControler.getAddHotel) // get request for hotel add page
-      .post(adminControler.postAddHotel) // post request for hotel add to db
+
 
 router.route('/search')
       .get(adminControler.getSearch)   // get request   

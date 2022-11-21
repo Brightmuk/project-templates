@@ -49,31 +49,18 @@
               <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <h5 class ="nav-title">RESERVATIONS</h5>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/reservations">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Reservations</span>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/pending">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Pending Bookings</span>
-            </a>
-          </li>
-          <h5 class ="nav-title">ROOM MANAGAEMENT</h5>
+          <h5 class ="nav-title">CAR MANAGAEMENT</h5>
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/rooms">
+            <a class="nav-link" href="/admin/cars">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Rooms</span>
+              <span class="nav-link-text">Cars</span>
             </a>
           </li>
   
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="/admin/addhotel">
+            <a class="nav-link" href="/admin/addCar">
               <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">Add Room</span>
+              <span class="nav-link-text">Add Car</span>
             </a>
           </li>
 
@@ -96,40 +83,41 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
-                  <% if(data.length) {  %>
+                  <% if(cars.length) {  %>
                   <thead class="bg-primary text-white">
                     <tr>
                       <th>No.</th>
-                      <th>Room No</th>
-                      <th>Category</th>
-                      <th>Room Type</th>
-                      <th>Cost</th>
-                      <th>Rooms Availablility</th>
-                      <th>Actions</th>
+                      <th>Make</th>
+                      <th>Model</th>
+                      <th>Price</th>
+                      <th>Seats</th>
+                      <th>Type</th>
+                      <th>Fuel</th>
+                      <th>Transmission</th>
+                      <th>km/l</th>
+                      <th>Year</th>
+                      <th>Purpose</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <% for (i in data) { %>
+                    <% for (i in cars) { %>
                     <tr>
                       <td><%=i%></td>
-                      <td><%=data[i].roomNo%></td>
-                      <td><%=data[i].name%></td>
-                      <td><%=data[i].type%></td>
-                      <td><%=data[i].cost%></td>
+                      <td><%=cars[i].make%></td>
+                      <td><%=cars[i].model%></td>
+                      <td><%=cars[i].price%></td>
+                      <td><%=cars[i].seats%>+</td>
+                      <td><%=cars[i].type%></td>
+                      <td><%=cars[i].fuel%></td>
+                      <td><%=cars[i].transmission%></td>
+                      <td><%=cars[i].consumption%></td>
+                      <td><%=cars[i].year%></td>
+                      <td><%=cars[i].purpose%></td>
 
-                      <% if(data[i].available==0){ %>
-                      <td class="booked">Booked</td>
-                        <% }else{ %>
-                          <td class="available">Available</td>
-                          <%}%> 
                       <th>
                       <form action="/admin/viewRoom" method="POST">
-                        <input type="hidden" name="cat" value="<%=data[i].name%>">
-                        <input type="hidden" name="type" value="<%=data[i].type%>">
-                        <input type="hidden" name="cost" value="<%=data[i].cost%>">
-                        <input type="hidden" name="roomNo" value="<%=data[i].roomNo%>">
-                        <input type="hidden" name="available" value="<%=data[i].available%>">
+                        <input type="hidden" name="id" value="<%=cars[i].id%>">
                         <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        
                       </form>
