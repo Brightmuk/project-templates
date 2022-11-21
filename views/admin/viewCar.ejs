@@ -30,6 +30,32 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+      .car-image{
+        width: 200px;
+        border-radius: 10px;
+      }
+      .car-header{
+        display: flex;
+        justify-content: space-between;
+      }
+      .header-right{
+        align-items: baseline;
+        font-size: 14px;
+        
+      }
+      .header-right .item{
+        display: flex;
+        color: grey;
+        justify-content: space-between;
+      }
+
+      progress{
+       
+        width: 70px;
+      }
+
+    </style>
   </head>
 
   <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -49,31 +75,18 @@
               <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <h5 class ="nav-title">RESERVATIONS</h5>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/reservations">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Reservations</span>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/pending">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Pending Bookings</span>
-            </a>
-          </li>
-          <h5 class ="nav-title ">ROOM MANAGAEMENT</h5>
+          <h5 class ="nav-title">CAR MANAGAEMENT</h5>
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/rooms">
+            <a class="nav-link" href="/admin/cars">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Rooms</span>
+              <span class="nav-link-text">Cars</span>
             </a>
           </li>
   
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="/admin/addhotel">
+            <a class="nav-link" href="/admin/addCar">
               <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">Add Room</span>
+              <span class="nav-link-text">Add Car</span>
             </a>
           </li>
 
@@ -88,75 +101,94 @@
       </div>
     </nav>
     <div class="content-wrapper">
+      
       <div class="container-fluid">
+        <% if(msg) { %>
+          <h3 style="color: #17b978;" class="text-center"><%=msg%></h3><br>
+          <%   } %>
+          <% if(err) { %>
+          <h3 style="color: #ff304f;" class="text-center"><%=err%></h3><br>
+          <%   } %>
+          
         <div class="row">
           
           <div class="col-lg-4  ">
-            <h2>Room <%=room.roomNo%></h2>
-            <br/>
-           <form class="view-room" action="/admin/updateRoom" method="POST">
-            <p>Category</p>
-            <input type="text" class="form-control" name="cat" value="<%=room.name%>" readonly>
-            <p>Room Type</p>
-            <input type="text" class="form-control" name="type" value="<%=room.type%>" readonly>
-            <p>Per Night Cost</p>
-            <input type="number" class="form-control" name="cost" value="<%=room.cost%>">
-            <p>Room Availablility</p>
-            <% if(room.available==1){ %>
-            <select name="available" class="form-control">
-              <option value="0">Booked</option>
-              <option value="1" selected>Available</option>
-          </select>
-          <% }else{%>
-            <select name="available" class="form-control">
-              <option value="0"selected>Booked</option>
-              <option value="1" >Available</option>
-          </select>
-          <% }%>
             
-            <p>Add Some Description</p>
-            <input type="text" class="form-control" name="description"  value="<%=room.dec%>">
-            <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
-            <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
-        </form>
+            <br/>
+            <div class="car-header">
+              <div class="header-left">
+                <img class="car-image" src="<%=car.image%>" alt="image">
+              </div>
+              <div class="header-right">
+                <div class="item">
+                <label for="file">Reliability</label>
+                <progress   value="<%=car.reliability%>" max="10">  </progress>
+                </div>
+                <div class="item">
+                <label for="file">Economy</label>
+                <progress   value="<%=car.economy%>" max="10">  </progress>
+                </div>
+                <div class="item">
+                <label for="file">Perfromance</label>
+                <progress   value="<%=car.perfromance%>" max="10">  </progress>
+                </div>
+                <div class="item">
+                <label for="file">Maintenance</label>
+                <progress   value="<%=car.maintenance%>" max="10">  </progress>
+                </div>
+                <div class="item">
+                <label for="file">Luxury</label>
+                <progress   value="<%=car.luxury%>" max="10">  </progress>
+                </div>
+                <div class="item">
+                  <label for="file">Utility</label>
+                  <progress   value="<%=car.Utility%>" max="10">  </progress>
+                </div>
+
+              </div>
+            </div>
+            
+            <br>
+            <br>
+           <form class="view-room" action="/admin/updateCar" method="POST">
+            <p>Make</p>
+            <input type="text" class="form-control" name="make" value="<%=car.make%>" >
+            <p>Model</p>
+            <input type="text" class="form-control" name="model" value="<%=car.model%>" >
+            <p>Type</p>
+            <input type="text" class="form-control" name="type"  value="<%=car.type%>">
+            <p>Purpose</p>
+            <input type="text" class="form-control" name="purpose" value="<%=car.purpose%>">
+          
+       
           </div>
-          <div class="col-lg-2  "></div>
+          <div class="col-lg-2 "></div>
           <div class="col-lg-4  occupant">
-            <h2>Occupant</h2>
             <br/>
-            <br/>
-            <br/>
-            <br/>
-            <% if(room.available==1){ %>
-              <p>No current Occupant</p>
-              <% }else{%>
-                <p>Email: <%=user.email%></p>
-                <p>Phone:<%=user.phone%></p>
-                <p>Bookig Date: <%=booking.date%></p>
-              <% }%>
-              <br/>
-              <% if(room.available==0){ %>
-             
-                
-               
-                <button class="btn btn-lg btn-success mt-3 add-room-btn" onclick="chekout()">Checkout</button>
-             
-              <% }%>
+
+            <p>Transmission</p>
+            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>">
+            <p>Fuel</p>
+            <input type="text" class="form-control" name="fuel"  value="<%=car.fuel%>">
+            <p>Seats</p>
+            <input type="number" class="form-control" name="seats"  value="<%=car.seats%>">
+            <p>Consumption</p>
+            <input type="number" class="form-control" name="consumption"  value="<%=car.consumption%>">
+            <p>price</p>
+            <input type="number" class="form-control" name="price"  value="<%=car.price%>">
+            <p>Year</p>
+            <input type="text" class="form-control" name="year" value="<%=car.year%>">
+            <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
+            <br>
+            <br>
+            <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
+          </form>
           </div>
         </div>
-
+        
 
       </div>
     </div>
-    <dialog id="checkoutDialogue" class="checkoutDialog">
-       <form action="/admin/checkout" method="POST">
-        <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
-        <input type="hidden" class="form-control" name="email"  value="<%=user.email%>">
-      <h3>Are you sure you want to checkout this reservation?</h3>
-      <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Checkout">
-       </form>
-      
-    </dialog>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -204,9 +236,7 @@
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
     <script>
-      function chekout() { 
-        document.getElementById("checkoutDialogue").showModal(); 
-      } 
+
       </script>
   </body>
 

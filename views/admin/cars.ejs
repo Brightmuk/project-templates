@@ -97,6 +97,7 @@
                       <th>km/l</th>
                       <th>Year</th>
                       <th>Purpose</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
 
@@ -116,7 +117,7 @@
                       <td><%=cars[i].purpose%></td>
 
                       <th>
-                      <form action="/admin/viewRoom" method="POST">
+                      <form action="/admin/viewCar" method="POST">
                         <input type="hidden" name="id" value="<%=cars[i].id%>">
                         <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        

@@ -10,7 +10,7 @@ exports.getLogin = (req, res, next) => {
         res.render('admin/login', { msg: "", err: "" });
     }
     else {
-        return res.render('/admin/index')
+        return res.render('admin/index')
 
     }
 
@@ -53,7 +53,7 @@ exports.postLogin = (req, res, next) => {
                 })
 
             }else {
-                return res.render('admin/login', { msg: "", err: "Please Check Your Information Again" });
+                return res.render('admin/login', { msg: "", err: "Please check your information  and try again" });
             }
         }
     })
@@ -193,7 +193,7 @@ exports.postAddCar = (req, res, next) => {
                         throw err;
                     }
                     else {
-                        res.render('admin/addCar', { msg: "Data Insertion Successfuly", err: "" });
+                        res.render('admin/addCar', { msg: "Car Added Successfuly", err: "" });
                     }
                 });
             }
@@ -207,146 +207,77 @@ exports.postAddCar = (req, res, next) => {
 
 //get view room 
 
-exports.viewRoom = (req, res, next) => {
+exports.viewCar = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "@Beatsbydre99",
-        database: "hotel"
+        database: "cars"
     });
 
-    roomQuery = "SELECT * " +
-        "FROM category " +
-        "WHERE name = " + mysql.escape(req.body.cat) +
-        " AND type = " + mysql.escape(req.body.type) +
-        " AND cost = " + mysql.escape(req.body.cost);
-
-    bookingQuery = "SELECT * " +
-        "FROM bookingStatus " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
+    carQuery = "SELECT * " + 
+    " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+    " WHERE cars.id =" + mysql.escape(req.body.id) ;
+    ; 
     
 
-    connectDB.query(roomQuery, (err, roomResult) => {
+    connectDB.query(carQuery, (err, carResult) => {
         if (err) throw err; 
         
-        else {
-        connectDB.query(bookingQuery, (err, bookingResult) => {
-            if (err) throw err; 
-            if(bookingResult.length>0){
-                userQuery = "SELECT * " +
-                "FROM user " +
-                "WHERE email = " + mysql.escape(bookingResult[0].email);
-    
-                connectDB.query(userQuery, (err, userResult) => {
-                    if (err) throw err;
-                    else{
-                        req.session.info = roomResult[0];
-                        
-                        res.render('admin/viewRoom', { room: roomResult[0] , booking: bookingResult[0] ,user: userResult[0]});
-                    }
-                }) 
-            }else {
-                req.session.info = roomResult[0];
-                        
-                res.render('admin/viewRoom', { room: roomResult[0]});
-            }
-        })
-    } 
-
+        res.render('admin/viewCar', { car: carResult[0],msg:"",err:""});
 
     })
 }
 
-//get view room 
+""
 
-exports.viewReservation = (req, res, next) => {
+exports.updateCar = (req, res, next) => {
+   console.log(req.body.id);
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "cars"
+    });
+
+    carQuery = "SELECT * " + 
+    " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+    " WHERE cars.id =" + mysql.escape(req.body.id);
+    ; 
+
+    updateQuery = "UPDATE cars " +
+        "SET make = " + mysql.escape(req.body.make) +
+        ", model = " + mysql.escape(req.body.model) +
+        ", price = " + mysql.escape(parseInt(req.body.price)) +
+        ", seats = " + mysql.escape(parseInt(req.body.seats)) +
+        ", type = " + mysql.escape(req.body.type) +
+        ", fuel = " + mysql.escape(req.body.fuel) +
+        ", transmission = " + mysql.escape(req.body.transmission) +
+        ", consumption = " + mysql.escape(parseInt(req.body.consumption)) +
+        ", year = " + mysql.escape(req.body.year) +
+        " WHERE id = " + mysql.escape(req.body.id);
     
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
 
-    roomQuery = "SELECT * " +
-        "FROM category " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
-
-
-    bookingQuery = "SELECT * " +
-        "FROM bookingStatus " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo)
-        " AND email = " + mysql.escape(req.body.email);
-
-    userQuery = "SELECT * " +
-        "FROM user " +
-        "WHERE email = " + mysql.escape(req.body.email); 
-
-    connectDB.query(roomQuery, (err, roomResult) => {
-        if (err) throw err; 
-        
-        else { 
-        connectDB.query(bookingQuery, (err, bookingResult) => {
-            if (err) throw err;  
-           
-                connectDB.query(userQuery, (err, userResult) => {
-                    if (err) throw err;
-                    else{
-                        req.session.info = roomResult[0];
-                        var today = Date.now()
-
-                        var diff = today - bookingResult[0].date.getTime();
-
-                        var days = (diff / (1000 * 3600 * 24)).toFixed(0);
-                        
-                        res.render('admin/singleReservation', { room: roomResult[0] , booking: bookingResult[0] ,user: userResult[0],days:days,cost:days*roomResult[0].cost});
-                    }
-                }) 
-            
-        }) 
-    } 
-
-    })
-}
-
-
-
-//update previous data
-
-exports.updateRoom = (req, res, next) => {
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    updateQuery = "UPDATE category " +
-        "SET type = " + mysql.escape(req.body.type) +
-        ", cost = " + mysql.escape(parseInt(req.body.cost)) +
-        ", available = " + mysql.escape(parseInt(req.body.available)) +
-        ", `dec` = " + mysql.escape(req.body.description) +
-        " WHERE roomNo = " + mysql.escape(req.body.roomNo);
-      
-        roomQuery = "SELECT * " +
-        "FROM category";
-
-
-    connectDB.query(updateQuery, (err, result) => {
+    connectDB.query(updateQuery, (err, updateResult) => {
         if (err) throw err;
-        else {
-            connectDB.query(roomQuery, (err, roomResult) => {
-                if (err) throw err;
-                else {
-                    return res.render('admin/rooms', { data: roomResult, msg: "Update Done Successfuly", err: "" });
-                }
+     
+            connectDB.query(carQuery, (err2, carResult) => {
+                if (err2) throw err2;
+                
+                    return res.render('admin/viewCar', { car: carResult[0],msg:"Car updated Successfully",err:""});
+                
             })
-            
-        }
+
     })
 
 }
+
+
+
+
+
+
 
 
 

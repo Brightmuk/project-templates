@@ -22,11 +22,11 @@ router.route('/addCar')
       .post(adminControler.postAddCar) 
  
 
-router.route('/viewRoom')
-      .post(adminControler.viewRoom)  
+router.route('/viewCar')
+      .post(adminControler.viewCar)  
 
-router.route('/updateRoom')
-      .post(adminControler.updateRoom)   
+router.route('/updateCar')
+      .post(adminControler.updateCar)   
 
  
 module.exports = router;
