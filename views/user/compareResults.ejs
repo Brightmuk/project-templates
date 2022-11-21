@@ -44,7 +44,7 @@
         justify-content: space-between;
     }
     .divider{
-        height: 70vh;
+        height: 120vh;
         width: 1px;
         background-color: rgb(209, 209, 209);
     }
@@ -54,6 +54,11 @@
     .car{
       width: 100px;
       margin:0px
+    }
+    .car-extras{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
     
 </style>
@@ -135,7 +140,7 @@
                     <% for(i=0;i<cars.length;i++){  %>
 
 
-                    <div class="col-3  car">
+                    <div class="col-5  car">
                         <!-- Single Room -->
                         <form action="/boooking" method="POST">
                             <input type="text" name="name" value="<%=cars[i].name%>" hidden>
@@ -162,8 +167,33 @@
 
                     
                     </form>
-                    <hr>
                     
+                    <div class=" single-room car-extras">
+                        <h5 class="feature">Reliability</h5>
+                        <h5 class="value"><%=cars[i].reliability%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Economy</h5>
+                        <h5 class="value"><%=cars[i].economy%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Perfromance</h5>
+                        <h5 class="value"><%=cars[i].performance%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Luxury</h5>
+                        
+                        <h5 class="value"><%=cars[i].luxury%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Utility</h5>
+                        <h5 class="value"><%=cars[i].Utility%></h5>
+                    </div>
+                    <hr>
                 </div>
                 <div class="divider"></div>
                 
@@ -178,7 +208,9 @@
                     <%  }  %>
 
                 </div>
+
             </div>
+
 
         </section>
         <!-- Room End -->
@@ -217,10 +249,10 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About Diamond Five Star Hotel</a></li>
-                                    <li><a href="#">Our Best Rooms</a></li>
-                                    <li><a href="#">Our Photo Gellary</a></li>
-                                    <li><a href="#">Pool Service</a></li>
+                                    <li><a href="#">About Automotive Finder </a></li>
+                                    <li><a href="#">Our Best Offers</a></li>
+                                    <li><a href="#">Our Customers</a></li>
+                                    <li><a href="#">Car Service</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -231,9 +263,9 @@
                                 <h4>Reservations</h4>
                                 <ul>
                                     <li><a href="#">Tel: 453-3251</a></li>
-                                    <li><a href="#">Phone No: 09125673251</a></li>
-                                    <li><a href="#">Skype: DiamondhotelBooking</a></li>
-                                    <li><a href="#">reservations@diamondhotel.com</a></li>
+                                    <li><a href="#">Phone No: 0712563251</a></li>
+                                    <li><a href="#">Skype: AutomitiveFinder</a></li>
+                                    <li><a href="#">info@automotivefinder.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -243,8 +275,8 @@
                             <div class="footer-tittle">
                                 <h4>Our Location</h4>
                                 <ul>
-                                    <li><a href="#">Purok Daisy, Brgy.Enclaro</a></li>
-                                    <li><a href="#">Binalbagan, Negros Occidental</a></li>
+                                    <li><a href="#">Nairbi Kenya</a></li>
+                                    <li><a href="#">Moi Avaenue, Kimathi House 4th floor</a></li>
                                 </ul>
                                 <!-- Form -->
                                 <div class="footer-form">
@@ -313,20 +345,7 @@
     <script src="./assets/js/main.js"></script>
     <script>
        
-        var count = 0;
-        function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        let expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
 
-        function addComparison(){
-            var carId = document.getElementById("carId").value;
-            console.log(carId)
-           setCookie(carId,carId,1)
-           document.getElementById("compares").innerHTML=count+=1;
-        }
     </script>
 
 </body>
