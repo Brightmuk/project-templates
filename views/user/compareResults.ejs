@@ -60,7 +60,9 @@
         display: flex;
         justify-content: space-between;
     }
-    
+    .car-img{
+        object-fit: cover;
+    }
 </style>
 <body>
 
@@ -151,7 +153,7 @@
 
                             <div class="single-room mb-10">
                                 <div class="room-img p-1">        
-                                        <a href="#"><img src="<%=cars[i].image%>" alt="" height="200px"></a>
+                                        <a href="#"><img class="car-img" src="<%=cars[i].image%>" alt="" height="200px"></a>
                                 </div>
                                 <div class="room-caption text-center">
 

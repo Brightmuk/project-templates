@@ -83,74 +83,6 @@ exports.getCars = (req, res, next) => {
 }
 
 
-
-//change booking status
-exports.postChangeStatus = (req, res, next) => {
-    //console.log(req.body);
-
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    var value = 0;
-
-    if (req.body.click == "Approve") {
-        value = 1;
-        
-        data = "UPDATE bookingstatus " +
-        " SET  status = 1"
-        " WHERE roomNo = " + mysql.escape(req.body.roomNo) +
-        " AND type = " + mysql.escape(req.body.type) +
-        " AND category = " + mysql.escape(req.body.cat) +
-        " AND roomWant = " + mysql.escape(req.body.want)
-
-        data2 = "UPDATE category " +
-        "SET available = 0" +
-        " WHERE roomNo = " + mysql.escape(req.body.roomNo)
-
-    } else {
-        data = "DELETE FROM bookingstatus " +
-        " WHERE email = " + mysql.escape(req.body.mail) +
-        " AND type = " + mysql.escape(req.body.type) +
-        " AND category = " + mysql.escape(req.body.cat) +
-        " AND roomWant = " + mysql.escape(req.body.want)
-    }
-    
-
-    data = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 1 ";
-
-    connectDB.query(data, (err, result) => {
-        if (err) throw err;
-
-        else {
-            connectDB.query(data1, (err1, result1) => {
-                if (err1) throw err1;
-                else {
-                    connectDB.query(data2, (err3,res) => {
-                        if (err3) throw err3;
-                        else{
-                            for (i in result1) {
-                                var a = result1[i].date; 
-                                result1[i].date = a.toString().slice(0, 15);
-                            }
-                        } 
-                    })
-
-                    return res.render('admin/reservations', { msg: "", err: "", data: result1 });
-                }
-            }) 
-        }
-    })
-
-}
-
-
-
 //get add hotel page
 
 exports.getAddCar = (req, res, next) => {
@@ -229,7 +161,7 @@ exports.postAddCar = (req, res, next) => {
                     imgPath = (make + type + price + "." + fileType);
                 }
                 imgPath ='/assets/img/cars/' + (make + type + price + "." + fileType)
-                file.path = a + '/public/assets/img/cars' + (make + type + price + "." + fileType); // __dirname
+                file.path = a + '/public/assets/img/cars/' + (make + type + price + "." + fileType); // __dirname
             } else {
                 console.log("Wrong File type")
                 wrong = 1;
@@ -268,34 +200,9 @@ exports.postAddCar = (req, res, next) => {
         })
 }
 
-//get update page
-exports.getSearch = (req, res, next) => { 
-    res.render('admin/search', { msg: "", err: "" })
-}
 
-//post request
-exports.postSearch = (req, res, next) => {
-    //console.log(req.body);
+//-------------------------------------------------------
 
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    data = "SELECT * " +
-        "FROM category " +
-        "WHERE name = " + mysql.escape(req.body.cat);
-
-    connectDB.query(data, (err, result) => {
-        if (err) throw err;
-        else {
-            return res.render('admin/update', { msg: "", err: "", data: result });
-        }
-    })
-
-}
 
 
 //get view room 
@@ -351,68 +258,6 @@ exports.viewRoom = (req, res, next) => {
     })
 }
 
-exports.checkout = (req, res, next) => {
-    
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    updateRoom = "UPDATE category " +
-        "SET available = 1 " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
-
-    updateBooking = "UPDATE bookingStatus " +
-        "SET checkout = 1 " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo)
-        " AND email = " + mysql.escape(req.body.email);
- 
-    roomQuery = "SELECT * " + 
-        "FROM category " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
-
-    bookingQuery = "SELECT * " +
-        "FROM bookingStatus " +
-        "WHERE roomNo = " + mysql.escape(req.body.roomNo);
-    
-    connectDB.query(updateRoom, (err, res) => {
-        if (err) throw err;
-    connectDB.query(updateBooking, (err22, res22) => {
-            if (err22) throw err22;
-    connectDB.query(roomQuery, (err, roomResult) => {
-        if (err) throw err; 
-        
-        else {
-        connectDB.query(bookingQuery, (err, bookingResult) => {
-            if (err) throw err; 
-            if(bookingResult.length>0){
-                userQuery = "SELECT * " +
-                "FROM user " +
-                "WHERE email = " + mysql.escape(bookingResult[0].email);
-    
-                connectDB.query(userQuery, (err, userResult) => {
-                    if (err) throw err;
-                    else{
-                        req.session.info = roomResult[0];
-                        
-                        res.render('admin/viewRoom', { room: roomResult[0] , booking: bookingResult[0] ,user: userResult[0]});
-                    }
-                }) 
-            }else {
-                req.session.info = roomResult[0];
-                        
-                res.render('admin/viewRoom', { room: roomResult[0]});
-            }
-        })
-    } 
-
-})
-    })
-})
-}
-
 //get view room 
 
 exports.viewReservation = (req, res, next) => {
@@ -465,56 +310,7 @@ exports.viewReservation = (req, res, next) => {
     })
 }
 
-//get reserved rooms
-exports.getReservations = (req, res, next) => {
-    // console.log(req.body);
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
 
-    data = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 1 ";
-    connectDB.query(data, (err, result) => {
-        if (err) throw err;
-        else {
-            for (i in result) {
-                var a = result[i].date;
-                result[i].date = a.toString().slice(0, 15);
-            }
-            res.render('admin/reservations', { data: result });
-        }
-    })
-
-}
-//get pending bookings
-exports.getPending = (req, res, next) => {
-    // console.log(req.body);
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    data = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 0 ";
-    connectDB.query(data, (err, result) => {
-        if (err) throw err;
-        else {
-            for (i in result) {
-                var a = result[i].date;
-                result[i].date = a.toString().slice(0, 15);
-            }
-            res.render('admin/pending', { data: result });
-        }
-    })
-
-}
 
 //update previous data
 
