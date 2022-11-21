@@ -276,11 +276,11 @@ exports.postAddHotel = (req, res, next) => {
 
             }
             else {
-
+                var roomNo = Math.floor(Math.random() * 100) + 1;
                 //saveDir = __dirname + '/uploads/';
                 
-                data = "INSERT INTO `category`(`name`, `type`, `cost`, `available`, `img`, `dec`) "+
-                         "VALUES('" +cat + "','" + type + "', '" + cost + "','" +avlvl + "' ,'" + imgPath + "' ,'" + des + "' )"
+                data = "INSERT INTO `category`(`name`, `type`, `cost`, `available`, `img`, `dec`,`roomNo`) "+
+                         "VALUES('" +cat + "','" + type + "', '" + cost + "','" +avlvl + "' ,'" + imgPath + "' ,'" + des + "','" + roomNo + "' )"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {

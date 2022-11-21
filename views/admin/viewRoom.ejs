@@ -148,8 +148,10 @@
 
       </div>
     </div>
+    <% if(room.available==0){ %>
     <dialog id="checkoutDialogue" class="checkoutDialog">
        <form action="/admin/checkout" method="POST">
+
         <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
         <input type="hidden" class="form-control" name="email"  value="<%=user.email%>">
       <h3>Are you sure you want to checkout this reservation?</h3>
@@ -157,6 +159,7 @@
        </form>
       
     </dialog>
+    <% }%>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">

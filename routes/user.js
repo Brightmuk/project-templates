@@ -21,7 +21,7 @@ router.route('/category')
        .post(userControler.postCategory) //post request form the category
 router.route('/boooking')
        .post(userControler.postBooking) //post booking data    
-        
+         
 router.route('/status') 
        .post(userControler.postStatus); 
 
