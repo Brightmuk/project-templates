@@ -7,7 +7,7 @@ exports.getHome = (req, res, next) => {
 
 }
 
-//post request of category
+//post request of cars
 exports.postSearch = (req, res, next) => {
    //console.log(req.body);
    var connectDB = mysql.createConnection({
@@ -20,8 +20,7 @@ exports.postSearch = (req, res, next) => {
 
    filterQuery = "SELECT * " +
       " FROM  cars " +
-      " WHERE purpose = " + mysql.escape(req.body.purpose) +
-      " AND type = " + mysql.escape(req.body.type) +
+      " WHERE type = " + mysql.escape(req.body.type) +
       " AND fuel = " + mysql.escape(req.body.fuel) +
       " AND transmission = " + mysql.escape(req.body.transmission) +
       " AND seats >= " + mysql.escape(req.body.seats); 
@@ -31,7 +30,7 @@ exports.postSearch = (req, res, next) => {
       if (filterErr) throw filterErr; 
       else {
     
-         return res.render('user/showResults', { cars: filterResult })
+         return res.render('user/showResults', { cars: filterResult, purpose:mysql.escape(req.body.purpose) })
       }
    })
 
@@ -49,7 +48,9 @@ exports.postCompare = (req, res, next) => {
    });
 
    var carStr = mysql.escape(req.body.cars);
-
+   var carPurpose = req.body.purpose;
+   var purpose = carPurpose.slice(1,-1);
+ 
    var carList = carStr.slice(1,-1);
 
    var toInt = carList.split(',').map(function(car){return parseInt(car)}); 
@@ -58,12 +59,23 @@ exports.postCompare = (req, res, next) => {
       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
       " WHERE cars.id IN (" + toInt + 
       ")"; 
+   
 
    connectDB.query(compareQery, (compareErr, compareResult) => {
       if (compareErr) throw compareErr; 
       else {
-         console.log(compareResult); 
-         return res.render('user/compareResults', {cars: compareResult});
+         var best;
+         compareResult.forEach(car => {
+            var highest = 0;
+            if(car[purpose]>highest){ 
+
+               highest=car[purpose];
+               best = car;
+            }
+         });
+         console.log(best);
+       
+         return res.render('user/compareResults', {cars: compareResult, bestOffer:best, purpose: purpose});
       }
    })
 

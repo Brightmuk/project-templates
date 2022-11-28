@@ -63,6 +63,30 @@
     .car-img{
         object-fit: cover;
     }
+    .recommendation{
+  display: flex;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid rgb(216, 216, 216);
+  border-radius: 20px;
+  background-color: rgb(240, 245, 255);
+}
+.recommendation .img-col{
+  margin-right: 10px;
+  border-radius: 5px;
+  
+}
+.recommendation img{
+  object-fit: cover;
+}
+.recommendation .name{
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(40, 40, 63);
+}
+.purpose{
+    color: grey;
+}
 </style>
 <body>
 
@@ -210,6 +234,23 @@
                     <%  }  %>
 
                 </div>
+                <hr>
+                <h3>Best recommendation</h3>
+                <br>
+                <div class="recommendation">
+                    
+                    <img class="img-col" src="<%=bestOffer.image%>">
+                    
+                    <div class="info-col">
+                        <h5 class="name"><%=bestOffer.make%> <%=bestOffer.model%> <%=bestOffer.year%></h5>
+                        <h5 >Based on your requirements, this will the best recommendation for you</h5>
+                        <h4 class="purpose"><%=purpose%></h4>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+
 
             </div>
 

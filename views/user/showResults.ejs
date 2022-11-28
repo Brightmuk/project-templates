@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style>
     .comparison{
     background-color: rgb(37, 37, 73);
@@ -43,6 +44,22 @@
     .car-img{
         object-fit: cover;
     }
+    #toast {
+        position: fixed; z-index: 99;
+        top: 100px; right: 5px;
+        width: 200px;
+        padding: 10px;
+        border: 1px solid #c1cafc;
+        border-radius: 5px;
+        color: white;
+        background: #e4a228;
+        border: 1px solid rgb(221, 221, 221);
+        display: none;
+        animation-duration: 2s;
+        font-size: 12px;
+    }
+
+
 </style>
 <body>
 
@@ -84,6 +101,7 @@
                                         <li><a href="/contact">Contact</a></li>
                                         
                                             <input id="compare-values" type="text" name="cars" value="" hidden>
+                                            <input id="purpose" type="text" name="purpose" value="<%=purpose%>" hidden>
                                         <button onclick="compare()" type="button" class="btn btn-lg comparison">Compare <span id="compares">0</span></button>
                                     
                                     </ul>
@@ -109,6 +127,7 @@
 
         <!-- Room Start -->
         <section class="room-area">
+            <div id="toast" onclick="this.style.display='none'"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-lg-12 col-sm-12 col-12">
@@ -165,11 +184,11 @@
 
                 </div>
             </div>
-
+            
         </section>
         <!-- Room End -->
     </main>
-
+    <div id="toast" onclick="this.style.display='none'"></div>
     <footer>
         <!-- Footer Start-->
         <div class="footer-area black-bg footer-padding">
@@ -303,22 +322,48 @@
         var cars= [];
 
         function addComparison(carId){
-            var id =JSON.parse(carId)
-            cars.push(id);
-            console.log("Added car: "+id+" to comparison");
-           document.getElementById("compares").innerHTML=count+=1;
+            var id =JSON.parse(carId);
+            if(cars.includes(id)){
+                var i = cars.indexOf(id);
+                cars.splice(i, 1);
+                count-=1;
+                document.getElementById("compares").innerHTML=count;
+                toast("Removed from comparison");
+            }else if(count<3){
+                cars.push(id);
+                console.log("Added car: "+id+" to comparison");
+                document.getElementById("compares").innerHTML=count+=1;
+                toast("Added to comparison");
+            }else{
+                toast("You can compare a maximum of 3 cars");
+            }
+            
+
+
         }
 
         function compare(){
-            var compareForm = document.getElementById("compareForm");
+            if(cars.length<2){
+                toast("Add at least two cars");
+            }else{
+                var compareForm = document.getElementById("compareForm");
             var inputField = document.getElementById("compare-values");
             inputField.value = cars;
             console.log(inputField.value);
             compareForm.submit();
-        }
-        
+            }
 
-        
+        }
+
+        function toast (msg) {
+            document.getElementById('toast').innerHTML=msg
+            $(document).ready(function(){
+                $("#toast").fadeTo("slow", 1.0);
+                $("#toast").fadeTo("slow", 1.0);
+                $("#toast").fadeTo("slow", 0.0);
+               
+            });
+        }
 
     </script>
 
