@@ -24,6 +24,9 @@ router.route('/addCar')
 
 router.route('/viewCar')
       .post(adminControler.viewCar)  
+      
+router.route('/deleteCar')
+      .post(adminControler.deleteCar)  
 
 router.route('/updateCar')
       .post(adminControler.updateCar)   

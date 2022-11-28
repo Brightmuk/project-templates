@@ -30,6 +30,17 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+      .form-next-right,.form-next-left{
+        display:none
+      }
+     
+      .prev-row{
+        display: flex;
+        justify-content: space-between;
+        width: 220px;
+      }
+    </style>
   </head>
 
   <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -86,40 +97,43 @@
             <h3 style="color: #ff304f;" class="text-center"><%=err%></h3><br>
             <%   } %>
             <form class="add-room" action="/admin/addCar" method="POST" enctype="multipart/form-data">
-              <div class="form-left">
+              <div class="form-left" id="form-left">
                 <p>Purpose</p>
-                <select name="purpose"class="form-control">
-                    <option value="Offroading">Offroading</option>
-                    <option value="cruise">City cruise</option>
-                    <option value="Transporter">Luggage Transporter</option>
-                </select>
+                <select name="purpose" class="form-control" required>
+                  <option value="offroading">Offroading</option>
+                  <option value="luxury">City cruise</option>
+                  <option value="utility">Luggage Transporter</option>
+                  <option value="performance">Speed/Fun</option>
+                  <option value="reliability">Daily Drive</option>
+                  <option value="economy">Pocket Friendly</option>
+              </select>
                 <br>
                 <p>Type</p>
-                <select name="type" class="form-control">
+                <select name="type" class="form-control" required>
                   <option value="SUV">SUV</option>
                   <option value="Sedan">Sedan</option>
                   <option value="Station Wagon">Wagon</option>
               </select>
               <br>
                 <p>Transmission</p>
-                <select name="transmission" class="form-control">
+                <select name="transmission" class="form-control" required>
                   <option value="Automatic">Automatic</option>
                   <option value="Manual">Manual</option>
                   <option value="CVT">CVT</option>
               </select>
               <br>
               <p>Make</p>
-              <input type="text" class="form-control" name="make" placeholder="Car make">
+              <input type="text" class="form-control" name="make" placeholder="Car make" required>
               <br>
               <p>Model</p>
-              <input type="text" class="form-control" name="model" placeholder="Car model">
-
-
-
+              <input type="text" class="form-control" name="model" placeholder="Car model" required>
+              <br>
+              <p>Year</p>
+              <input type="text" class="form-control" name="year" placeholder="2015" required>
 
               </div>
 
-              <div class="form-right">
+              <div class="form-right" id="form-right">
                 <p>Fuel</p>
                 <select name="fuel" class="form-control">
                   <option value="Petrol">Petrol</option>
@@ -131,15 +145,53 @@
                 <input type="number" class="form-control" name="consumption" placeholder="km/ltr">
                 <br>
                 <p>Price</p>
-                <input type="number" class="form-control" name="price" placeholder="ksh">
+                <input type="number" class="form-control" name="price" placeholder="ksh" required>
                 <br>
                 <p>Seats</p>
-                <input type="number" class="form-control" name="seats" placeholder="seats">
+                <input type="number" class="form-control" name="seats" placeholder="seats" required>
                 <br>
                 <p>Image</p>
-                <input type="file" class="form-control" name="image" placeholder="Add Image">
+                <input type="file" class="form-control" name="image" placeholder="Add Image" required>
+                <br>
+                <input type="button" onclick="next()" class="btn btn-lg btn-success mt-3 add-room-btn" value="Next">
+              </div>
+              <div class="form-next-right" id="form-next-left">
+                <h3>Car stats </h3>
+              
+                <p>Reliability</p>
+                <input type="number" class="form-control" name="reliability" placeholder="0" required>
+                <br>
+                <p>Utility</p>
+                <input type="number" class="form-control" name="utility" placeholder="0" required>
+                <br>
+                <p>Economy</p>
+                <input type="number" class="form-control" name="economy" placeholder="0" required>
+                <br>
+                <p>Maintenance</p>
+                <input type="number" class="form-control" name="maintenance" placeholder="0" required>
                 
-                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Car">
+
+                <br>
+              </div>
+              <div class="form-next-right" id="form-next-right">
+                <br>
+                <p>Luxury</p>
+                <input type="number" class="form-control" name="luxury" placeholder="0" required>
+                <br>
+                <p>Performance</p>
+                <input type="number" class="form-control" name="performance" placeholder="0" required>
+                <br>
+                <p>Offroading performance</p>
+                <input type="number" class="form-control" name="offroading" placeholder="0" required>
+                <br>
+                <br>
+                <div class="prev-row">
+                  <input type="button" onclick="prev()" class="btn btn-lg btn-success mt-3 add-room-btn" value="Previous">
+                  <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Car">
+                </div>
+                
+                
+                <br>
               </div>
 
               <!-- <input type="text" class="form-control" name="type" placeholder="Room Type"> -->
@@ -203,6 +255,21 @@
   <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script>
+    function next(){
+      document.getElementById("form-next-right").style.display="inline";
+      document.getElementById("form-next-left").style.display="inline";
+      document.getElementById("form-left").style.display="none";
+      document.getElementById("form-right").style.display="none";
+    }
+    function prev(){
+      document.getElementById("form-next-right").style.display="none";
+      document.getElementById("form-next-left").style.display="none";
+      document.getElementById("form-left").style.display="inline";
+      document.getElementById("form-right").style.display="inline";
+    }
+
+  </script>
 </body>
 
 </html>

@@ -48,7 +48,7 @@ exports.postLogin = (req, res, next) => {
                 connectDB.query(carsQuery, (err, result) => {
                     if (err) throw err;
                     else {
-                        return res.render('admin/index', { msg: "", err: "", cars: result });
+                        return res.render('admin/cars', { msg: "", err: "", cars: result });
                     }
                 })
 
@@ -101,7 +101,7 @@ exports.postAddCar = (req, res, next) => {
 
     //var
    var make = "", model = "", type = "",year = "", price = 0, seats = 0, fuel="",transmission="",purpose=""
-   consumption=0, year=""
+   consumption=0, year="",reliability=0,utility=0,economy=0,performance=0,luxury=0,maintenance=0,offroading=0
 
    var imgPath=""
     var wrong = 0;
@@ -140,6 +140,27 @@ exports.postAddCar = (req, res, next) => {
             }
             else if (name === "year") {
                 year = field
+            }
+            else if (name === "offroading") {
+                offroading = field
+            }
+            else if (name === "utility") {
+                utility = field
+            }
+            else if (name === "economy") {
+                economy = field
+            }
+            else if (name === "maintenance") {
+                maintenance = field
+            }
+            else if (name === "luxury") {
+                luxury = field
+            }
+            else if (name === "performance") {
+                performance = field
+            }
+            else if (name === "reliability") {
+                reliability = field
             }
             
 
@@ -185,15 +206,35 @@ exports.postAddCar = (req, res, next) => {
 
                 //saveDir = __dirname + '/uploads/';
                 
-                data = "INSERT INTO `cars`(`make`, `model`, `price`,`seats`,`type`,`fuel`,`transmission`, `consumption`,`year`,`purpose`,  `image`, `listing_user`) "+
-                         "VALUES('" +make + "','" + model + "', '" + price + "','" +seats + "','" + type + "', '" + fuel + "','" +transmission + "', '" + consumption + "','" + year + "', '" + purpose + "','" +imgPath + "' ,'" + 1+ "' )"
+                data = "INSERT INTO `cars`( `make`, `model`, `price`,`seats`,`type`,`fuel`,`transmission`, `consumption`,`year`,  `image`, `listing_user`) "+
+                         "VALUES('" +make + "','" + model + "', '" + price + "','" +seats + "','" + type + "', '" + fuel + "','" +transmission + "', '" + consumption + "','" + year + "', '" +imgPath + "' ,'" + 1+ "' )"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {
                         throw err;
                     }
                     else {
-                        res.render('admin/addCar', { msg: "Car Added Successfuly", err: "" });
+                      
+                        carQ = "SELECT * " + 
+                        "FROM  cars " +
+                        "WHERE make = " + mysql.escape( make) +
+                        " AND model = " + mysql.escape( model);
+                        connectDB.query(carQ, (err2, thisCar) => {
+                            if (err2) {
+                                throw err2;
+                            }
+                            
+
+                            statQ = "INSERT INTO `carExtras`(`reliability`,`Utility`,`economy`,`maintenance`,`luxury`,`performance`,`car_listing`,`offroading`) "+
+                            "VALUES('"+reliability+"','"+utility+"','"+economy+"','"+maintenance+"','"+luxury+"','"+performance+"','"+ thisCar[0].id+"','"+offroading+"')"
+                            connectDB.query(statQ, (statErr, statRes) => {
+                                if (statErr) {
+                                    throw statErr;
+                                }
+                                res.render('admin/addCar', { msg: "Car Added Successfuly", err: "" });
+                            })
+                        })
+
                     }
                 });
             }
@@ -218,7 +259,7 @@ exports.viewCar = (req, res, next) => {
 
     carQuery = "SELECT * " + 
     " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-    " WHERE cars.id =" + mysql.escape(req.body.id) ;
+    " WHERE cars.id =" + mysql.escape(req.body.id);
     ; 
     
 
@@ -230,7 +271,7 @@ exports.viewCar = (req, res, next) => {
     })
 }
 
-""
+
 
 exports.updateCar = (req, res, next) => {
    console.log(req.body.id);
@@ -271,6 +312,44 @@ exports.updateCar = (req, res, next) => {
 
     })
 
+}
+
+exports.deleteCar = (req, res, next) => {
+    
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "cars"
+    });
+
+    delQuery = "DELETE  " + 
+    " FROM  cars" +
+    " WHERE id =" + mysql.escape(req.body.id);
+
+    extraQuery = "DELETE " + 
+    " FROM  carExtras" +
+    " WHERE car_listing =" + mysql.escape(req.body.id);
+
+    carsQuery = "SELECT *"+ 
+        " FROM cars";
+    
+
+    connectDB.query(extraQuery, (err1, carResult1) => {
+        if (err1) throw err1; 
+        
+        connectDB.query(delQuery, (err2, carResult2) => {
+        if (err2) throw err2; 
+        
+        connectDB.query(carsQuery, (err, result) => {
+            if (err) throw err; 
+            else { 
+                return res.render('admin/cars', { msg: "Car deleted successfully", err: "", cars: result });
+            }
+        })
+
+    })
+    })
 }
 
 

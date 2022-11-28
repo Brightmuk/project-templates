@@ -54,6 +54,10 @@
        
         width: 70px;
       }
+      .action-row{
+        display: flex;
+        justify-content: space-between;
+      }
 
     </style>
   </head>
@@ -157,8 +161,8 @@
             <input type="text" class="form-control" name="model" value="<%=car.model%>" >
             <p>Type</p>
             <input type="text" class="form-control" name="type"  value="<%=car.type%>">
-            <p>Purpose</p>
-            <input type="text" class="form-control" name="purpose" value="<%=car.purpose%>">
+            <p>Transmission</p>
+            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>">
           
        
           </div>
@@ -166,8 +170,7 @@
           <div class="col-lg-4  occupant">
             <br/>
 
-            <p>Transmission</p>
-            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>">
+
             <p>Fuel</p>
             <input type="text" class="form-control" name="fuel"  value="<%=car.fuel%>">
             <p>Seats</p>
@@ -178,10 +181,22 @@
             <input type="number" class="form-control" name="price"  value="<%=car.price%>">
             <p>Year</p>
             <input type="text" class="form-control" name="year" value="<%=car.year%>">
+
             <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
             <br>
             <br>
-            <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
+            <div class="action-row">
+
+
+             
+
+              <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
+            </div>
+           
+          </form>
+          <form id="delForm" action="/admin/deleteCar" method="POST">
+            <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
+            <input type="button" onclick="submitDelete()" class="btn btn-lg btn-danger mt-3 add-room-btn" value="Delete">
           </form>
           </div>
         </div>
@@ -244,6 +259,12 @@
   <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script>
+    function submitDelete(){
+      document.getElementById("delForm").submit();
+     
+    }
+  </script>
 </body>
 
 </html>
