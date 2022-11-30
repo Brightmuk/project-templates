@@ -1,47 +1,71 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Automotive Finder</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Automitive Finder</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- CSS here -->
-            <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="/assets/css/gijgo.css">
-            <link rel="stylesheet" href="/assets/css/slicknav.css">
-            <link rel="stylesheet" href="/assets/css/animate.min.css">
-            <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="/assets/css/themify-icons.css">
-            <link rel="stylesheet" href="/assets/css/slick.css">
-            <link rel="stylesheet" href="/assets/css/nice-select.css">
-            <link rel="stylesheet" href="/assets/css/style.css">
-            <link rel="stylesheet" href="/assets/css/responsive.css">
-            <style media="screen">
-                .flexer{
-                    display: flex;
-                    justify-content: space-around;
-                    margin: 50px;
-                }
-                .position{
-                    margin:50px
-                }
-                .positionbtn{
-                    height: 20px;
-                }
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <!-- Place favicon.ico in the root directory -->
 
-            </style>
-            <link rel="stylesheet" href="/assets/css/style.css">
-            
-   </head>
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/gijgo.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<style>
+    .comparison{
+    background-color: rgb(37, 37, 73);
+  padding: 20px;
+  color: white;
 
-   <body>
+    }
+    .btn-warning{
+        background-color: rgb(65, 55, 38);
+    }
+    .btn-warning:hover{
+        background-color: rgb(122, 83, 9);
+    }
+    .compare-view{
+        justify-content: space-between;
+    }
+    .divider{
+        height: 120vh;
+        width: 1px;
+        background-color: rgb(209, 209, 209);
+    }
+    .divider:last-child{
+        display: none;
+    }
+    .car{
+      width: 100px;
+      margin:0px
+    }
+    .car-extras{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .car-img{
+        object-fit: cover;
+    }
+
+</style>
+<body>
 
     <!-- Preloader Start -->
     <div id="preloader-active">
@@ -58,17 +82,17 @@
 
     <header>
         <!-- Header Start -->
-       <div class="header-area header-sticky">
+        <div class="header-area header-sticky">
             <div class="main-header ">
                 <div class="container">
                     <div class="row align-items-center">
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                               <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
+                                <a href="/"><img src="assets/img/logo/logo.jpg" alt=""></a>
                             </div>
                         </div>
-                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                        <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                             <!-- main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
@@ -78,14 +102,15 @@
                                         <li><a href="/cars">Cars</a></li>
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
-                                        
+
+                                    </form>
                                     </ul>
-                                   
+                                    
                                 </nav>
                                 
                             </div>
                         </div>
-              
+                    
                         <!-- Mobile Menu -->
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
@@ -93,86 +118,91 @@
                     </div>
                 </div>
             </div>
-       </div>
+        </div>
         <!-- Header End -->
     </header>
     <main>
 
-        <!-- Booking Room Start-->
-        <section class="login">
-            <div class="containers mt-5 mb-5">
-                <form action="/search" method="POST">
-              <div class="row ">
 
-                  <div class="position">
-                    <div class="col-lg-12 flexer">
-                      <div class="selectone">
-                       <p>Purpose</p>
-                       <select name="purpose">
-                           <option value="offroading">Offroading</option>
-                           <option value="luxury">City cruise</option>
-                           <option value="utility">Luggage Transporter</option>
-                           <option value="performance">Speed/Fun</option>
-                           <option value="reliability">Daily Drive</option>
-                           <option value="economy">Pocket Friendly</option>
-                       </select>
-                     </div>
-                    <div class="selectone ml-3">
-                         <p>Type</p>
-                       <select name="type">
-                           <option value="SUV">SUV</option>
-                           <option value="Sedan">Sedan</option>
-                           <option value="Wagon">Station Wagon</option>
-                           <option value="Hatchback">Hatchback</option>
-                           <option value="Van">Van / Minibus</option>
-                       </select>
-
-                     </div>
-                     <div class="selectone ml-3">
-                        <p>Fuel</p>
-                        <select name="fuel">
-                            <option value="Diesel">Diesel</option>
-                            <option value="Petrol">Petrol</option>
-                            <option value="Electric">Electric</option>
-                        </select>
-                      </div>
-                      <div class="selectone ml-3">
-                        <p>Transmission</p>
-                        <select name="transmission">
-                            <option value="Automatic">Automatic</option>
-                            <option value="Manual">Manual</option>
-                            <option value="CVT">CVT</option>
-                        </select>
-                      </div>
-                      <div class="selectone ml-3">
-                        <p>Seats</p>
-                        <select name="seats">
-                            <option value="2">2+</option>
-                            <option value="3">3+</option>
-                            <option value="4">4+</option>
-                            <option value="5">5+</option>
-                        </select>
-                      </div>
-                      <div class="btn-column">
-                        <br/>
-                        <br/>
-                        <input type="submit" value="Search" class="btn btn-info btn-sm positionbtn ml-3">
-                      </div>
-                     
-
+        <!-- Room Start -->
+        <section class="room-area">
+            <div class="container">
+                <div class="row compare-view">
+                    <div class="col-lg-12 col-lg-12 col-sm-12 col-12">
+                        <!--font-back-tittle  -->
+                        <div class="font-back-tittle mb-45">
+                            <div class="archivment-front">
+                                <h3> </h3>
+                            </div>
+                            <h3 class="archivment-back">Best Match</h3>
+                        </div>
                     </div>
 
-                  </div>
+                    <div class="col-5  car">
+                                  
+
+
+                            <div class="single-room mb-10">
+                                <div class="room-img p-1">        
+                                        <a href="#"><img class="car-img" src="<%=car.image%>" alt="" height="200px"></a>
+                                </div>
+                                <div class="room-caption text-center">
+
+                                    <h3><a href="#"><%=car.make%> <%=car.model%></a></h3>
+                                    <h5><%=car.year%> <%=car.color%></h5>
+                                    <div class="per-night">
+                                        <span>ksh. <%=car.price%></span>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+
+                    
+
+                </div>
+                <div class="stats col-5">
+                    <div class=" single-room car-extras">
+                        <h5 class="feature">Reliability</h5>
+                        <h5 class="value"><%=car.reliability%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Economy</h5>
+                        <h5 class="value"><%=car.economy%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Perfromance</h5>
+                        <h5 class="value"><%=car.performance%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Luxury</h5>
+                        
+                        <h5 class="value"><%=car.luxury%></h5>
+                    </div>
+                    <hr>
+                    <div class="car-extras">
+                        <h5 class="feature">Utility</h5>
+                        <h5 class="value"><%=car.Utility%></h5>
+                    </div>
+                    <hr>
+                </div>
+                <div class="divider"></div>
+
+
+                </div>
+
+
 
             </div>
 
-        </form>
-              </div>
-            </div>
-          </section>
-        <!-- Booking Room End-->
 
+        </section>
+        
     </main>
+
     <footer>
         <!-- Footer Start-->
         <div class="footer-area black-bg footer-padding">
@@ -263,43 +293,48 @@
         <!-- Footer End-->
     </footer>
 
-	<!-- JS here -->
+    <!-- JS here -->
 
-		<!-- All JS Custom Plugins Link Here here -->
-        <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="/assets/js/popper.min.js"></script>
-        <script src="/assets/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="/assets/js/jquery.slicknav.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./assets/js/jquery.slicknav.min.js"></script>
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="/assets/js/owl.carousel.min.js"></script>
-        <script src="/assets/js/slick.min.js"></script>
-        <!-- Date Picker -->
-        <script src="/assets/js/gijgo.min.js"></script>
-		<!-- One Page, Animated-HeadLin -->
-        <script src="/assets/js/wow.min.js"></script>
-		<script src="/assets/js/animated.headline.js"></script>
-        <script src="/assets/js/jquery.magnific-popup.js"></script>
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./assets/js/owl.carousel.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <!-- Date Picker -->
+    <script src="./assets/js/gijgo.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/animated.headline.js"></script>
 
-		<!-- Scrollup, nice-select, sticky -->
-        <script src="/assets/js/jquery.scrollUp.min.js"></script>
-        <script src="/assets/js/jquery.nice-select.min.js"></script>
-		<script src="/assets/js/jquery.sticky.js"></script>
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./assets/js/jquery.scrollUp.min.js"></script>
+    <script src="./assets/js/jquery.nice-select.min.js"></script>
+    <script src="./assets/js/jquery.sticky.js"></script>
+    <script src="./assets/js/jquery.magnific-popup.js"></script>
 
-        <!-- contact js -->
-        <script src="/assets/js/contact.js"></script>
-        <script src="/assets/js/jquery.form.js"></script>
-        <script src="/assets/js/jquery.validate.min.js"></script>
-        <script src="/assets/js/mail-script.js"></script>
-        <script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+    <!-- contact js -->
+    <script src="./assets/js/contact.js"></script>
+    <script src="./assets/js/jquery.form.js"></script>
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <script src="./assets/js/mail-script.js"></script>
+    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
 
-		<!-- Jquery Plugins, main Jquery -->
-        <script src="/assets/js/plugins.js"></script>
-        <script src="/assets/js/main.js"></script>
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+       
 
-    </body>
+    </script>
+
+</body>
+
 </html>

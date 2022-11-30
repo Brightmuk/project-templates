@@ -35,9 +35,29 @@ exports.postSearch = (req, res, next) => {
    })
 
 }
+exports.postCars = (req, res, next) => {
+   //console.log(req.body);
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
 
 
-//post request of category
+   carQuery = "SELECT * " +
+      " FROM  cars ";
+
+   connectDB.query(carQuery, (filterErr, filterResult) => {
+      if (filterErr) throw filterErr; 
+      else {
+         return res.render('user/cars', { cars: filterResult })
+      }
+   })
+
+}
+
+//post request of compare
 exports.postCompare = (req, res, next) => {
    //console.log(req.body);
    var connectDB = mysql.createConnection({
@@ -64,69 +84,45 @@ exports.postCompare = (req, res, next) => {
    connectDB.query(compareQery, (compareErr, compareResult) => {
       if (compareErr) throw compareErr; 
       else {
-         var best;
-         compareResult.forEach(car => {
-            var highest = 0;
-            if(car[purpose]>highest){ 
-
-               highest=car[purpose];
-               best = car;
-            }
-         });
-         console.log(best);
+         var best; 
        
-         return res.render('user/compareResults', {cars: compareResult, bestOffer:best, purpose: purpose});
+         if(compareResult[0][purpose]>compareResult[1][purpose]){
+            
+            best = compareResult[0]
+         }else{
+           
+            best = compareResult[1]
+         }
+         console.log('The best at '+ purpose +' is:'+best.make+' with '+best[purpose]);
+       
+         return res.render('user/compareResults', {cars: compareResult, bestOffer: best, purpose: purpose});
       }
    })
 
 }
 
 
-//authentication check
-exports.authentication = (req, res, next) => {
-
-   if (req.session.mail != undefined) {
-      next();
-   }
-   else {
-      res.render('user/home', { user: "" });
-   }
-}
-
-
-
-//show the login page
-exports.getLogin = (req, res, next) => {
-   res.render('user/loginAccount', { user: "", msg: [], err: [] });
-}
-
-//post page of login
-exports.postLogin = (req, res, next) => {
-
+//view car
+exports.postViewCar = (req, res, next) => {
+ 
    var connectDB = mysql.createConnection({
       host: "localhost",
       user: "root",
       password: "@Beatsbydre99",
-      database: "hotel"
+      database: "cars"
    });
+   var car = mysql.escape(req.body.carId);
 
-   data = "SELECT * " +
-      "FROM  user " +
-      "WHERE email = " + mysql.escape(req.body.mail) +
-      " AND password = " + mysql.escape(req.body.pass);
+   query = "SELECT * " + 
+      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+      " WHERE cars.id = (" + car + 
+      ")"; 
+   
 
-
-   connectDB.query(data, (err, result) => {
-      if (err) throw err; // show if any error have
+   connectDB.query(query, (err, result) => {
+      if (err) throw err; 
       else {
-         if (result.length) {
-            req.session.mail = result[0].email;
-            res.render('user/home', {user: result[0].email});
-         }
-         else {
-            res.render('user/loginAccount', { user: "", msg: [], err: ["Please Check Your information again"] });
-         }
-
+         return res.render('user/viewCar', {car: result[0]});
       }
    })
 
@@ -135,38 +131,8 @@ exports.postLogin = (req, res, next) => {
 
 
 
-// show create account page
-exports.getCreateAccount = (req, res, next) => {
-   res.render('user/createAccount', { user: "", msg: [], err: [] })
-}
 
-//get data from user for create account
-exports.postCreateAccount = (req, res, next) => {
 
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
-   });
-
-   var p1 = req.body.pass;
-   var p2 = req.body.con_pass;
-
-   if (p1 != p2) { // if password doesn't match 
-      return res.render("user/createAccount", { user: "", msg: [], err: ["Password Doesn't Match"] })
-   }
-
-   var data = "INSERT INTO user " +
-      " VALUES ( '" + req.body.name + "' ,'" + req.body.mail + "','" + req.body.phone + "','" + p1 + "')";
-
-   connectDB.query(data, (err, result) => {
-      if (err) throw err;// if db has error, show that 
-      else {
-         res.render('user/loginAccount', { user: "", msg: ["Account Create Successfuly"], err: [] }); //show login page
-      }
-   })
-}
 
 //get request for category
 exports.getSearch = (req, res, next) => {
@@ -178,12 +144,12 @@ exports.getSearch = (req, res, next) => {
 
 //show contact page
 exports.getContact =(req,res,next)=>{
-   if(req.session.mail== undefined){
       res.render('user/contact', { user: "" });
-   }
-   else{
-      res.render('user/contact', { user: req.session.mail });
-   }
    
+}
+//show contact page
+exports.getAbout =(req,res,next)=>{
+   res.render('user/about', { user: "" });
+
 }
 

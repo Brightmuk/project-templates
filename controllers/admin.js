@@ -2,15 +2,47 @@ var mysql = require('mysql');
 var formidable = require('formidable');
 const path = require('path');
 const session=require('express-session');
+const http = require('https');
 
 // login get request
 exports.getLogin = (req, res, next) => {
     
     if (req.session.admin == undefined) {
+        
         res.render('admin/login', { msg: "", err: "" });
     }
     else {
-        return res.render('admin/index')
+        const options = {
+            "method": "GET",
+            "hostname": "news-api14.p.rapidapi.com",
+            "port": null,
+            "path": "/search?q=car%20industry&country=us&language=en&pageSize=10",
+            "headers": {
+                "x-rapidapi-subscription": "cars",
+                "x-rapidapi-proxy-secret": "c02cea90-4588-11eb-add9-c577b8ecdc8e",
+                "x-rapidapi-user": "suprikurniyanto",
+                "X-RapidAPI-Key": "a307e8eddfmsh2a33e3d638138dcp17c32cjsne44e5a3808fc",
+                "X-RapidAPI-Host": "news-api14.p.rapidapi.com",
+                "useQueryString": true
+            }
+        };
+        var results;
+        const dataReq = http.request(options, function (dataRes) {
+            const chunks = [];
+        
+            dataRes.on("data", function (chunk) {
+                chunks.push(chunk);
+            });
+        
+            dataRes.on("end", function () {
+                const body = Buffer.concat(chunks);
+                console.log(JSON.parse(body.toString()).articles);
+                results=JSON.parse(body.toString()).articles;
+                res.render('admin/index',{ articles: results,data:'My name' })
+            });
+        });
+        dataReq.end();
+       
 
     }
 
@@ -36,8 +68,6 @@ exports.postLogin = (req, res, next) => {
         "WHERE username = " + mysql.escape(req.body.name) +
         "AND password = " + mysql.escape(req.body.pass);
 
-    carsQuery = "SELECT * " +
-        "FROM cars";
 
     connectDB.query(data, (err, result) => {
         if (err) throw err;
@@ -45,12 +75,37 @@ exports.postLogin = (req, res, next) => {
             if (result.length) {
                 req.session.admin = result[0].id;
                 req.session.user = result[0].id;
-                connectDB.query(carsQuery, (err, result) => {
-                    if (err) throw err;
-                    else {
-                        return res.render('admin/cars', { msg: "", err: "", cars: result });
+                const options = {
+                    "method": "GET",
+                    "hostname": "news-api14.p.rapidapi.com",
+                    "port": null,
+                    "path": "/search?q=car%20industry&country=us&language=en&pageSize=10",
+                    "headers": {
+                        "x-rapidapi-subscription": "cars",
+                        "x-rapidapi-proxy-secret": "c02cea90-4588-11eb-add9-c577b8ecdc8e",
+                        "x-rapidapi-user": "suprikurniyanto",
+                        "X-RapidAPI-Key": "a307e8eddfmsh2a33e3d638138dcp17c32cjsne44e5a3808fc",
+                        "X-RapidAPI-Host": "news-api14.p.rapidapi.com",
+                        "useQueryString": true
                     }
-                })
+                };
+                var results;
+                const dataReq = http.request(options, function (dataRes) {
+                    const chunks = [];
+                
+                    dataRes.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    dataRes.on("end", function () {
+                        const body = Buffer.concat(chunks);
+                        console.log(JSON.parse(body.toString()).articles);
+                        results=JSON.parse(body.toString()).articles;
+                        res.render('admin/index',{ articles: results,data:'My name' })
+                    });
+                }); 
+                dataReq.end();
+               
 
             }else {
                 return res.render('admin/login', { msg: "", err: "Please check your information  and try again" });
@@ -70,13 +125,12 @@ exports.getCars = (req, res, next) => {
         database: "cars"
     });
 
-    carsQuery = "SELECT * " +
-        "FROM cars";
+    carsQuery = "SELECT * FROM cars"
 
     connectDB.query(carsQuery, (err, result) => {
         if (err) throw err;
         else {
-            return res.render('admin/cars', { msg: "", err: "", cars: result });
+            return res.render('admin/cars', { msg: "", err: "",cars:result});
         }
     })
 
