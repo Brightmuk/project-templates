@@ -257,7 +257,7 @@ exports.postAddCar = (req, res, next) => {
 
             }
             else {
-
+                var roomNo = Math.floor(Math.random() * 100) + 1;
                 //saveDir = __dirname + '/uploads/';
                 
                 data = "INSERT INTO `cars`( `make`, `model`, `price`,`seats`,`type`,`fuel`,`transmission`, `consumption`,`year`,  `image`, `listing_user`) "+
