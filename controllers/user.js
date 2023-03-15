@@ -3,8 +3,44 @@ var mysql = require('mysql');
 
 // show the home page
 exports.getHome = (req, res, next) => {
-   return res.render('user/home');
+   
+   return res.render('user/home',{user:req.session.user});
+   
+}
 
+exports.postLogin = (req, res, next) => {
+   //console.log(req.body);
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
+
+
+   query = "SELECT * " +
+      "FROM users " +
+      "WHERE username = " + mysql.escape(req.body.name) +
+      "AND password = " + mysql.escape(req.body.password);
+
+
+   connectDB.query(query, (err, result) => {
+      if (err) throw err; 
+      if (result.length) {
+         req.session.user = result[0].id;
+       
+         return res.render('user/home',{user:result[0].username})
+      }else{
+         return res.render('user/login', { msg: "", err: "Please check your information  and try again" });
+      } 
+      
+   })
+
+}
+
+//get request for category
+exports.getLogin = (req, res, next) => {
+   res.render('user/login',{msg:"",err:""});
 }
 
 //post request of cars
@@ -30,7 +66,7 @@ exports.postSearch = (req, res, next) => {
       if (filterErr) throw filterErr; 
       else {
     
-         return res.render('user/showResults', { cars: filterResult, purpose:mysql.escape(req.body.purpose) })
+         return res.render('user/showResults', { cars: filterResult, purpose:mysql.escape(req.body.purpose),user:req.session.user })
       }
    })
 
@@ -51,11 +87,13 @@ exports.postCars = (req, res, next) => {
    connectDB.query(carQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
       else {
-         return res.render('user/cars', { cars: filterResult })
+         return res.render('user/cars', { cars: filterResult ,user:req.session.user })
       }
    })
 
 }
+
+
 
 //post request of compare
 exports.postCompare = (req, res, next) => {
@@ -95,7 +133,7 @@ exports.postCompare = (req, res, next) => {
          }
          console.log('The best at '+ purpose +' is:'+best.make+' with '+best[purpose]);
        
-         return res.render('user/compareResults', {cars: compareResult, bestOffer: best, purpose: purpose});
+         return res.render('user/compareResults', {cars: compareResult, bestOffer: best, purpose: purpose,user:req.session.user });
       }
    })
 
@@ -128,10 +166,67 @@ exports.postViewCar = (req, res, next) => {
 
 }
 
+//post view cars
+
+exports.userCars = (req, res, next) => {
+   //console.log(req.body);
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
 
 
+   carQuery = "SELECT * " + 
+      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+      " WHERE cars.listing_user = (" + (req.session.user) + 
+      ")"; 
+   
+
+   connectDB.query(carQuery, (err, result) => {
+      if (err) throw err; 
+      else {
+       
+         return res.render('user/cars', {cars: result});
+      }
+   })
+
+}
 
 
+exports.hireCar = (req, res, next) => {
+ 
+   var connectDB = mysql.createConnection({
+       host: "localhost",
+       user: "root",
+       password: "@Beatsbydre99",
+       database: "cars"
+   });
+   console.log("The id is:", req.body.carId);
+   
+
+   updateQuery = "UPDATE cars " +
+       "SET listing_user = " + mysql.escape(req.session.user)+
+       " WHERE id = " + mysql.escape(req.body.carId);
+
+   carQuery = "SELECT * " + 
+       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+       " WHERE cars.id =" + mysql.escape(req.body.carId);
+   
+
+   connectDB.query(updateQuery, (err, updateResult) => {
+       if (err) throw err;
+    
+           connectDB.query(carQuery, (err2, carResult) => {
+               if (err2) throw err2;
+               
+                   return res.render('user/viewCar', { car: carResult[0],msg:"Car booked Successfully",err:""});
+               
+           })
+   })
+
+}
 
 
 //get request for category

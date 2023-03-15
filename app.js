@@ -16,7 +16,8 @@ const adminRouter = require('./routes/admin');
 
 const oneDay = 1000 * 60 * 60 * 24;
 
-app.use(session({
+app.use(
+  session({
   secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
   saveUninitialized:true,
   cookie: { maxAge: oneDay },

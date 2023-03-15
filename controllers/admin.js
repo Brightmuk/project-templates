@@ -137,13 +137,13 @@ exports.getCars = (req, res, next) => {
 }
 
 
-//get add hotel page
+
 
 exports.getAddCar = (req, res, next) => {
     res.render('admin/addCar', { msg: "", err: "" });
 }
 
-//add new hotel info
+
 exports.postAddCar = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
@@ -261,7 +261,7 @@ exports.postAddCar = (req, res, next) => {
                 //saveDir = __dirname + '/uploads/';
                 
                 data = "INSERT INTO `cars`( `make`, `model`, `price`,`seats`,`type`,`fuel`,`transmission`, `consumption`,`year`,  `image`, `listing_user`) "+
-                         "VALUES('" +make + "','" + model + "', '" + price + "','" +seats + "','" + type + "', '" + fuel + "','" +transmission + "', '" + consumption + "','" + year + "', '" +imgPath + "' ,'" + 1+ "' )"
+                         "VALUES('" +make + "','" + model + "', '" + price + "','" +seats + "','" + type + "', '" + fuel + "','" +transmission + "', '" + consumption + "','" + year + "', '" +imgPath + "' ,'" + null+ "' )"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {

@@ -186,10 +186,15 @@
                                         <h3><%=cars[i].make%></h3>
                                         <h5><%=cars[i].model%></h5>
                                         <div class="per-night">
-                                            <span>ksh. <%=cars[i].price%></span>
+                                            <span>ksh. <%=cars[i].price%> / day</span>
                                         </div>
+                                        <br>
+                                        <% if(cars[i].listing_user==null) { %>
+                                            <input type="submit" class="btn btn-danger" value="View">
+                                      <%   }else{ %>
+                                        <input type="submit" class="btn btn-danger" value="Hired">
+                                        <% }%>
                                         
-                                        <input type="submit" class="btn btn-danger" value="View">
                                     </div>
                                   
                                 </div>

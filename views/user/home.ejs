@@ -53,21 +53,35 @@
                                 <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
+                        
                         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                             <!-- main-menu -->
+                           
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
+                                        
                                         <li><a href="/">Home</a></li>                                      
                                         <li><a href="/search">Search</a></li>
                                         <li><a href="/cars">Cars</a></li>
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
+                                        <% if(user==null) { %>
+                                            <a href="/login">
+                                                <input type="submit" class="btn btn-login" value="Login">
+                                                </a>
+                                      <%   }else{ %>
+                                        <a href="/userCars">
+                                            <input type="submit" class="btn btn-login" value="My cars">
+                                            </a>
+                                        <% }%>
                                         
                                     </ul>
                                 </nav>
                             </div>
+                       
                         </div>
+                        
 
                         <!-- Mobile Menu -->
                         <div class="col-12">
