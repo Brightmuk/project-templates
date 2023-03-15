@@ -7,7 +7,21 @@
     <title>Automitive Finder</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <!-- Font Awesome -->
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+    rel="stylesheet"
+    />
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
     <!-- Place favicon.ico in the root directory -->
@@ -26,6 +40,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+
 </head>
 <style>
     .comparison{
@@ -63,6 +78,11 @@
     .car-img{
         object-fit: cover;
     }
+    .btn-outline-warning{
+        margin:auto;
+        width:100%
+
+    }
 
 </style>
 <body>
@@ -81,6 +101,7 @@
     <!-- Preloader Start -->
 
     <header>
+
         <!-- Header Start -->
         <div class="header-area header-sticky">
             <div class="main-header ">
@@ -102,7 +123,15 @@
                                         <li><a href="/cars">Cars</a></li>
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
-
+                                        <% if(user==null) { %>
+                                            <a href="/login">
+                                                <input type="submit" class="btn btn-login" value="Login">
+                                                </a>
+                                      <%   }else{ %>
+                                        <a href="/userCars">
+                                            <input type="submit" class="btn btn-login" value="My cars">
+                                            </a>
+                                        <% }%>
                                     </form>
                                     </ul>
                                     
@@ -122,7 +151,38 @@
         <!-- Header End -->
     </header>
     <main>
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/hireCar" method="POST" class="modal-content">
+      <div class="modal-header text-center">
+          
+        <h4 class="modal-title w-100 font-weight-bold">Hire this car</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
 
+        <div class="md-form mb-4">
+          <p>Start date</p>
+          <input type="date" id="date-start" onchange="setEndMin()" class="form-control" name="startDate">
+        </div>
+        <div class="md-form mb-4">
+
+            <p>End Date</p>
+            <input type="date" id="date-end"  class="form-control" name="endDate">
+          </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+         <input type="text" name="carId" value="<%=car.id%>" hidden>
+        <input type="submit" class="btn btn-login" value="Hire">
+                
+      </div>
+    </form>
+  </div>
+</div>
 
         <!-- Room Start -->
         <section class="room-area">
@@ -157,17 +217,14 @@
                                     
                                 </div>
                             </div>
-                            <br>
-                            <% if(car.listing_user==null) { %>
-                                <form action="/hireCar" method="POST">
-                                    <input type="text" name="carId" value="<%=car.id%>" hidden>
-                                <button type="submit" class="center btn btn-outline-warning">Hire this car</button> 
-                                    </form>
-                          <%   }else{ %>
-                            <h3>This car has been  hired!</h3>
                             
-                            <% }%>
-
+                            <div class="text-center">
+                                <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">
+                                  Hire this car</a>
+                              </div>
+                                
+                       
+                                    <br>
                                 <br>
                 </div>
                 <div class="stats col-5">
@@ -340,8 +397,23 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
+    <!-- MDB -->
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
+    ></script>
     <script>
-       
+       //validators
+       var today = new Date().toISOString().split('T')[0];
+        document.getElementsByName("startDate")[0].setAttribute('min', today);
+
+        function setEndMin(){
+           
+            var date = document.getElementsByName("startDate")[0].value;
+            
+            document.getElementsByName("endDate")[0].setAttribute('min', date);
+        }
+
 
     </script>
 

@@ -99,7 +99,15 @@
                                         <li><a href="/cars">Cars</a></li>
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
-                                        
+                                        <% if(user==null) { %>
+                                            <a href="/login">
+                                                <input type="submit" class="btn btn-login" value="Login">
+                                                </a>
+                                      <%   }else{ %>
+                                        <a href="/userCars">
+                                            <input type="submit" class="btn btn-login" value="My cars">
+                                            </a>
+                                        <% }%>
                                             <input id="compare-values" type="text" name="cars" value="" hidden>
                                             <input id="purpose" type="text" name="purpose" value="<%=purpose%>" hidden>
                                         <button onclick="compare()" type="button" class="btn btn-lg comparison">Compare <span id="compares">0</span></button>

@@ -78,6 +78,15 @@
                                         <li><a href="/cars">Cars</a></li>
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
+                                        <% if(user==null) { %>
+                                            <a href="/login">
+                                                <input type="submit" class="btn btn-login" value="Login">
+                                                </a>
+                                      <%   }else{ %>
+                                        <a href="/userCars">
+                                            <input type="submit" class="btn btn-login" value="My cars">
+                                            </a>
+                                        <% }%>
                                         
                                     </ul>
                                    

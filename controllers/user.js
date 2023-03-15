@@ -95,6 +95,121 @@ exports.postCars = (req, res, next) => {
 
 
 
+
+//view car
+exports.postViewCar = (req, res, next) => {
+ 
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
+   var car = mysql.escape(req.body.carId);
+
+   query = "SELECT * " + 
+      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+      " WHERE cars.id = (" + car + 
+      ")"; 
+   
+
+   connectDB.query(query, (err, result) => {
+      if (err) throw err; 
+      else {
+         return res.render('user/viewCar', {car: result[0],user:req.session.user });
+      }
+   })
+
+}
+
+//post view cars
+
+exports.userCars = (req, res, next) => {
+   //console.log(req.body);
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "cars"
+   });
+
+
+   carQuery = "SELECT * " + 
+      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+      " WHERE cars.listing_user = (" + (req.session.user) + 
+      ")"; 
+   
+
+   connectDB.query(carQuery, (err, result) => {
+      if (err) throw err; 
+      else {
+       
+         return res.render('user/cars', {cars: result,user:req.session.user });
+      }
+   })
+
+}
+
+
+exports.hireCar = (req, res, next) => {
+ 
+   var connectDB = mysql.createConnection({
+       host: "localhost",
+       user: "root",
+       password: "@Beatsbydre99",
+       database: "cars"
+   });
+      var startDate = mysql.escape(req.body.startDate);
+      var endDate = mysql.escape(req.body.endDate);
+      var userId = mysql.escape(req.session.user);
+      var carId = mysql.escape(req.body.carId);
+
+   if(req.session.user==null){
+      return res.render('user/login', { msg: "", err: "Your session expired, please login again!" });
+   }
+
+   hiringQuery = "INSERT INTO `hiring`(`car_id`, `user_id`,`start_date`,`end_date`) "+
+   "VALUES(" + carId + ",'" + userId + "', " + startDate + "," + endDate+ " )"
+
+   carQuery = "SELECT * " +  
+       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+       " WHERE cars.id =" + mysql.escape(req.body.carId);
+   
+
+   connectDB.query(hiringQuery, (err, result) => {
+       if (err) throw err;
+    
+           connectDB.query(carQuery, (err2, carResult) => {
+               if (err2) throw err2;
+               
+                   return res.render('user/invoice', { car: carResult[0],msg:"Car booked Successfully",err:"",user:req.session.user });
+               
+           })
+   })
+
+}
+
+
+//get request for category
+exports.getSearch = (req, res, next) => {
+
+   res.render('user/search',{user:req.session.user });
+}
+
+
+
+//show contact page
+exports.getContact =(req,res,next)=>{
+      res.render('user/contact', { user:req.session.user });
+
+}
+//show contact page
+exports.getAbout =(req,res,next)=>{
+   res.render('user/about', { user:req.session.user  });
+
+}
+
+
 //post request of compare
 exports.postCompare = (req, res, next) => {
    //console.log(req.body);
@@ -138,113 +253,3 @@ exports.postCompare = (req, res, next) => {
    })
 
 }
-
-
-//view car
-exports.postViewCar = (req, res, next) => {
- 
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
-   });
-   var car = mysql.escape(req.body.carId);
-
-   query = "SELECT * " + 
-      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-      " WHERE cars.id = (" + car + 
-      ")"; 
-   
-
-   connectDB.query(query, (err, result) => {
-      if (err) throw err; 
-      else {
-         return res.render('user/viewCar', {car: result[0]});
-      }
-   })
-
-}
-
-//post view cars
-
-exports.userCars = (req, res, next) => {
-   //console.log(req.body);
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
-   });
-
-
-   carQuery = "SELECT * " + 
-      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-      " WHERE cars.listing_user = (" + (req.session.user) + 
-      ")"; 
-   
-
-   connectDB.query(carQuery, (err, result) => {
-      if (err) throw err; 
-      else {
-       
-         return res.render('user/cars', {cars: result});
-      }
-   })
-
-}
-
-
-exports.hireCar = (req, res, next) => {
- 
-   var connectDB = mysql.createConnection({
-       host: "localhost",
-       user: "root",
-       password: "@Beatsbydre99",
-       database: "cars"
-   });
-   console.log("The id is:", req.body.carId);
-   
-
-   updateQuery = "UPDATE cars " +
-       "SET listing_user = " + mysql.escape(req.session.user)+
-       " WHERE id = " + mysql.escape(req.body.carId);
-
-   carQuery = "SELECT * " + 
-       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-       " WHERE cars.id =" + mysql.escape(req.body.carId);
-   
-
-   connectDB.query(updateQuery, (err, updateResult) => {
-       if (err) throw err;
-    
-           connectDB.query(carQuery, (err2, carResult) => {
-               if (err2) throw err2;
-               
-                   return res.render('user/viewCar', { car: carResult[0],msg:"Car booked Successfully",err:""});
-               
-           })
-   })
-
-}
-
-
-//get request for category
-exports.getSearch = (req, res, next) => {
-
-   res.render('user/search');
-}
-
-
-
-//show contact page
-exports.getContact =(req,res,next)=>{
-      res.render('user/contact', { user: "" });
-   
-}
-//show contact page
-exports.getAbout =(req,res,next)=>{
-   res.render('user/about', { user: "" });
-
-}
-
