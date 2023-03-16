@@ -73,6 +73,7 @@
     .car-extras{
         width: 100%;
         display: flex;
+        height: 30px;
         justify-content: space-between;
     }
     .car-img{
@@ -228,32 +229,59 @@
                                 <br>
                 </div>
                 <div class="stats col-5">
+                    <% if(isHired) { %>
                     <div class=" single-room car-extras">
-                        <h5 class="feature">Reliability</h5>
-                        <h5 class="value"><%=car.reliability%></h5>
+                        <h5 class="feature">Start date:</h5>
+                        <h5 class="value"><b><%=car.start_date%></b></h5>
                     </div>
                     <hr>
                     <div class="car-extras">
-                        <h5 class="feature">Economy</h5>
-                        <h5 class="value"><%=car.economy%></h5>
+                        <h5 class="feature">End date:</h5>
+                        <h5 class="value"><b><%=car.end_date%></b></h5>
                     </div>
+                    
                     <hr>
                     <div class="car-extras">
-                        <h5 class="feature">Perfromance</h5>
-                        <h5 class="value"><%=car.performance%></h5>
-                    </div>
-                    <hr>
-                    <div class="car-extras">
-                        <h5 class="feature">Luxury</h5>
+                        <h5 class="feature">Remaining days</h5>
                         
-                        <h5 class="value"><%=car.luxury%></h5>
+                        <h5 class="value" id="days"><b>0</b></h5>
                     </div>
                     <hr>
                     <div class="car-extras">
-                        <h5 class="feature">Utility</h5>
-                        <h5 class="value"><%=car.Utility%></h5>
+                        <h5 class="feature">Current bill</h5>
+                        <h5 class="value" id="currentBill"><b>0</b></h5>
                     </div>
+                    <% }else{%>
+                        <div class=" single-room car-extras">
+                            <h5 class="feature">Reliability</h5>
+                            <h5 class="value"><b><%=car.reliability%></b></h5>
+                        </div>
+                        <hr>
+                        <div class="car-extras">
+                            <h5 class="feature">Fuel economy</h5>
+                            <h5 class="value"><b><%=car.economy%></b></h5>
+                        </div>
+                        <hr>
+                        
+                        <div class="car-extras">
+                            <h5 class="feature">performance</h5>
+                            
+                            <h5 class="value" id="days"><b><%=car.performance%></b></h5>
+                        </div>
+                        <hr>
+                        <div class="car-extras">
+                            <h5 class="feature">Offroading</h5>
+                            
+                            <h5 class="value" id="days"><b><%=car.offroading%></b></h5>
+                        </div>
+                        <hr>
+                        <div class="car-extras">
+                            <h5 class="feature">Luxury</h5>
+                            <h5 class="value" id="currentBill"><b><%=car.luxury%></b></h5>
+                        </div>
+                        <% } %>
                     <hr>
+                    
                 </div>
 
                 <div class="divider"></div>
@@ -404,15 +432,22 @@
     ></script>
     <script>
        //validators
-       var today = new Date().toISOString().split('T')[0];
-        document.getElementsByName("startDate")[0].setAttribute('min', today);
 
-        function setEndMin(){
-           
-            var date = document.getElementsByName("startDate")[0].value;
+        var startDate = Date.parse(JSON.parse('<%- JSON.stringify(car.start_date) %>'));
+        var endDate = Date.parse(JSON.parse('<%- JSON.stringify(car.end_date) %>'));
             
-            document.getElementsByName("endDate")[0].setAttribute('min', date);
-        }
+        var days = Math.floor((endDate-startDate)/(24*3600*1000));
+
+        document.getElementById('days').innerHTML = days;
+
+        var price = JSON.parse('<%- JSON.stringify(car.price) %>');
+        console.log(price)
+        var total = days* price;
+
+
+        var currentBill = Math.floor((endDate-Date.now())/(24*3600*1000))*price;
+        console.log(Math.floor((endDate-Date.now())/(24*3600*1000)))
+        document.getElementById('currentBill').innerHTML = currentBill;
 
 
     </script>

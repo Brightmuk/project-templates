@@ -108,9 +108,7 @@
                                             <input type="submit" class="btn btn-login" value="My cars">
                                             </a>
                                         <% }%>
-                                            <input id="compare-values" type="text" name="cars" value="" hidden>
-                                            <input id="purpose" type="text" name="purpose" value="<%=purpose%>" hidden>
-                                        <button onclick="compare()" type="button" class="btn btn-lg comparison">Compare <span id="compares">0</span></button>
+                                        
                                     
                                     </ul>
                                     
@@ -154,13 +152,10 @@
 
                     <div class="col-xl-4 col-lg-4 col-md-12 col-12">
                         <!-- Single Room -->
-                        <form action="/compare" method="POST">
-                            <input type="text" name="name" value="<%=cars[i].name%>" hidden>
-                            <input type="text" name="type" value="<%=cars[i].type%>" hidden>
-                            <input type="text" name="cost" value="<%=cars[i].cost%>" hidden>
-                            <input type="text" name="roomNo" value="<%=cars[i].roomNo%>" hidden>
+                        <form action="/viewCar" method="POST">
 
-                            <input id="carId" type="text" name="id" value="<%=cars[i].id%>" hidden>
+
+                            <input id="carId" type="text" name="carId" value="<%=cars[i].id%>" hidden>
 
                             <div class="single-room mb-50">
                                 <div class="room-img p-2">        
@@ -174,7 +169,7 @@
                                         <span>ksh. <%=cars[i].price%></span>
                                     </div>
                                     <!-- <input type="submit" class="btn btn-danger" value="View"> -->
-                                    <button type="button" onclick="addComparison('<%- JSON.stringify(cars[i].id) %>' )" class="btn btn-warning">View</button>
+                                    <button type="submit"  class="btn btn-warning">View</button>
                                 </div>
                             </div>
 

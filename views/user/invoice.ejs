@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Contact Us</title>
+    <title>Invoice</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,6 +27,164 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
+<style>
+    *
+{
+	border: 0;
+	box-sizing: content-box;
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	vertical-align: top;
+}
+
+/* content editable */
+
+*[contenteditable] { border-radius: 0.25em; min-width: 1em; outline: 0; }
+
+*[contenteditable] { cursor: pointer; }
+
+* *[contenteditable]:focus, td:hover *[contenteditable]
+
+span[contenteditable] { display: inline-block; }
+
+/* heading */
+
+h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
+
+/* table */
+
+table { font-size: 75%; table-layout: fixed; width: 100%; }
+table { border-collapse: separate; border-spacing: 2px; }
+th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
+th, td { border-radius: 0.25em; border-style: solid; }
+th { background: #EEE; border-color: #BBB; }
+td { border-color: #DDD; }
+
+/* page */
+body{
+    background-color: rgb(235, 235, 235);
+}
+.btn-waring{
+    position: absolute;
+    top:100px;
+    right: 0;
+}
+html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; }
+
+
+#invoice-pdf { box-sizing: border-box; height: 11in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
+#invoice-pdf { background: rgb(255, 255, 255); border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
+
+/* header */
+
+header { margin: 0 0 1em; }
+header:after { clear: both; content: ""; display: table; }
+
+header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 1em; padding: 0.5em 0; }
+header address { float: left; font-size: 75%; font-style: normal; line-height: 1.25; margin: 0 1em 1em 0; }
+header address p { margin: 0 0 0.25em; }
+header span, header img { display: block; float: right; }
+header span { margin: 0 0 1em 1em; max-height: 25%; max-width: 60%; position: relative; }
+header img { max-height: 100%; max-width: 100%; }
+header input { cursor: pointer; filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; height: 100%; left: 0; opacity: 0; position: absolute; top: 0; width: 100%; }
+
+/* article */
+
+article, article address, table.meta, table.inventory { margin: 0 0 3em; }
+article:after { clear: both; content: ""; display: table; }
+article h1 { clip: rect(0 0 0 0); position: absolute; }
+
+article address { float: left; font-size: 125%; font-weight: bold; }
+
+/* table meta & balance */
+
+table.meta, table.balance { float: right; width: 36%; }
+table.meta:after, table.balance:after { clear: both; content: ""; display: table; }
+
+/* table meta */
+
+table.meta th { width: 40%; }
+table.meta td { width: 60%; }
+
+/* table items */
+
+table.inventory { clear: both; width: 100%; }
+table.inventory th { font-weight: bold; text-align: center; }
+
+table.inventory td:nth-child(1) { width: 26%; }
+table.inventory td:nth-child(2) { width: 38%; }
+table.inventory td:nth-child(3) { text-align: right; width: 12%; }
+table.inventory td:nth-child(4) { text-align: right; width: 12%; }
+table.inventory td:nth-child(5) { text-align: right; width: 12%; }
+
+/* table balance */
+
+table.balance th, table.balance td { width: 50%; }
+table.balance td { text-align: right; }
+
+/* aside */
+
+aside h1 { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
+aside h1 { border-color: #999; border-bottom-style: solid; }
+
+/* javascript */
+
+.add, .cut
+{
+	border-width: 1px;
+	display: block;
+	font-size: .8rem;
+	padding: 0.25em 0.5em;	
+	float: left;
+	text-align: center;
+	width: 0.6em;
+}
+
+.add, .cut
+{
+	background: #9AF;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+	background-image: -moz-linear-gradient(#00ADEE 5%, #0078A5 100%);
+	background-image: -webkit-linear-gradient(#00ADEE 5%, #0078A5 100%);
+	border-radius: 0.5em;
+	border-color: #0076A3;
+	color: #FFF;
+	cursor: pointer;
+	font-weight: bold;
+	text-shadow: 0 -1px 2px rgba(0,0,0,0.333);
+}
+
+.add { margin: -2.5em 0 0; }
+
+
+.cut { opacity: 0; position: absolute; top: 0; left: -1.5em; }
+.cut { -webkit-transition: opacity 100ms ease-in; transition: opacity 100ms ease-in;}
+
+
+
+@media print {
+	* { -webkit-print-color-adjust: exact; }
+	html { background: none; padding: 0; }
+	body { box-shadow: none; margin: 0; }
+	span:empty { display: none; }
+	.add, .cut { display: none; }
+}
+
+@page { margin: 0; }
+</style>
+<button class="btn btn-warning" onclick="printFunction()">Print</button>
+
+<a href="/userCars">
+    <button class="btn btn-warning">Done</button>
+</a>
 
 <body>
     
@@ -43,185 +201,88 @@
     </div>
     <!-- Preloader Start -->
 
-    <header>
-        <!-- Header Start -->
-       <div class="header-area header-sticky">
-            <div class="main-header ">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <!-- logo -->
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="logo">
-                               <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
-                            </div>
-                        </div>
-                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
-                            <!-- main-menu -->
-                            <div class="main-menu f-right d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a href="/">Home</a></li>                                      
-                                        <li><a href="/search">Search</a></li>
-                                        <li><a href="/cars">Cars</a></li>
-                                        <li><a href="/about">About</a></li>
-                                        <li><a href="/contact">Contact</a></li>
-                                        <% if(user==null) { %>
-                                            <a href="/login">
-                                                <input type="submit" class="btn btn-login" value="Login">
-                                                </a>
-                                      <%   }else{ %>
-                                        <a href="/userCars">
-                                            <input type="submit" class="btn btn-login" value="My cars">
-                                            </a>
-                                        <% }%>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>             
-            
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       </div>
-        <!-- Header End -->
-    </header>
+
 
     <!-- slider Area Start-->
 
     <!-- slider Area End-->
 
     <!-- ================ contact section start ================= -->
-    <section class="contact-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="contact-title">Car Rental Invoice</h2>
-                    </div>
-                    <div class="col-lg-8">
-                      <h3>Name: Brandon Manyonyi</h3>
-                      <p>Address: 21 street jump</p>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1">
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-home"></i></span>
-                            <div class="media-body">
-                                <h3>Nairobi Kenya</h3>
-                                <p>Moi Avenue, Alpha Towers</p>
-                            </div>
-                        </div>
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-tablet"></i></span>
-                            <div class="media-body">
-                                <h3>07123456789 || 003-7040</h3>
-                                <p>Mon to Fri 9am to 6pm</p>
-                            </div>
-                        </div>
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-email"></i></span>
-                            <div class="media-body">
-                                <h3>support@automotivefinder.com</h3>
-                                <p>Send us your query anytime!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <!-- ================ contact section end ================= -->
     
-    <footer>
-        <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
-            <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-30">
-                            <!-- logo -->
-                            <div class="footer-logo">
-                                <a href="index.html"><img src="/assets/img/logo/logo.png" alt=""></a>
-                            </div>
-                            <div class="footer-social footer-social2">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                            </div>
-                            <div class="footer-pera">
-                                <p>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;
-                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
-                                    Automotive Finder<i class="ti-heart" aria-hidden="true"></i>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5">
-                        <div class="single-footer-caption mb-30">
-                            <div class="footer-tittle">
-                                <h4>Quick Links</h4>
-                                <ul>
-                                    <li><a href="#">About Automotive Finder </a></li>
-                                    <li><a href="#">Our Best Offers</a></li>
-                                    <li><a href="#">Our Customers</a></li>
-                                    <li><a href="#">Car Service</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
-                        <div class="single-footer-caption mb-30">
-                            <div class="footer-tittle">
-                                <h4>Info</h4>
-                                <ul>
-                                    <li><a href="#">Tel: 453-3251</a></li>
-                                    <li><a href="#">Phone No: 0712563251</a></li>
-                                    <li><a href="#">Skype: AutomitiveFinder</a></li>
-                                    <li><a href="#">info@automotivefinder.com</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4  col-sm-5">
-                        <div class="single-footer-caption mb-30">
-                            <div class="footer-tittle">
-                                <h4>Our Location</h4>
-                                <ul>
-                                    <li><a href="#">Nairbi Kenya</a></li>
-                                    <li><a href="#">Moi Avaenue, Kimathi House 4th floor</a></li>
-                                </ul>
-                                <!-- Form -->
-                                <div class="footer-form">
-                                    <div id="mc_embed_signup">
-                                        <form target="_blank"
-                                            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                            method="get" class="subscribe_form relative mail_part">
-                                            <input type="email" name="email" id="newsletter-form-email"
-                                                placeholder="Email Address" class="placeholder hide-on-focus"
-                                                onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = ' Email Address '">
-                                            <div class="form-icon">
-                                                <button type="submit" name="submit" id="newsletter-submit"
-                                                    class="email_icon newsletter-submit button-contactForm"><img
-                                                        src="/assets/img/logo/form-iocn.jpg" alt=""></button>
-                                            </div>
-                                            <div class="mt-10 info"></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section id="invoice-pdf">
+        <div class="col-xl-2 col-lg-2">
+            <div class="logo">
+                <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
             </div>
         </div>
-        <!-- Footer End-->
-    </footer>
+            <div class="container">
+                
+                    <header>
+                        
+                        <h1>Invoice</h1>
+                        <address contenteditable>
+                            <p><%=user.first_name%> <%=user.last_name%></p>
+                            <p>Moi Avenue <br>Ambassador 5674</p>
+                            <p><%=user.phone%></p>
+                        </address>
+                        <span><img alt="" src="http://www.jonathantneal.com/examples/invoice/logo.png"><input type="file" accept="image/*"></span>
+                    </header>
+                    <article>
+                        <h1>Recipient</h1>
+                        <address contenteditable>
+                            <p>Car for Hire<br>c/o Marcus Avery</p>
+                        </address>
+                        <table class="meta">
+                            <tr>
+                                <th><span >Invoice #</span></th>
+                                <td><span >00<%=hiring.id%></span></td>
+                            </tr>
+                            <tr>
+                                <th><span >Date</span></th>
+                                <td><span ><%=hiring.start_date%></span></td>
+                            </tr>
+                           
+                        </table>
+                        <table class="inventory">
+                            <thead>
+                                <tr>
+                                    <th><span >Vehicle</span></th>
+                                    <th><span >Start Date</span></th>
+                                    <th><span >End date</span></th>
+                                    <th><span >Days</span></th>
+                                    <th><span >Price/day(Ksh)</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a class="cut">-</a><span ><%=car.make%> <%=car.model%></span></td>
+                                    <td><span id="startDate" ><%=hiring.start_date%></span></td>
+                                    <td><span id="endDate"><%=hiring.end_date%></span></td>
+                                    <td><span id="days">0</span></td>
+                                    <td><span data-prefix>Ksh.</span><span id="price"><%=car.price%></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <table class="balance">
+                            <tr>
+                                <th><span >Total</span></th>
+                                <td><span data-prefix>Ksh.</span><span id="total">00.00</span></td>
+                            </tr>
+
+                        </table>
+                    </article>
+                    <aside>
+                        <h1><span >All terms and consition apply</span></h1>
+                        <div >
+                            <p>A delayment of returning the car costs an extra 15% on the daily hiring price </p>
+                            <p>Payment via Till no: <b>893 458</b> or cooperative bank transfer to: <b>01193849298492939</b> </p>
+                        </div>
+                    </aside>
+                
+            </div>
+        </section>
+       
     <!-- JS here -->
 	
 		<!-- All JS Custom Plugins Link Here here -->
@@ -262,23 +323,28 @@
         
 
         <script>
-        $('#datepicker').datepicker({
-            iconsLibrary: 'fontawesome',
-            disableDaysOfWeek: [0, 0],
-        //     icons: {
-        //      rightIcon: '<span class="fa fa-caret-down"></span>'
-        //  }
-        });
-        $('#datepicker2').datepicker({
-            iconsLibrary: 'fontawesome',
-            icons: {
-             rightIcon: '<span class="fa fa-caret-down"></span>'
-         }
+            
+        var startDate = Date.parse(JSON.parse('<%- JSON.stringify(hiring.start_date) %>'));
+        var endDate = Date.parse(JSON.parse('<%- JSON.stringify(hiring.end_date) %>'));
+            console.log(startDate);
+            console.log(endDate);
+            
+        var days = Math.floor((endDate-startDate)/(24*3600*1000));
 
-        });
-        var timepicker = $('#timepicker').timepicker({
-         format: 'HH.MM'
-     });
+        document.getElementById('days').innerHTML = days;
+
+        var price = '<%- JSON.stringify(car.price) %>';
+
+        var total = days* price;
+        document.getElementById('total').innerHTML = total;
+            
+        function printFunction() {
+            var divContents = document.getElementById("invoice-pdf").innerHTML;
+            var prnt = window.open('', '', 'height=500, width=500');
+             prnt .document.write(divContents);
+            prnt .document.close();
+            prnt .print();
+        }
         </script>
     </body>
     

@@ -87,7 +87,7 @@ exports.postCars = (req, res, next) => {
    connectDB.query(carQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
       else {
-         return res.render('user/cars', { cars: filterResult ,user:req.session.user })
+         return res.render('user/cars', { cars: filterResult ,user:req.session.user, userCars:false  })
       }
    })
 
@@ -107,18 +107,51 @@ exports.postViewCar = (req, res, next) => {
    });
    var car = mysql.escape(req.body.carId);
 
+   hiringQuery =  "SELECT * FROM hiring "+
+   "WHERE car_id="+car
+
    query = "SELECT * " + 
       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+      " INNER JOIN hiring ON cars.id=hiring.car_id" +
       " WHERE cars.id = (" + car + 
       ")"; 
    
+      connectDB.query(query, (err, hireResult) => {
+         if (err) throw err; 
 
-   connectDB.query(query, (err, result) => {
-      if (err) throw err; 
-      else {
-         return res.render('user/viewCar', {car: result[0],user:req.session.user });
-      }
-   })
+         if(hireResult.length<1){
+            console.log('Not hired');
+
+            query = "SELECT * " + 
+            " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+            " WHERE cars.id = (" + car + 
+            ")"; 
+            connectDB.query(query, (err2, carResult) => {
+               console.log('Doing here');
+               if (err2) throw err2; 
+               
+               else {
+                  console.log(carResult);
+                  return res.render('user/viewCar', {car: carResult[0],user:req.session.user, isHired: false });
+               }
+            })
+         }else{
+            
+            console.log('hired!');
+            query = "SELECT * " + 
+            " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
+            " INNER JOIN hiring ON cars.id=hiring.car_id" +
+            " WHERE cars.id = (" + car + 
+            ")"; 
+            connectDB.query(query, (err2, carResult) => {
+               console.log('Doing there')
+               if (err2) throw err2; 
+               else {
+                  return res.render('user/viewCar', {car: carResult[0],user:req.session.user, isHired: true });
+               }
+            })
+         }
+})
 
 }
 
@@ -133,10 +166,10 @@ exports.userCars = (req, res, next) => {
       database: "cars"
    });
 
-
+   
    carQuery = "SELECT * " + 
-      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-      " WHERE cars.listing_user = (" + (req.session.user) + 
+      " FROM  hiring INNER JOIN cars ON hiring.car_id=cars.id" +
+      " WHERE hiring.user_id = (" + (req.session.user) + 
       ")"; 
    
 
@@ -144,7 +177,7 @@ exports.userCars = (req, res, next) => {
       if (err) throw err; 
       else {
        
-         return res.render('user/cars', {cars: result,user:req.session.user });
+         return res.render('user/cars', {cars: result,user:req.session.user, userCars:true });
       }
    })
 
@@ -168,23 +201,37 @@ exports.hireCar = (req, res, next) => {
       return res.render('user/login', { msg: "", err: "Your session expired, please login again!" });
    }
 
-   hiringQuery = "INSERT INTO `hiring`(`car_id`, `user_id`,`start_date`,`end_date`) "+
+   hiringQueryInsert = "INSERT INTO `hiring`(`car_id`, `user_id`,`start_date`,`end_date`) "+
    "VALUES(" + carId + ",'" + userId + "', " + startDate + "," + endDate+ " )"
+
+   hiringQueryGet = "SELECT * FROM hiring WHERE car_id=" + carId;
 
    carQuery = "SELECT * " +  
        " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
        " WHERE cars.id =" + mysql.escape(req.body.carId);
+
+   userQuery = "SELECT * FROM users WHERE id=" + userId 
    
 
-   connectDB.query(hiringQuery, (err, result) => {
+   connectDB.query(hiringQueryInsert, (err, result) => {
        if (err) throw err;
+
+       connectDB.query(hiringQueryGet, (err2, resultHire) => {
+         if (err2) throw err2;
+            connectDB.query(userQuery, (err3, userResult) => {
+               if (err3) throw err3;
     
-           connectDB.query(carQuery, (err2, carResult) => {
-               if (err2) throw err2;
+           connectDB.query(carQuery, (err4, carResult) => {
+               if (err4) throw err4;
                
-                   return res.render('user/invoice', { car: carResult[0],msg:"Car booked Successfully",err:"",user:req.session.user });
-               
+                   return res.render('user/invoice', { 
+                      car: carResult[0],
+                      hiring:resultHire[0],
+                      user:userResult[0] 
+                  });
+               })
            })
+      })
    })
 
 }
