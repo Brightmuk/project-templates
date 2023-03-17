@@ -152,6 +152,42 @@
         <!-- Header End -->
     </header>
     <main>
+
+<!-- Return car modal -->
+        <div class="modal fade" id="modalReturnForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form action="/returnCar" method="POST" class="modal-content">
+            <div class="modal-header text-center">
+                
+              <h4 class="modal-title w-100 font-weight-bold">Return this car Today</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+      
+              <div class="md-form mb-4">
+                <p>Start date</p>
+                <input type="text" id="date-start" disabled class="form-control" name="startDate" value="<%= car.start_date%>">
+              </div>
+                <div class="md-form mb-4">
+      
+                    <p>Current Bill</p>
+                    <input type="text" id="currentBilling" disabled class="form-control" name="currentBill" value="0">
+                  </div>
+      
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+               <input type="text" name="carId" value="<%=car.id%>" hidden>
+              <input type="submit" class="btn btn-login" value="Return the car">
+                      
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Hire car modal -->
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -218,18 +254,28 @@
                                     
                                 </div>
                             </div>
+                            <% if(isHired&&user==car.user_id) { %>
+                                <div class="text-center">
+                                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalReturnForm">
+                                      Return this car</a>
+                                  </div>
+                                <% }else if(isHired){%>
+                                    <h3>This car has been hired from <b><%=car.start_date%></b> to <b><%=car.end_date%></b> </h3>
+                                    
+                                <% }else{%>
+                                    <div class="text-center">
+                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">
+                                          Hire this car</a>
+                                      </div>
+                                    <% }%>
                             
-                            <div class="text-center">
-                                <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">
-                                  Hire this car</a>
-                              </div>
                                 
                        
                                     <br>
                                 <br>
                 </div>
                 <div class="stats col-5">
-                    <% if(isHired) { %>
+                    <% if(isHired&&user==car.user_id) { %>
                     <div class=" single-room car-extras">
                         <h5 class="feature">Start date:</h5>
                         <h5 class="value"><b><%=car.start_date%></b></h5>
@@ -446,7 +492,8 @@
 
 
         var currentBill = Math.floor((endDate-Date.now())/(24*3600*1000))*price;
-        console.log(Math.floor((endDate-Date.now())/(24*3600*1000)))
+        
+        document.getElementById('currentBilling').value = currentBill;
         document.getElementById('currentBill').innerHTML = currentBill;
 
 

@@ -377,11 +377,11 @@ table{
   min-width: 300px;
 }
 .add-room-btn{
-  background-color: #373e44;
+  background-color: #374440;
   animation-duration: 1s;
 }
 .add-room-btn:hover{
-  background-color: #2c3136;
+  background-color: #2c3634;
 }
 .available{
   color: green;

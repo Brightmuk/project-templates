@@ -8,6 +8,8 @@ exports.getHome = (req, res, next) => {
    
 }
 
+
+//Post login
 exports.postLogin = (req, res, next) => {
    //console.log(req.body);
    var connectDB = mysql.createConnection({
@@ -38,14 +40,14 @@ exports.postLogin = (req, res, next) => {
 
 }
 
-//get request for category
+//get login screen
 exports.getLogin = (req, res, next) => {
    res.render('user/login',{msg:"",err:""});
 }
 
-//post request of cars
+//post search cars
 exports.postSearch = (req, res, next) => {
-   //console.log(req.body);
+   
    var connectDB = mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -59,7 +61,8 @@ exports.postSearch = (req, res, next) => {
       " WHERE type = " + mysql.escape(req.body.type) +
       " AND fuel = " + mysql.escape(req.body.fuel) +
       " AND transmission = " + mysql.escape(req.body.transmission) +
-      " AND seats >= " + mysql.escape(req.body.seats); 
+      " AND seats >= " + mysql.escape(req.body.seats);
+      
 
 
    connectDB.query(filterQuery, (filterErr, filterResult) => {
@@ -71,8 +74,11 @@ exports.postSearch = (req, res, next) => {
    })
 
 }
+
+//query all cars that are available
+
 exports.postCars = (req, res, next) => {
-   //console.log(req.body);
+   
    var connectDB = mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -80,9 +86,8 @@ exports.postCars = (req, res, next) => {
       database: "cars"
    });
 
-
    carQuery = "SELECT * " +
-      " FROM  cars ";
+      " FROM  cars";
 
    connectDB.query(carQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
@@ -96,7 +101,7 @@ exports.postCars = (req, res, next) => {
 
 
 
-//view car
+//view a single car
 exports.postViewCar = (req, res, next) => {
  
    var connectDB = mysql.createConnection({
@@ -147,7 +152,7 @@ exports.postViewCar = (req, res, next) => {
                console.log('Doing there')
                if (err2) throw err2; 
                else {
-                  return res.render('user/viewCar', {car: carResult[0],user:req.session.user, isHired: true });
+                  return res.render('user/viewCar', {car: carResult[0], user:req.session.user, isHired: true });
                }
             })
          }
@@ -155,10 +160,10 @@ exports.postViewCar = (req, res, next) => {
 
 }
 
-//post view cars
+//post view user cars
 
 exports.userCars = (req, res, next) => {
-   //console.log(req.body);
+   
    var connectDB = mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -170,7 +175,7 @@ exports.userCars = (req, res, next) => {
    carQuery = "SELECT * " + 
       " FROM  hiring INNER JOIN cars ON hiring.car_id=cars.id" +
       " WHERE hiring.user_id = (" + (req.session.user) + 
-      ")"; 
+      ") AND hiring.returned=0"; 
    
 
    connectDB.query(carQuery, (err, result) => {
@@ -184,6 +189,8 @@ exports.userCars = (req, res, next) => {
 }
 
 
+
+//Hire cars
 exports.hireCar = (req, res, next) => {
  
    var connectDB = mysql.createConnection({
@@ -201,8 +208,8 @@ exports.hireCar = (req, res, next) => {
       return res.render('user/login', { msg: "", err: "Your session expired, please login again!" });
    }
 
-   hiringQueryInsert = "INSERT INTO `hiring`(`car_id`, `user_id`,`start_date`,`end_date`) "+
-   "VALUES(" + carId + ",'" + userId + "', " + startDate + "," + endDate+ " )"
+   hiringQueryInsert = "INSERT INTO `hiring`(`car_id`, `user_id`,`start_date`,`end_date`,`returned`) "+
+   "VALUES(" + carId + ",'" + userId + "', " + startDate + "," + endDate+ "," + 0 + " )"
 
    hiringQueryGet = "SELECT * FROM hiring WHERE car_id=" + carId;
 
@@ -237,12 +244,11 @@ exports.hireCar = (req, res, next) => {
 }
 
 
-//get request for category
+//get the search screen
 exports.getSearch = (req, res, next) => {
 
    res.render('user/search',{user:req.session.user });
 }
-
 
 
 //show contact page
@@ -250,53 +256,10 @@ exports.getContact =(req,res,next)=>{
       res.render('user/contact', { user:req.session.user });
 
 }
-//show contact page
+//show about page
 exports.getAbout =(req,res,next)=>{
    res.render('user/about', { user:req.session.user  });
 
 }
 
 
-//post request of compare
-exports.postCompare = (req, res, next) => {
-   //console.log(req.body);
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
-   });
-
-   var carStr = mysql.escape(req.body.cars);
-   var carPurpose = req.body.purpose;
-   var purpose = carPurpose.slice(1,-1);
- 
-   var carList = carStr.slice(1,-1);
-
-   var toInt = carList.split(',').map(function(car){return parseInt(car)}); 
-
-   compareQery = "SELECT * " + 
-      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-      " WHERE cars.id IN (" + toInt + 
-      ")"; 
-   
-
-   connectDB.query(compareQery, (compareErr, compareResult) => {
-      if (compareErr) throw compareErr; 
-      else {
-         var best; 
-       
-         if(compareResult[0][purpose]>compareResult[1][purpose]){
-            
-            best = compareResult[0]
-         }else{
-           
-            best = compareResult[1]
-         }
-         console.log('The best at '+ purpose +' is:'+best.make+' with '+best[purpose]);
-       
-         return res.render('user/compareResults', {cars: compareResult, bestOffer: best, purpose: purpose,user:req.session.user });
-      }
-   })
-
-}

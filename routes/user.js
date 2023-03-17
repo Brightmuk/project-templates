@@ -20,14 +20,11 @@ router.route('/cars')
        .get(userControler.postCars)  
 
 router.route('/userCars',)
-       .get(userControler.userCars)
-
-router.route('/compare')
-       .post(userControler.postCompare)      
- 
-       
+       .get(userControler.userCars)     
+      
 router.post('/viewCar',userControler.postViewCar);  
 router.post('/hireCar',userControler.hireCar); 
+router.post('/returnCar',userControler.hireCar);
 
 router.get('/contact',userControler.getContact);       
 router.get('/about',userControler.getAbout);    
