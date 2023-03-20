@@ -1,6 +1,11 @@
 //moduler 
 var mysql = require('mysql');
 
+const host =  "localhost";
+const user =  "root";
+const password = "@Beatsbydre99";
+const database = "cars";
+
 // show the home page
 exports.getHome = (req, res, next) => {
    
@@ -13,10 +18,10 @@ exports.getHome = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
    //console.log(req.body);
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
 
@@ -49,10 +54,10 @@ exports.getLogin = (req, res, next) => {
 exports.postSearch = (req, res, next) => {
    
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
 
@@ -80,10 +85,10 @@ exports.postSearch = (req, res, next) => {
 exports.postCars = (req, res, next) => {
    
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    carQuery = "SELECT * " +
@@ -105,10 +110,10 @@ exports.postCars = (req, res, next) => {
 exports.postViewCar = (req, res, next) => {
  
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
    var car = mysql.escape(req.body.carId);
 
@@ -165,17 +170,18 @@ exports.postViewCar = (req, res, next) => {
 exports.userCars = (req, res, next) => {
    
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "cars"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
+   
 
    
    carQuery = "SELECT * " + 
       " FROM  hiring INNER JOIN cars ON hiring.car_id=cars.id" +
       " WHERE hiring.user_id = (" + (req.session.user) + 
-      ") AND hiring.returned=0"; 
+      ") AND hiring.returned=0";  
    
 
    connectDB.query(carQuery, (err, result) => {
@@ -189,15 +195,47 @@ exports.userCars = (req, res, next) => {
 }
 
 
+exports.returnHire = (req, res, next)=>{
+
+   var connectDB = mysql.createConnection({
+      host: host,
+      user: user,
+      password: password,
+      database: database
+  });
+
+  returnHiring = "UPDATE hiring SET returned=1 WHERE car_id=" + (req.body.carId);
+
+  carQuery = "SELECT * " + 
+  " FROM  hiring INNER JOIN cars ON hiring.car_id=cars.id" +
+  " WHERE hiring.user_id = (" + (req.session.user) + 
+  ") AND hiring.returned=0"; 
+
+  console.log('Returning...',(req.body.carId))
+  connectDB.query(returnHiring, (err1, result1) => {
+   if (err1) throw err1; 
+   else {
+
+      connectDB.query(carQuery, (err2, result2) => {
+      if (err2) throw err2; 
+
+         return res.render('user/cars', {cars: result2, user:req.session.user, userCars:true });
+      })
+
+   }
+})
+
+}
+
 
 //Hire cars
 exports.hireCar = (req, res, next) => {
  
    var connectDB = mysql.createConnection({
-       host: "localhost",
-       user: "root",
-       password: "@Beatsbydre99",
-       database: "cars"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
       var startDate = mysql.escape(req.body.startDate);
       var endDate = mysql.escape(req.body.endDate);

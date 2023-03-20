@@ -24,7 +24,7 @@ router.route('/userCars',)
       
 router.post('/viewCar',userControler.postViewCar);  
 router.post('/hireCar',userControler.hireCar); 
-router.post('/returnCar',userControler.hireCar);
+router.post('/returnCar', userControler.returnHire);
 
 router.get('/contact',userControler.getContact);       
 router.get('/about',userControler.getAbout);    
