@@ -194,7 +194,7 @@ exports.userCars = (req, res, next) => {
 
 }
 
-
+//return hire
 exports.returnHire = (req, res, next)=>{
 
    var connectDB = mysql.createConnection({

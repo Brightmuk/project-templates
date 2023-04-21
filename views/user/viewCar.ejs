@@ -203,7 +203,7 @@
 
         <div class="md-form mb-4">
           <p>Start date</p>
-          <input type="date" id="date-start" onchange="setEndMin()" class="form-control" name="startDate">
+          <input type="date" id="date-start"  onchange="setEndMin()" class="form-control" name="startDate">
         </div>
         <div class="md-form mb-4">
 
@@ -478,7 +478,11 @@
     ></script>
     <script>
        //validators
-
+       document.getElementById('date-start').min = Date.now();
+        function setEndMin(){
+            document.getElementById('date-end').min = document.getElementById('date-start').value;
+        }
+        
         var startDate = Date.parse(JSON.parse('<%- JSON.stringify(car.start_date) %>'));
         var endDate = Date.parse(JSON.parse('<%- JSON.stringify(car.end_date) %>'));
             
@@ -495,6 +499,8 @@
         
         document.getElementById('currentBilling').value = currentBill;
         document.getElementById('currentBill').innerHTML = currentBill;
+
+
 
 
     </script>
