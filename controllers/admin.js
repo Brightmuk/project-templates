@@ -7,7 +7,7 @@ const http = require('https');
 const host =  "localhost";
 const user =  "root";
 const password = "@Beatsbydre99";
-const database = "cars";
+const database = "flowers";
 
 // login get request
 exports.getLogin = (req, res, next) => {

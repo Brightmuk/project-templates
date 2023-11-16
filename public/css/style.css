@@ -12,7 +12,9 @@ body.sticky-footer {
 
 body.fixed-nav {
   padding-top: 56px; }
+.input{
 
+}
 .content-wrapper {
   min-height: calc(100vh - 56px);
   padding-top: 1rem; }
@@ -443,5 +445,8 @@ table{
 }
 .btn-warning{
   background-color: rgb(85, 71, 45);
+}
+.btn-login{
+  background-color: purple;
 }
 

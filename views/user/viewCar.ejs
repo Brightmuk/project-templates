@@ -78,12 +78,32 @@
     }
     .car-img{
         object-fit: cover;
+        height:400px
     }
     .btn-outline-warning{
         margin:auto;
         width:100%
 
     }
+    .stats{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .logo a{
+    color: purple;
+    font-weight: bold;
+}
+
+.btn-buy{
+    background-color: rgb(187, 22, 85);
+}.btn-cart{
+    height: 50px;
+    padding: 15px;
+}
+.btn-cart i{
+    font-size: 20px;
+}
 
 </style>
 <body>
@@ -111,7 +131,7 @@
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="/"><img src="assets/img/logo/logo.jpg" alt=""></a>
+                                <a href="/"><img src="/assets/img/logo/logo.png" alt="">Flora Joy</a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
@@ -121,7 +141,7 @@
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
                                         <li><a href="/search">Search</a></li>
-                                        <li><a href="/cars">Cars</a></li>
+                                        
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
                                         <% if(user==null) { %>
@@ -129,9 +149,13 @@
                                                 <input type="submit" class="btn btn-login" value="Login">
                                                 </a>
                                       <%   }else{ %>
-                                        <a href="/userCars">
-                                            <input type="submit" class="btn btn-login" value="My cars">
+                                        <a href="/account">
+                                            <input type="submit" class="btn btn-login" value="Account">
                                             </a>
+                                            <a href="/cart">
+                        
+                                                <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
+                                                </a>
                                         <% }%>
                                     </form>
                                     </ul>
@@ -240,94 +264,48 @@
 
 
                             <div class="single-room mb-10">
-                                <div class="room-img p-1">        
+                                <div class="room-img p-1">  
+                                    <br>  
+                                    <br>  
+                                    <br> 
+                                    <br>
+                                    <br> 
                                         <a href="#"><img class="car-img" src="<%=car.image%>" alt="" height="200px"></a>
                                 </div>
-                                <div class="room-caption text-center">
-
-                                    <h3><a href="#"><%=car.make%> <%=car.model%></a></h3>
-                                    <h5><%=car.year%> <%=car.color%></h5>
-                                    <div class="per-night">
-                                        <span>ksh. <%=car.price%> / day</span>
-                                    </div>
-                                    
-                                    
-                                </div>
+                                
                             </div>
-                            <% if(isHired&&user==car.user_id) { %>
-                                <div class="text-center">
-                                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalReturnForm">
-                                      Return this car</a>
-                                  </div>
-                                <% }else if(isHired){%>
-                                    <h3>This car has been hired from <b><%=car.start_date%></b> to <b><%=car.end_date%></b> </h3>
-                                    
-                                <% }else{%>
-                                    <div class="text-center">
-                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">
-                                          Hire this car</a>
-                                      </div>
-                                    <% }%>
+
                             
                                 
                        
                                     <br>
                                 <br>
                 </div>
-                <div class="stats col-5">
-                    <% if(isHired&&user==car.user_id) { %>
-                    <div class=" single-room car-extras">
-                        <h5 class="feature">Start date:</h5>
-                        <h5 class="value"><b><%=car.start_date%></b></h5>
-                    </div>
-                    <hr>
-                    <div class="car-extras">
-                        <h5 class="feature">End date:</h5>
-                        <h5 class="value"><b><%=car.end_date%></b></h5>
-                    </div>
-                    
-                    <hr>
-                    <div class="car-extras">
-                        <h5 class="feature">Remaining days</h5>
+                <div class="stats col-6">
+                    <div class="room-caption">
                         
-                        <h5 class="value" id="days"><b>0</b></h5>
-                    </div>
-                    <hr>
-                    <div class="car-extras">
-                        <h5 class="feature">Current bill</h5>
-                        <h5 class="value" id="currentBill"><b>0</b></h5>
-                    </div>
-                    <% }else{%>
-                        <div class=" single-room car-extras">
-                            <h5 class="feature">Reliability</h5>
-                            <h5 class="value"><b><%=car.reliability%></b></h5>
-                        </div>
-                        <hr>
-                        <div class="car-extras">
-                            <h5 class="feature">Fuel economy</h5>
-                            <h5 class="value"><b><%=car.economy%></b></h5>
-                        </div>
-                        <hr>
+                        <h3><a href="#"> <%=car.model%></a></h3>
+                        <h4><%=car.make%></h4>
+                        <h5>⭐ <%=car.year%> </h5>
                         
-                        <div class="car-extras">
-                            <h5 class="feature">performance</h5>
-                            
-                            <h5 class="value" id="days"><b><%=car.performance%></b></h5>
+                        <br>
+                        <h3><b>Ksh. <%=car.price%></b></h3>
+                        
+                        <hr>
+                        <div class="perks">
+                            <p>🌸 Fast countrywide delivery</p>
+                            <p>🌸 Secured payments</p>
+                            <p>🌸 Express shipping</p>
                         </div>
                         <hr>
-                        <div class="car-extras">
-                            <h5 class="feature">Offroading</h5>
                             
-                            <h5 class="value" id="days"><b><%=car.offroading%></b></h5>
+                            <span></span>
                         </div>
-                        <hr>
-                        <div class="car-extras">
-                            <h5 class="feature">Luxury</h5>
-                            <h5 class="value" id="currentBill"><b><%=car.luxury%></b></h5>
-                        </div>
-                        <% } %>
-                    <hr>
-                    
+                        <input type="submit" class="btn btn-buy" value="Add to cart">
+                        
+                        
+                    </div>
+
                 </div>
 
                 <div class="divider"></div>
@@ -343,10 +321,10 @@
         </section>
         
     </main>
-
+<hr>
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
+        <div class="footer-area footer-padding">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
@@ -377,7 +355,7 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About Automotive Finder </a></li>
+                                    <li><a href="#">About Flora Joy </a></li>
                                     <li><a href="#">Our Best Offers</a></li>
                                     <li><a href="#">Our Customers</a></li>
                                     <li><a href="#">Car Service</a></li>

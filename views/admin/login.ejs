@@ -11,8 +11,21 @@
     <link rel="stylesheet" href="/css/login.css">
     <style>
         body{
-            background-color: rgb(12, 32, 44);
+            background-color: rgb(252, 230, 243);
         }
+        .login-box,input[name]{
+            background-color: rgb(241, 62, 92);
+            border-bottom: 1px solid white;
+        }
+        input[name]:focus{
+            background-color: rgb(241, 62, 92);
+            border-bottom: 1px solid white;
+            
+        }
+        label{
+            color: white;
+        }
+       
     </style>
 </head>
 
@@ -37,7 +50,7 @@
                 <%   } %>
 
                 <div class="col-lg-12 login-form">
-                    <div class="col-lg-12 login-form">
+                    <div class="col-lg-12 ">
                         <form action="/admin/" method="POST">
                             <div class="form-group">
                                 <label class="form-control-label">USERNAME</label>
@@ -53,7 +66,7 @@
                                     <!-- Error Message -->
                                 </div>
                                 <div class="col-lg-7 login-btm login-button">
-                                    <button type="submit" class="center btn btn-outline-warning">LOGIN</button>
+                                    <button type="submit" class="center btn btn-warning"> LOGIN </button>
                                 </div>
                             </div>
                         </form>
@@ -61,6 +74,7 @@
                 </div>
                 <div class="col-lg-3 col-md-2"></div>
             </div>
+        </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

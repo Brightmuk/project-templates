@@ -4,92 +4,44 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Automitive Finder</title>
+    <title>About Us</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/gijgo.css">
-    <link rel="stylesheet" href="assets/css/slicknav.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+   <!-- CSS here -->
+   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+   <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+   <link rel="stylesheet" href="assets/css/gijgo.css">
+   <link rel="stylesheet" href="assets/css/slicknav.css">
+   <link rel="stylesheet" href="assets/css/animate.min.css">
+   <link rel="stylesheet" href="assets/css/magnific-popup.css">
+   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+   <link rel="stylesheet" href="assets/css/themify-icons.css">
+   <link rel="stylesheet" href="assets/css/themify-icons.css">
+   <link rel="stylesheet" href="assets/css/slick.css">
+   <link rel="stylesheet" href="assets/css/nice-select.css">
+   <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <style>
-    .comparison{
-    background-color: rgb(37, 37, 73);
-  padding: 20px;
-  color: white;
-
-    }
-    .btn-warning{
-        background-color: rgb(65, 55, 38);
-    }
-    .btn-warning:hover{
-        background-color: rgb(122, 83, 9);
-    }
-    .compare-view{
-        justify-content: space-between;
-    }
-    .divider{
-        height: 120vh;
-        width: 1px;
-        background-color: rgb(209, 209, 209);
-    }
-    .divider:last-child{
-        display: none;
-    }
-    .car{
-      width: 100px;
-      margin:0px
-    }
-    .car-extras{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-    .car-img{
-        object-fit: cover;
-    }
-    .recommendation{
-  display: flex;
-  height: 150px;
-  padding: 10px;
-  border: 1px solid rgb(216, 216, 216);
-  border-radius: 20px;
-  background-color: rgb(240, 245, 255);
-}
-.recommendation .img-col{
-  margin-right: 10px;
-  border-radius: 5px;
-  
-}
-.recommendation img{
-  object-fit: cover;
-}
-.recommendation .name{
-    font-size: 30px;
+    .logo a{
+    color: purple;
     font-weight: bold;
-    color: rgb(40, 40, 63);
 }
-.purpose{
-    color: grey;
+.btn-cart{
+    height: 50px;
+    padding: 15px;
+}
+.btn-cart i{
+    font-size: 20px;
 }
 </style>
 <body>
-
+    
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -105,24 +57,24 @@
 
     <header>
         <!-- Header Start -->
-        <div class="header-area header-sticky">
+       <div class="header-area header-sticky">
             <div class="main-header ">
                 <div class="container">
                     <div class="row align-items-center">
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
+                                <a href="/"><img src="/assets/img/logo/logo.png" alt="">Flora Joy</a>
                             </div>
                         </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                             <!-- main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
                                         <li><a href="/search">Search</a></li>
-                                        <li><a href="/cars">Cars</a></li>
+                                        
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
                                         <% if(user==null) { %>
@@ -130,18 +82,17 @@
                                                 <input type="submit" class="btn btn-login" value="Login">
                                                 </a>
                                       <%   }else{ %>
-                                        <a href="/userCars">
-                                            <input type="submit" class="btn btn-login" value="My cars">
-                                            </a>
-                                        <% }%>
-                                    </form>
-                                    </ul>
+                                        <form action="/logout" method="POST" style="float: right; margin-top: 25px;">
+                                            <input type="submit" class="btn btn-login" value="Logout">
+                                        </form>
                                     
+                                            
+                                        <% }%>
+                                    </ul>
                                 </nav>
-                                
                             </div>
-                        </div>
-                    
+                        </div>             
+            
                         <!-- Mobile Menu -->
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
@@ -149,96 +100,37 @@
                     </div>
                 </div>
             </div>
-        </div>
+       </div>
         <!-- Header End -->
     </header>
-    <main>
 
+    <!-- slider Area Start-->
 
-        <!-- Room Start -->
-        <section class="room-area">
+    <!-- slider Area End-->
+
+    <!-- ================ contact section start ================= -->
+    <section class="contact-section">
             <div class="container">
-                <div class="row compare-view">
-                    <div class="col-lg-12 col-lg-12 col-sm-12 col-12">
-                        <!--font-back-tittle  -->
-                        <div class="font-back-tittle mb-45">
-                            <div class="archivment-front">
-                            <% if(userCars==true){%>
-
-                                <h3>Your hired cars</h3>
-
-                                <% }else{ %>
-
-                                <h3>Explore</h3>
-                                <% }%>
-                            </div>
-                            <h3 class="archivment-back">Variety of picks</h3>
-                        </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="contact-title">Account</h2>
                     </div>
+                    <div class="col-lg-8">
+                      <h3>Mercy Wairimu</h3>
+                      <p>Member since 19/30/2022</p>
 
-                    <% if(cars.length) { %>
-                        
-                    <% for(i=0;i<cars.length;i++){  %>
-
-
-                        <div class="col-xl-4 col-lg-4 col-md-12 col-12">
-                            <!-- Single Room -->
-                            <form action="/viewCar" method="POST">
-                       
-    
-                                <input id="carId" type="text" name="carId" value="<%=cars[i].id%>" hidden>
-    
-                                <div class="single-room mb-50">
-                                    <div class="room-img p-2">        
-                                            <a href="#"><img class="car-img" src="<%=cars[i].image%>" alt="" height="200px"></a>
-                                    </div>
-                                  
-                                    <div class="room-caption text-center">
-    
-                                        <h3><%=cars[i].make%></h3>
-                                        <h5><%=cars[i].model%></h5>
-                                        <div class="per-night">
-                                            <span>ksh. <%=cars[i].price%> / day</span>
-                                        </div>
-                                        <br>
-                                       
-                                            <input type="submit" class="btn btn-danger" value="View">
-                                      
-                                        
-                                    </div>
-                                  
-                                </div>
-    
-                        
-                        </form>
-                    </div>
-                
-                    <% } %>
-           
-                    <% } else{  %>
                       <br>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                      <h2 style="color: #ff304f;" class="text-center mt-5 mb-5">No cars</h2>
+                      Orders made: <b>5</b>
+                    </div>
+                    
                 </div>
-                    <br>
-                    <%  }  %>
-
-                </div>
-
-                <br>
-                <br>
-
-
             </div>
-
-
         </section>
-        <!-- Room End -->
-    </main>
-
+    <!-- ================ contact section end ================= -->
+    
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
+        <div class="footer-area  footer-padding">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
@@ -258,7 +150,7 @@
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     Copyright &copy;
                                     <script>document.write(new Date().getFullYear());</script> All rights reserved |
-                                    Automotive Finder<i class="ti-heart" aria-hidden="true"></i>
+                                    Hotel Management System<i class="ti-heart" aria-hidden="true"></i>
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 </p>
                             </div>
@@ -269,7 +161,7 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About Automotive Finder </a></li>
+                                    <li><a href="#">About Flora Joy </a></li>
                                     <li><a href="#">Our Best Offers</a></li>
                                     <li><a href="#">Our Customers</a></li>
                                     <li><a href="#">Car Service</a></li>
@@ -325,49 +217,64 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <!-- JS here -->
+	
+		<!-- All JS Custom Plugins Link Here here -->
+        <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+		
+		<!-- Jquery, Popper, Bootstrap -->
+		<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="./assets/js/popper.min.js"></script>
+        <script src="./assets/js/bootstrap.min.js"></script>
+	    <!-- Jquery Mobile Menu -->
+        <script src="./assets/js/jquery.slicknav.min.js"></script>
 
-    <!-- All JS Custom Plugins Link Here here -->
-    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+		<!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="./assets/js/owl.carousel.min.js"></script>
+        <script src="./assets/js/slick.min.js"></script>
+        <!-- Date Picker -->
+        <script src="./assets/js/gijgo.min.js"></script>
+		<!-- One Page, Animated-HeadLin -->
+        <script src="./assets/js/wow.min.js"></script>
+		<script src="./assets/js/animated.headline.js"></script>
+		
+		<!-- Scrollup, nice-select, sticky -->
+        <script src="./assets/js/jquery.scrollUp.min.js"></script>
+        <script src="./assets/js/jquery.nice-select.min.js"></script>
+		<script src="./assets/js/jquery.sticky.js"></script>
+        <script src="./assets/js/jquery.magnific-popup.js"></script>
 
-    <!-- Jquery, Popper, Bootstrap -->
-    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="./assets/js/popper.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <!-- Jquery Mobile Menu -->
-    <script src="./assets/js/jquery.slicknav.min.js"></script>
+        <!-- contact js -->
+        <script src="./assets/js/contact.js"></script>
+        <script src="./assets/js/jquery.form.js"></script>
+        <script src="./assets/js/jquery.validate.min.js"></script>
+        <script src="./assets/js/mail-script.js"></script>
+        <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+        
+		<!-- Jquery Plugins, main Jquery -->	
+        <script src="./assets/js/plugins.js"></script>
+        <script src="./assets/js/main.js"></script>
+        
 
-    <!-- Jquery Slick , Owl-Carousel Plugins -->
-    <script src="./assets/js/owl.carousel.min.js"></script>
-    <script src="./assets/js/slick.min.js"></script>
-    <!-- Date Picker -->
-    <script src="./assets/js/gijgo.min.js"></script>
-    <!-- One Page, Animated-HeadLin -->
-    <script src="./assets/js/wow.min.js"></script>
-    <script src="./assets/js/animated.headline.js"></script>
+        <script>
+        $('#datepicker').datepicker({
+            iconsLibrary: 'fontawesome',
+            disableDaysOfWeek: [0, 0],
+        //     icons: {
+        //      rightIcon: '<span class="fa fa-caret-down"></span>'
+        //  }
+        });
+        $('#datepicker2').datepicker({
+            iconsLibrary: 'fontawesome',
+            icons: {
+             rightIcon: '<span class="fa fa-caret-down"></span>'
+         }
 
-    <!-- Scrollup, nice-select, sticky -->
-    <script src="./assets/js/jquery.scrollUp.min.js"></script>
-    <script src="./assets/js/jquery.nice-select.min.js"></script>
-    <script src="./assets/js/jquery.sticky.js"></script>
-    <script src="./assets/js/jquery.magnific-popup.js"></script>
-
-    <!-- contact js -->
-    <script src="./assets/js/contact.js"></script>
-    <script src="./assets/js/jquery.form.js"></script>
-    <script src="./assets/js/jquery.validate.min.js"></script>
-    <script src="./assets/js/mail-script.js"></script>
-    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-
-    <!-- Jquery Plugins, main Jquery -->
-    <script src="./assets/js/plugins.js"></script>
-    <script src="./assets/js/main.js"></script>
-    <script>
-       
-
-    </script>
-
-</body>
-
-</html>
+        });
+        var timepicker = $('#timepicker').timepicker({
+         format: 'HH.MM'
+     });
+        </script>
+    </body>
+    
+    </html>

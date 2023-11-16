@@ -277,7 +277,7 @@ label {
 /* button style */
 .btn {
   -moz-user-select: none;
-  background: #374440;
+  background: purple;
   border: medium none;
   border-radius: 5px;
   color: #fff;
@@ -297,7 +297,7 @@ label {
   white-space: nowrap; }
 
 .btn:hover {
-  background: #303f53;
+  background: rgb(131, 11, 131);
   color: #fff; }
 
 .border-btn {

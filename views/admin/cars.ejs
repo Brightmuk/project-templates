@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Bootstrap Admin Dashboard</title>
+  <title>Admin Dashboard</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
   <link rel="stylesheet" href="./style.css">
 
@@ -46,7 +46,7 @@
       <div class="logo">
         <a href="/admin"><img src="/assets/img/logo/logo.png" alt=""></a>
     </div>
-      <a class="navbar-brand"  href="/admin/">Automotive Finder Admin</a>
+      <a class="navbar-brand"  href="/admin/">Admin Panel</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -57,21 +57,27 @@
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
             <a class="nav-link" href="/admin/">
               <i class="fa fa-fw fa-dashboard"></i>
-              <span class="nav-link-text">Trending</span>
+              <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <h5 class ="nav-title">CAR MANAGAEMENT</h5>
+          <h5 class ="nav-title">MANAGAEMENT</h5>
+          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
+            <a class="nav-link" href="/admin/cars">
+              <i class="fa fa-fw fa-area-chart"></i>
+              <span class="nav-link-text">User orders</span>
+            </a>
+          </li>
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="/admin/cars">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Cars</span>
+              <span class="nav-link-text">Flowers</span>
             </a>
           </li>
   
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
             <a class="nav-link" href="/admin/addCar">
               <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">Add Car</span>
+              <span class="nav-link-text">Add Flower</span>
             </a>
           </li>
 
@@ -85,9 +91,11 @@
         </ul>
       </div>
     </nav>
+ 
     <div class="content-wrapper">
       <div class="container-fluid">
-
+        <br>
+        <br>
         <div class="card mb-3">
           <div class="card-header">
 
@@ -101,12 +109,9 @@
                       <th>Make</th>
                       <th>Model</th>
                       <th>Price</th>
-                      <th>Seats</th>
-                      <th>Type</th>
-                      <th>Fuel</th>
-                      <th>Transmission</th>
-                      <th>km/l</th>
-                      <th>Year</th>
+                      <th>Quantity</th>
+                      
+                      <th>Rating</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -118,12 +123,11 @@
                       <td><%=cars[i].make%></td>
                       <td><%=cars[i].model%></td>
                       <td><%=cars[i].price%></td>
-                      <td><%=cars[i].seats%>+</td>
-                      <td><%=cars[i].type%></td>
-                      <td><%=cars[i].fuel%></td>
-                      <td><%=cars[i].transmission%></td>
+    
                       <td><%=cars[i].consumption%></td>
+                      
                       <td><%=cars[i].year%></td>
+
 
                       <th>
                       <form action="/admin/viewCar" method="POST">

@@ -58,7 +58,7 @@
     <div class="logo">
       <a href="/admin"><img src="/assets/img/logo/logo.png" alt=""></a>
   </div>
-    <a class="navbar-brand" href="/admin/"> Admin</a>
+    <a class="navbar-brand" href="/admin/"> Admin Panel</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -67,21 +67,27 @@
         <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" href="/admin/">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Trending</span>
+            <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
-        <h5 class ="nav-title">CAR MANAGAEMENT</h5>
+        <h5 class ="nav-title">MANAGAEMENT</h5>
         <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="/admin/cars">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Cars</span>
+            <span class="nav-link-text">User orders</span>
+          </a>
+        </li>
+        <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="/admin/cars">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Flowers</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="/admin/addCar">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Add Car</span>
+            <span class="nav-link-text">Add Flowers</span>
           </a>
         </li>
 
@@ -98,26 +104,7 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 
-      <h1>Automotive News</h1>
-      
-       <br>
-       <div class="news ">
-        <% for (i in articles) { %>
-          <div class="card mb-3">
-            <div class="card-header">
-              <h4> <%=articles[i].title%></h4>
-          <div class="card-body">
-            <a target="blank" href="<%=articles[i].url%>">Read more</a>
-         
-        </div>
-        <div class="card-footer">
-          <p>Publisher: <%=articles[i].publisher.name%></p>
-        </div>
-        </div>
-        </div>
-        <br>
-          <%}%>
-       </div>
+ 
 
 
 

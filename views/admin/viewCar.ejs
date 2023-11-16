@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
       .car-image{
-        width: 200px;
+        width: 400px;
         border-radius: 10px;
       }
       .car-header{
@@ -65,6 +65,7 @@
   .logo{
     margin-right: 10px;
   }
+ 
     </style>
   </head>
 
@@ -74,7 +75,7 @@
       <div class="logo">
         <a href="/admin"><img src="/assets/img/logo/logo.png" alt=""></a>
     </div>
-      <a class="navbar-brand"  href="/admin/">Automotive Finder Admin</a>
+      <a class="navbar-brand"  href="/admin/">Admin Panel</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -85,21 +86,27 @@
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
             <a class="nav-link" href="/admin/">
               <i class="fa fa-fw fa-dashboard"></i>
-              <span class="nav-link-text">Trending</span>
+              <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <h5 class ="nav-title">CAR MANAGAEMENT</h5>
+          <h5 class ="nav-title">MANAGAEMENT</h5>
+          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
+            <a class="nav-link" href="/admin/cars">
+              <i class="fa fa-fw fa-area-chart"></i>
+              <span class="nav-link-text">User orders</span>
+            </a>
+          </li>
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="/admin/cars">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Cars</span>
+              <span class="nav-link-text">Flowers</span>
             </a>
           </li>
   
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
             <a class="nav-link" href="/admin/addCar">
               <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">Add Car</span>
+              <span class="nav-link-text">Add Flowers</span>
             </a>
           </li>
 
@@ -133,62 +140,31 @@
                 <img class="car-image" src="<%=car.image%>" alt="image">
               </div>
               <div class="header-right">
-                <div class="item">
-                <label for="file">Reliability</label>
-                <progress   value="<%=car.reliability%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Economy</label>
-                <progress   value="<%=car.economy%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Perfromance</label>
-                <progress   value="<%=car.perfromance%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Maintenance</label>
-                <progress   value="<%=car.maintenance%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Luxury</label>
-                <progress   value="<%=car.luxury%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                  <label for="file">Utility</label>
-                  <progress   value="<%=car.Utility%>" max="10">  </progress>
-                </div>
+
 
               </div>
             </div>
             
             <br>
             <br>
-           <form class="view-room" action="/admin/updateCar" method="POST">
+           
+
+          </div>
+         
+          
+          <div class="col-lg-4  details">
+            <br/>
+            <form class="view-room" action="/admin/updateCar" method="POST">
             <p>Make</p>
             <input type="text" class="form-control" name="make" value="<%=car.make%>" >
             <p>Model</p>
             <input type="text" class="form-control" name="model" value="<%=car.model%>" >
-            <p>Type</p>
-            <input type="text" class="form-control" name="type"  value="<%=car.type%>">
-            <p>Transmission</p>
-            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>">
-          
-       
-          </div>
-          <div class="col-lg-2 "></div>
-          <div class="col-lg-4  occupant">
-            <br/>
 
-
-            <p>Fuel</p>
-            <input type="text" class="form-control" name="fuel"  value="<%=car.fuel%>">
-            <p>Seats</p>
-            <input type="number" class="form-control" name="seats"  value="<%=car.seats%>">
-            <p>Consumption</p>
+            <p>Quantity</p>
             <input type="number" class="form-control" name="consumption"  value="<%=car.consumption%>">
             <p>price</p>
             <input type="number" class="form-control" name="price"  value="<%=car.price%>">
-            <p>Year</p>
+            <p>Rating</p>
             <input type="text" class="form-control" name="year" value="<%=car.year%>">
 
             <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
@@ -197,17 +173,17 @@
             <div class="action-row">
 
 
-             
-
               <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
+              <form id="delForm" action="/admin/deleteCar" method="POST">
+                <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
+                <input type="button" onclick="submitDelete()" class="btn btn-lg btn-danger mt-3 add-room-btn" value="Delete">
+              </form>
             </div>
            
           </form>
-          <form id="delForm" action="/admin/deleteCar" method="POST">
-            <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
-            <input type="button" onclick="submitDelete()" class="btn btn-lg btn-danger mt-3 add-room-btn" value="Delete">
-          </form>
+          
           </div>
+          
         </div>
         
 

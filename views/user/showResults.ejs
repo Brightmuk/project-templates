@@ -59,7 +59,17 @@
         font-size: 12px;
     }
 
-
+    .logo a{
+    color: purple;
+    font-weight: bold;
+}
+.btn-cart{
+    height: 50px;
+    padding: 15px;
+}
+.btn-cart i{
+    font-size: 20px;
+}
 </style>
 <body>
 
@@ -85,7 +95,7 @@
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="/"><img src="assets/img/logo/logo.jpg" alt=""></a>
+                                <a href="/"><img src="/assets/img/logo/logo.png" alt="">Flora Joy</a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
@@ -96,7 +106,7 @@
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
                                         <li><a href="/search">Search</a></li>
-                                        <li><a href="/cars">Cars</a></li>
+                                        
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
                                         <% if(user==null) { %>
@@ -104,9 +114,13 @@
                                                 <input type="submit" class="btn btn-login" value="Login">
                                                 </a>
                                       <%   }else{ %>
-                                        <a href="/userCars">
+                                        <a href="/account">
                                             <input type="submit" class="btn btn-login" value="My cars">
                                             </a>
+                                            <a href="/cart">
+                        
+                                                <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
+                                                </a>
                                         <% }%>
                                         
                                     
@@ -194,7 +208,7 @@
     <div id="toast" onclick="this.style.display='none'"></div>
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
+        <div class="footer-area footer-padding">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
@@ -225,7 +239,7 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About Automotive Finder </a></li>
+                                    <li><a href="#">About Flora Joy </a></li>
                                     <li><a href="#">Our Best Offers</a></li>
                                     <li><a href="#">Our Customers</a></li>
                                     <li><a href="#">Car Service</a></li>

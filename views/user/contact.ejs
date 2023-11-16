@@ -27,7 +27,23 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
+<style>
 
+    .contact-form{
+        width:50%
+    }
+    .logo a{
+    color: purple;
+    font-weight: bold;
+}
+.btn-cart{
+    height: 50px;
+    padding: 15px;
+}
+.btn-cart i{
+    font-size: 20px;
+}
+</style>
 <body>
     
     <!-- Preloader Start -->
@@ -52,7 +68,7 @@
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                               <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="/"><img src="/assets/img/logo/logo.png" alt="">Flora Joy</a>
                             </div>
                         </div>
                     <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
@@ -62,7 +78,7 @@
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
                                         <li><a href="/search">Search</a></li>
-                                        <li><a href="/cars">Cars</a></li>
+                                        
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
                                         <% if(user==null) { %>
@@ -70,9 +86,13 @@
                                                 <input type="submit" class="btn btn-login" value="Login">
                                                 </a>
                                       <%   }else{ %>
-                                        <a href="/userCars">
-                                            <input type="submit" class="btn btn-login" value="My cars">
+                                        <a href="/account">
+                                            <input type="submit" class="btn btn-login" value="Account">
                                             </a>
+                                            <a href="/cart">
+                        
+                                                <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
+                                                </a>
                                         <% }%>
                                     </ul>
                                 </nav>
@@ -102,8 +122,10 @@
                         <h2 class="contact-title">Link with Us</h2>
                     </div>
                     <div class="col-lg-8">
-                      <h3>Name: Brandon Manyonyi</h3>
-                      <p>Address: 21 street jump</p>
+                      <h3>Flora Joy</h3>
+                      <p>Address: Nairobi, Moi avenue</p>
+
+                     
                     </div>
                     <div class="col-lg-3 offset-lg-1">
                         <div class="media contact-info">
@@ -123,7 +145,7 @@
                         <div class="media contact-info">
                             <span class="contact-info__icon"><i class="ti-email"></i></span>
                             <div class="media-body">
-                                <h3>support@automotivefinder.com</h3>
+                                <h3>support@florajoy.com</h3>
                                 <p>Send us your query anytime!</p>
                             </div>
                         </div>
@@ -135,7 +157,7 @@
     
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
+        <div class="footer-area footer-padding">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
@@ -166,7 +188,7 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About Automotive Finder </a></li>
+                                    <li><a href="#">About Flora Joy</a></li>
                                     <li><a href="#">Our Best Offers</a></li>
                                     <li><a href="#">Our Customers</a></li>
                                     <li><a href="#">Car Service</a></li>
