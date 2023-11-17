@@ -107,6 +107,22 @@
 .btn-cart i{
     font-size: 20px;
 }
+.filter{
+    border-bottom: 1px solid rgb(199, 199, 199);
+    
+    
+}
+.filter button{
+    margin-left: 20px;
+    color: grey;
+}
+.flexer{
+    display: flex;
+    justify-content: space-around;
+    margin: 50px;
+    
+}
+
 </style>
 <body>
 
@@ -141,7 +157,7 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
-                                        <li><a href="/search">Search</a></li>
+                                    
                                         
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
@@ -176,20 +192,87 @@
         </div>
         <!-- Header End -->
     </header>
+
     <main>
 
 
         <!-- Room Start -->
         <section class="room-area">
+            
             <div class="container">
+                <div class="filte">
+                    <div class="containers ">
+                        <form action="/search" method="POST">
+                      <div class="row ">
+        
+                          <div class="position">
+                            <div class="col-lg-12 flexer">
+                              <div class="selectone">
+                               <p>Type</p>
+                               <select name="purpose">
+                                   <option value="Hamper">Hamper</option>
+                                   <option value="Bouquet">Bouquet</option>
+                                   <option value="Romantic">Romantic</option>
+                                   <option value="Plant">Plant</option>
+                                   
+                               </select>
+                             </div>
+                            <div class="selectone ml-3">
+                                 <p>Color</p>
+                               <select name="type">
+                                   <option value="red">red</option>
+                                   <option value="yellow">yellow</option>
+                                   <option value="mixed">mixed</option>
+                                   <option value="red-white">red-white</option>
+                                   <option value="red-yellow">red-yellow</option>
+                                   <option value="white-purple">white-purple</option>
+                               </select>
+        
+                             </div>
+                             <div class="selectone ml-3">
+                                <p>Price - min</p>
+                                <select name="fuel">
+                                    <option value="Ksh.3,000">Ksh.3,000</option>
+                                    <option value="Ksh.5,000">Ksh.5,000</option>
+                                    <option value="Ksh.10,000">Ksh.10,000</option>
+                                    <option value="Ksh.20,000">Ksh.20,000</option>
+                                    <option value="ksh.30,000">ksh.30,000</option>
+                                </select>
+                              </div>
+                              <div class="selectone ml-3">
+                                <p>price - max</p>
+                                <select name="transmission">
+                                    <option value="Ksh.3,000">Ksh.3,000</option>
+                                    <option value="Ksh.5,000">Ksh.5,000</option>
+                                    <option value="Ksh.10,000">Ksh.10,000</option>
+                                    <option value="Ksh.20,000">Ksh.20,000</option>
+                                    <option value="ksh.30,000">ksh.30,000</option>
+                                </select>
+                              </div>
+                              
+                              <div class="btn-column">
+                                <br/>
+                                <br/>
+                                <input type="submit" value="Filter" class="btn btn-info btn-sm positionbtn ml-3">
+                              </div>
+                             
+        
+                            </div>
+        
+                          </div>
+        
+                    </div>
+        
+                </form>
+                      </div>
+                        
+                </div>
                 <div class="row compare-view">
                     <div class="col-lg-12 col-lg-12 col-sm-12 col-12">
                         <!--font-back-tittle  -->
-                        <div class="font-back-tittle mb-45">
-                            
-                            <h3 class="archivment-back">Fresh picks</h3>
-                        </div>
+                       
                     </div>
+                    
 
                     <% if(cars.length) { %>
                         
@@ -198,7 +281,7 @@
 
                         <div class="col-xl-4 col-lg-4 col-md-12 col-12">
                             <!-- Single Room -->
-                            <form action="/viewCar" method="POST">
+                            <form action="/view" method="POST">
                        
     
                                 <input id="carId" type="text" name="carId" value="<%=cars[i].id%>" hidden>
@@ -380,7 +463,25 @@
     <script src="./assets/js/main.js"></script>
     <script>
        
+       var modal = document.getElementById("filter-modal");
 
+        var btn = document.getElementById("filterBtn");
+
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
     </script>
 
 </body>

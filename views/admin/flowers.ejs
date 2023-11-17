@@ -62,20 +62,20 @@
           </li>
           <h5 class ="nav-title">MANAGAEMENT</h5>
           <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/cars">
+            <a class="nav-link" href="/admin/flowers">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">User orders</span>
             </a>
           </li>
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/cars">
+            <a class="nav-link" href="/admin/flowers">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">Flowers</span>
             </a>
           </li>
   
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="/admin/addCar">
+            <a class="nav-link" href="/admin/addFlower">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">Add Flower</span>
             </a>
@@ -102,12 +102,12 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
-                  <% if(cars.length) {  %>
+                  <% if(flowers.length) {  %>
                   <thead class="bg-primary text-white">
                     <tr>
                       <th>No.</th>
-                      <th>Make</th>
-                      <th>Model</th>
+                      <th>Type</th>
+                      <th>Name</th>
                       <th>Price</th>
                       <th>Quantity</th>
                       
@@ -117,21 +117,21 @@
                   </thead>
 
                   <tbody>
-                    <% for (i in cars) { %>
+                    <% for (i in flowers) { %>
                     <tr>
                       <td><%=i%></td>
-                      <td><%=cars[i].make%></td>
-                      <td><%=cars[i].model%></td>
-                      <td><%=cars[i].price%></td>
+                      <td><%=flowers[i].type%></td>
+                      <td><%=flowers[i].name%></td>
+                      <td><%=flowers[i].price%></td>
     
-                      <td><%=cars[i].consumption%></td>
+                      <td><%=flowers[i].quantity%></td>
                       
-                      <td><%=cars[i].year%></td>
+                      <td><%=flowers[i].rating%></td>
 
 
                       <th>
-                      <form action="/admin/viewCar" method="POST">
-                        <input type="hidden" name="id" value="<%=cars[i].id%>">
+                      <form action="/admin/viewFlower" method="POST">
+                        <input type="hidden" name="id" value="<%=flowers[i].id%>">
                         <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        
                       </form>
@@ -153,7 +153,7 @@
         <footer class="sticky-footer">
           <div class="container">
             <div class="text-center">
-              <small>2022 Copyright © Automotive Finder. All Rights Reserved.</small>
+              <small>2022 Copyright © Flora Joy. All Rights Reserved.</small>
             </div>
           </div>
         </footer>

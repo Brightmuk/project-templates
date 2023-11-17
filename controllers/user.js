@@ -18,7 +18,7 @@ exports.home = (req, res, next) => {
    });
 
    carQuery = "SELECT * " +
-      " FROM  cars";
+      " FROM  flowers";
 
    connectDB.query(carQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
@@ -46,7 +46,7 @@ exports.postLogin = (req, res, next) => {
       "AND password = " + mysql.escape(req.body.password);
 
       carQuery = "SELECT * " +
-      " FROM  cars";
+      " FROM  flowers";
 
    connectDB.query(query, (err, result) => {
       if (err) throw err; 
@@ -82,7 +82,7 @@ exports.postSearch = (req, res, next) => {
 
 
    filterQuery = "SELECT * " +
-      " FROM  cars " +
+      " FROM  flowers " +
       " WHERE type = " + mysql.escape(req.body.type) +
       " AND fuel = " + mysql.escape(req.body.fuel) +
       " AND transmission = " + mysql.escape(req.body.transmission) +
@@ -106,7 +106,7 @@ exports.postSearch = (req, res, next) => {
 
 
 //view a single car
-exports.postViewCar = (req, res, next) => {
+exports.postViewFlower = (req, res, next) => {
  
    var connectDB = mysql.createConnection({
       host: host,
@@ -116,12 +116,12 @@ exports.postViewCar = (req, res, next) => {
    });
    var car = mysql.escape(req.body.carId);
 
-   hiringQuery =  "SELECT * FROM hiring "+
-   "WHERE car_id="+car
+   hiringQuery =  "SELECT * FROM orders "+
+   "WHERE order_id="+car
 
    query = "SELECT * " + 
       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-      " INNER JOIN hiring ON cars.id=hiring.car_id" +
+      " INNER JOIN hiring ON cars.id=hiring.order_id" +
       " WHERE cars.id = (" + car + 
       ")"; 
    
@@ -132,8 +132,8 @@ exports.postViewCar = (req, res, next) => {
             console.log('Not hired');
 
             query = "SELECT * " + 
-            " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-            " WHERE cars.id = (" + car + 
+            " FROM  flowers " +
+            " WHERE flowers.id = (" + car + 
             ")"; 
             connectDB.query(query, (err2, carResult) => {
                console.log('Doing here');
@@ -141,22 +141,22 @@ exports.postViewCar = (req, res, next) => {
                
                else {
                   console.log(carResult);
-                  return res.render('user/viewCar', {car: carResult[0],user:req.session.user, isHired: false });
+                  return res.render('user/viewFlower', {car: carResult[0],user:req.session.user, isHired: false });
                }
             })
          }else{
             
             console.log('hired!');
             query = "SELECT * " + 
-            " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-            " INNER JOIN hiring ON cars.id=hiring.car_id" +
-            " WHERE cars.id = (" + car + 
+            " FROM  flowers " +
+            " INNER JOIN orders ON flowers.id=orders.order_id" +
+            " WHERE flowers.id = (" + car + 
             ")"; 
             connectDB.query(query, (err2, carResult) => {
                console.log('Doing there')
                if (err2) throw err2; 
                else {
-                  return res.render('user/viewCar', {car: carResult[0], user:req.session.user, isHired: true });
+                  return res.render('user/viewFlower', {car: carResult[0], user:req.session.user, isHired: true });
                }
             })
          }
@@ -178,7 +178,7 @@ exports.account = (req, res, next) => {
 
    
    carQuery = "SELECT * " + 
-      " FROM  hiring";  
+      " FROM  orders";  
    
 
    connectDB.query(carQuery, (err, result) => {
@@ -201,12 +201,11 @@ exports.returnHire = (req, res, next)=>{
       database: database
   });
 
-  returnHiring = "UPDATE hiring SET returned=1 WHERE car_id=" + (req.body.carId);
+  returnHiring = "UPDATE orders SET returned=1 WHERE flower_id=" + (req.body.carId);
 
   carQuery = "SELECT * " + 
-  " FROM  hiring INNER JOIN cars ON hiring.car_id=cars.id" +
-  " WHERE hiring.user_id = (" + (req.session.user) + 
-  ") AND hiring.returned=0"; 
+  " FROM  orders" +
+  " WHERE orders.user_id = (" + (req.session.user)  
 
   console.log('Returning...',(req.body.carId))
   connectDB.query(returnHiring, (err1, result1) => {
@@ -243,14 +242,14 @@ exports.hireCar = (req, res, next) => {
       return res.render('user/login', { msg: "", err: "Your session expired, please login again!" });
    }
 
-   hiringQueryInsert = "INSERT INTO `hiring`(`car_id`, `user_id`,`start_date`,`end_date`,`returned`) "+
+   hiringQueryInsert = "INSERT INTO `orders`(`car_id`, `user_id`,`start_date`,`end_date`,`returned`) "+
    "VALUES(" + carId + ",'" + userId + "', " + startDate + "," + endDate+ "," + 0 + " )"
 
-   hiringQueryGet = "SELECT * FROM hiring WHERE car_id=" + carId;
+   hiringQueryGet = "SELECT * FROM orders WHERE flower_id=" + carId;
 
    carQuery = "SELECT * " +  
-       " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-       " WHERE cars.id =" + mysql.escape(req.body.carId);
+       " FROM  flowers " +
+       " WHERE flowers.id =" + mysql.escape(req.body.carId);
 
    userQuery = "SELECT * FROM users WHERE id=" + userId 
    
@@ -307,7 +306,7 @@ exports.logout = (req, res, next) => {
    });
    req.session.destroy();
    carQuery = "SELECT * " +
-   " FROM  cars";
+   " FROM  flowers";
 
 connectDB.query(carQuery, (filterErr, filterResult) => {
    if (filterErr) throw filterErr; 

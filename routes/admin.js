@@ -11,25 +11,25 @@ router.route('/')
    .get(adminControler.getLogin) 
    .post(adminControler.postLogin) 
 
-router.route('/cars') 
-      .get(adminControler.getCars)
+router.route('/flowers') 
+      .get(adminControler.getFlowers)
 
 
 router.get('/logout',adminControler.logout)  
 
-router.route('/addCar')
-      .get(adminControler.getAddCar) 
-      .post(adminControler.postAddCar) 
+router.route('/addFlower')
+      .get(adminControler.getAddFlower) 
+      .post(adminControler.postAddFlower) 
  
 
-router.route('/viewCar')
-      .post(adminControler.viewCar)  
+router.route('/viewFlower')
+      .post(adminControler.viewFlower)  
       
-router.route('/deleteCar')
-      .post(adminControler.deleteCar)  
+router.route('/deleteFlower')
+      .post(adminControler.deleteFlower)  
 
-router.route('/updateCar')
-      .post(adminControler.updateCar)   
+router.route('/updateFlower')
+      .post(adminControler.updateFlower)   
 
  
 module.exports = router;

@@ -73,20 +73,20 @@
 
           <h5 class ="nav-title">MANAGAEMENT</h5>
           <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/cars">
+            <a class="nav-link" href="/admin/flowers">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">User orders</span>
             </a>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/cars">
+            <a class="nav-link" href="/admin/flowers">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">Flowers</span>
             </a>
           </li>
   
           <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="/admin/addCar">
+            <a class="nav-link" href="/admin/addFlower">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">Add Flowers</span>
             </a>
@@ -114,106 +114,45 @@
             <% if(err) { %>
             <h3 style="color: #ff304f;" class="text-center"><%=err%></h3><br>
             <%   } %>
-            <form class="add-room" action="/admin/addCar" method="POST" enctype="multipart/form-data">
+            <form class="add-room" action="/admin/addFlower" method="POST" enctype="multipart/form-data">
               <div class="form-left" id="form-left">
-                <p>Purpose</p>
-                <select name="purpose" class="form-control" required>
-                  <option value="offroading">Offroading</option>
-                  <option value="luxury">City cruise</option>
-                  <option value="utility">Luggage Transporter</option>
-                  <option value="performance">Speed/Fun</option>
-                  <option value="reliability">Daily Drive</option>
-                  <option value="economy">Pocket Friendly</option>
-              </select>
-                <br>
                 <p>Type</p>
                 <select name="type" class="form-control" required>
-                  <option value="SUV">SUV</option>
-                  <option value="Sedan">Sedan</option>
-                  <option value="Station Wagon">Wagon</option>
+                  <option value="Hamper">Hamper</option>
+                  <option value="Plant">Plant</option>
+                  <option value="Romantic">Romantic</option>
+                  <option value="Bouquet">Bouquet</option>
+                  
               </select>
+                
               <br>
-                <p>Transmission</p>
-                <select name="transmission" class="form-control" required>
-                  <option value="Automatic">Automatic</option>
-                  <option value="Manual">Manual</option>
-                  <option value="CVT">CVT</option>
+              <p>Name</p>
+              <input type="text" class="form-control" name="name" >
+              <br>
+              <p>Color</p>
+              <select class="form-control"  name="type">
+                  <option value="red">red</option>
+                  <option value="yellow">yellow</option>
+                  <option value="mixed">mixed</option>
+                  <option value="red-white">red-white</option>
+                  <option value="red-yellow">red-yellow</option>
+                  <option value="white-purple">white-purple</option>
               </select>
-              <br>
-              <p>Make</p>
-              <input type="text" class="form-control" name="make" placeholder="Car make" required>
-              <br>
-              <p>Model</p>
-              <input type="text" class="form-control" name="model" placeholder="Car model" required>
-              <br>
-              <p>Year</p>
-              <input type="text" class="form-control" name="year" placeholder="2015" required>
-
-              </div>
-
-              <div class="form-right" id="form-right">
-                <p>Fuel</p>
-                <select name="fuel" class="form-control">
-                  <option value="Petrol">Petrol</option>
-                  <option value="Diesel">Diesel</option>
-                  <option value="Electric">Electric</option>
-              </select>
-              <br>
-                <p>Consumption</p>
-                <input type="number" class="form-control" name="consumption" placeholder="km/ltr">
+              
+            <br>
+                <p>Stock</p>
+                <input type="number" class="form-control" name="quantity" placeholder="Quantity">
                 <br>
                 <p>Price</p>
                 <input type="number" class="form-control" name="price" placeholder="ksh" required>
                 <br>
-                <p>Seats</p>
-                <input type="number" class="form-control" name="seats" placeholder="seats" required>
-                <br>
+
                 <p>Image</p>
                 <input type="file" class="form-control" name="image" placeholder="Add Image" required>
                 <br>
-                <input type="button" onclick="next()" class="btn btn-lg btn-success mt-3 add-room-btn" value="Next">
-              </div>
-              <div class="form-next-right" id="form-next-left">
-                <h3>Car stats </h3>
-              
-                <p>Reliability</p>
-                <input type="number" class="form-control" name="reliability" placeholder="0" required>
-                <br>
-                <p>Utility</p>
-                <input type="number" class="form-control" name="utility" placeholder="0" required>
-                <br>
-                <p>Economy</p>
-                <input type="number" class="form-control" name="economy" placeholder="0" required>
-                <br>
-                <p>Maintenance</p>
-                <input type="number" class="form-control" name="maintenance" placeholder="0" required>
-                
-
-                <br>
-              </div>
-              <div class="form-next-right" id="form-next-right">
-                <br>
-                <p>Luxury</p>
-                <input type="number" class="form-control" name="luxury" placeholder="0" required>
-                <br>
-                <p>Performance</p>
-                <input type="number" class="form-control" name="performance" placeholder="0" required>
-                <br>
-                <p>Offroading performance</p>
-                <input type="number" class="form-control" name="offroading" placeholder="0" required>
-                <br>
-                <br>
-                <div class="prev-row">
-                  <input type="button" onclick="prev()" class="btn btn-lg btn-success mt-3 add-room-btn" value="Previous">
-                  <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Car">
-                </div>
-                
-                
-                <br>
+                <input type="submit"  class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Flower">
               </div>
 
-              <!-- <input type="text" class="form-control" name="type" placeholder="Room Type"> -->
-             
             </form>
           </div>
         </div>
@@ -225,7 +164,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>2022 Copyright © Automotive Finder. All Rights Reserved.</small>
+          <small>2022 Copyright © Flora Joy. All Rights Reserved.</small>
         </div>
       </div>
     </footer>
@@ -274,18 +213,7 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script>
-    function next(){
-      document.getElementById("form-next-right").style.display="inline";
-      document.getElementById("form-next-left").style.display="inline";
-      document.getElementById("form-left").style.display="none";
-      document.getElementById("form-right").style.display="none";
-    }
-    function prev(){
-      document.getElementById("form-next-right").style.display="none";
-      document.getElementById("form-next-left").style.display="none";
-      document.getElementById("form-left").style.display="inline";
-      document.getElementById("form-right").style.display="inline";
-    }
+   
 
   </script>
 </body>

@@ -20,10 +20,10 @@ router.route('/search')
 router.route('/account',)
        .get(userControler.account)     
       
-router.post('/viewCar',userControler.postViewCar);  
+router.post('/view',userControler.postViewFlower);  
 router.post('/hireCar',userControler.hireCar); 
 router.post('/returnCar', userControler.returnHire);
-
+ 
 router.get('/contact',userControler.getContact);       
 router.get('/about',userControler.getAbout);    
 router.post('/logout',userControler.logout);  

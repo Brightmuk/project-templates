@@ -104,6 +104,30 @@
 .btn-cart i{
     font-size: 20px;
 }
+.btn-buy:focus{
+    width: 100%;
+}
+#cartForm{
+    margin-top: 25px;
+    margin-left: 20px;
+    width: 50px;
+    float: right;
+}
+#toast {
+        position: absolute;
+        bottom: 30px;
+        width: 200px;
+        padding: 10px;
+        border: 1px solid #c1cafc;
+        border-radius: 5px;
+        color: white;
+        background: #e428a5;
+        border: 1px solid rgb(221, 221, 221);
+        display: none;
+        animation-duration: 2s;
+        font-size: 12px;
+        margin: auto;
+    }
 
 </style>
 <body>
@@ -140,7 +164,6 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
-                                        <li><a href="/search">Search</a></li>
                                         
                                         <li><a href="/about">About</a></li>
                                         <li><a href="/contact">Contact</a></li>
@@ -152,10 +175,12 @@
                                         <a href="/account">
                                             <input type="submit" class="btn btn-login" value="Account">
                                             </a>
-                                            <a href="/cart">
-                        
-                                                <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                </a>
+                                            <form action="/cart" method="POST" id="cartForm">
+                                                <input id="cart-values" type="text" name="flowers" value="" hidden>
+                                                
+                                                <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i><span id="cart-count"> 0</span></button>
+                                                </form>
+
                                         <% }%>
                                     </form>
                                     </ul>
@@ -177,73 +202,7 @@
     </header>
     <main>
 
-<!-- Return car modal -->
-        <div class="modal fade" id="modalReturnForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <form action="/returnCar" method="POST" class="modal-content">
-            <div class="modal-header text-center">
-                
-              <h4 class="modal-title w-100 font-weight-bold">Return this car Today</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body mx-3">
-      
-              <div class="md-form mb-4">
-                <p>Start date</p>
-                <input type="text" id="date-start" disabled class="form-control" name="startDate" value="<%= car.start_date%>">
-              </div>
-                <div class="md-form mb-4">
-      
-                    <p>Current Bill</p>
-                    <input type="text" id="currentBilling" disabled class="form-control" name="currentBill" value="0">
-                  </div>
-      
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-               <input type="text" name="carId" value="<%=car.car_id%>" hidden>
-              <input type="submit" class="btn btn-login" value="Return the car">
-                      
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Hire car modal -->
-<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <form action="/hireCar" method="POST" class="modal-content">
-      <div class="modal-header text-center">
-          
-        <h4 class="modal-title w-100 font-weight-bold">Hire this car</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-
-        <div class="md-form mb-4">
-          <p>Start date</p>
-          <input type="date" id="date-start"  onchange="setEndMin()" class="form-control" name="startDate">
-        </div>
-        <div class="md-form mb-4">
-
-            <p>End Date</p>
-            <input type="date" id="date-end"  class="form-control" name="endDate">
-          </div>
-
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-         <input type="text" name="carId" value="<%=car.id%>" hidden>
-        <input type="submit" class="btn btn-login" value="Hire">
-                
-      </div>
-    </form>
-  </div>
-</div>
+        
 
         <!-- Room Start -->
         <section class="room-area">
@@ -301,11 +260,11 @@
                             
                             <span></span>
                         </div>
-                        <input type="submit" class="btn btn-buy" value="Add to cart">
-                        
-                        
+                       
+                        <button type="button" onclick="addToCart('<%- JSON.stringify(car.id) %>' )" class="btn btn-buy">Add to cart</button>
+                        <div id="toast" onclick="this.style.display='none'"></div>
                     </div>
-
+                   
                 </div>
 
                 <div class="divider"></div>
@@ -455,32 +414,73 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
     ></script>
     <script>
-       //validators
-       document.getElementById('date-start').min = Date.now();
-        function setEndMin(){
-            document.getElementById('date-end').min = document.getElementById('date-start').value;
+
+
+
+        var count = 0;
+        var cars= [];
+
+        function addToCart(carId){
+            var id =JSON.parse(carId);
+            if(cars.includes(id)){
+                var i = cars.indexOf(id);
+                cars.splice(i, 1);
+                count-=1;
+                document.getElementById("cart-count").innerHTML=count;
+                toast("Removed from cart");
+            }else{
+                cars.push(id);
+                console.log("Added flower: "+id+" to cart");
+                document.getElementById("cart-count").innerHTML=count+=1;
+                toast("Added to cart");
+            }
+
         }
-        
-        var startDate = Date.parse(JSON.parse('<%- JSON.stringify(car.start_date) %>'));
-        var endDate = Date.parse(JSON.parse('<%- JSON.stringify(car.end_date) %>'));
-            
-        var days = Math.floor((endDate-startDate)/(24*3600*1000));
 
-        document.getElementById('days').innerHTML = days;
+        function compare(){
+            if(cars.length<1){
+                toast("Add at least one item to cart");
+            }else{
+                var compareForm = document.getElementById("cartForm");
+            var inputField = document.getElementById("cart-values");
+            inputField.value = cars;
+            console.log(inputField.value);
+            compareForm.submit();
+            }
 
-        var price = JSON.parse('<%- JSON.stringify(car.price) %>');
-        console.log(price)
-        var total = days* price;
+        }
 
+        function toast (msg) {
+            document.getElementById('toast').innerHTML=msg
+            $(document).ready(function(){
+                $("#toast").fadeTo("slow", 1.0);
+                $("#toast").fadeTo("slow", 1.0);
+                $("#toast").fadeTo("slow", 0.0);
+               
+            });
+        }
 
-        var currentBill = Math.floor((endDate-Date.now())/(24*3600*1000))*price;
-        
-        document.getElementById('currentBilling').value = currentBill;
-        document.getElementById('currentBill').innerHTML = currentBill;
-
-
-
-
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
     </script>
 
 </body>

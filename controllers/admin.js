@@ -17,38 +17,8 @@ exports.getLogin = (req, res, next) => {
         res.render('admin/login', { msg: "", err: "" });
     }
     else {
-        const options = {
-            "method": "GET",
-            "hostname": "news-api14.p.rapidapi.com",
-            "port": null,
-            "path": "/search?q=car%20industry&country=us&language=en&pageSize=10",
-            "headers": {
-                "x-rapidapi-subscription": "cars",
-                "x-rapidapi-proxy-secret": "c02cea90-4588-11eb-add9-c577b8ecdc8e",
-                "x-rapidapi-user": "suprikurniyanto",
-                "X-RapidAPI-Key": "a307e8eddfmsh2a33e3d638138dcp17c32cjsne44e5a3808fc",
-                "X-RapidAPI-Host": "news-api14.p.rapidapi.com",
-                "useQueryString": true
-            }
-        };
-        var results;
-        const dataReq = http.request(options, function (dataRes) {
-            const chunks = [];
-        
-            dataRes.on("data", function (chunk) {
-                chunks.push(chunk);
-            });
-        
-            dataRes.on("end", function () {
-                const body = Buffer.concat(chunks);
-                console.log(JSON.parse(body.toString()).articles);
-                results=JSON.parse(body.toString()).articles;
-                res.render('admin/index',{ articles: results,data:'My name' })
-            });
-        });
-        dataReq.end();
+        res.render('admin/index',{ data:'My name' })
        
-
     }
 
 } 
@@ -78,39 +48,8 @@ exports.postLogin = (req, res, next) => {
         if (err) throw err;
         else {
             if (result.length) {
-                req.session.admin = result[0].id;
-                req.session.user = result[0].id;
-                const options = {
-                    "method": "GET",
-                    "hostname": "news-api14.p.rapidapi.com",
-                    "port": null,
-                    "path": "/search?q=car%20industry&country=us&language=en&pageSize=10",
-                    "headers": {
-                        "x-rapidapi-subscription": "cars",
-                        "x-rapidapi-proxy-secret": "c02cea90-4588-11eb-add9-c577b8ecdc8e",
-                        "x-rapidapi-user": "suprikurniyanto",
-                        "X-RapidAPI-Key": "a307e8eddfmsh2a33e3d638138dcp17c32cjsne44e5a3808fc",
-                        "X-RapidAPI-Host": "news-api14.p.rapidapi.com",
-                        "useQueryString": true
-                    }
-                };
-                var results;
-                const dataReq = http.request(options, function (dataRes) {
-                    const chunks = [];
-                
-                    dataRes.on("data", function (chunk) {
-                        chunks.push(chunk);
-                    });
-                
-                    dataRes.on("end", function () {
-                        const body = Buffer.concat(chunks);
-                        console.log(JSON.parse(body.toString()).articles);
-                        results=JSON.parse(body.toString()).articles;
-                        res.render('admin/index',{ articles: results,data:'My name' })
-                    });
-                }); 
-                dataReq.end();
-               
+
+                res.render('admin/index',{data:'My name' })
 
             }else {
                 return res.render('admin/login', { msg: "", err: "Please check your information  and try again" });
@@ -120,7 +59,7 @@ exports.postLogin = (req, res, next) => {
 }
 
 //post request
-exports.getCars = (req, res, next) => {
+exports.getFlowers = (req, res, next) => {
     //console.log(req.body);
 
     var connectDB = mysql.createConnection({
@@ -130,12 +69,12 @@ exports.getCars = (req, res, next) => {
         database: database
     });
 
-    carsQuery = "SELECT * FROM cars"
+    carsQuery = "SELECT * FROM flowers"
 
     connectDB.query(carsQuery, (err, result) => {
         if (err) throw err;
         else {
-            return res.render('admin/cars', { msg: "", err: "",cars:result});
+            return res.render('admin/flowers', { msg: "", err: "",flowers:result});
         }
     })
 
@@ -144,12 +83,12 @@ exports.getCars = (req, res, next) => {
 
 
 
-exports.getAddCar = (req, res, next) => {
-    res.render('admin/addCar', { msg: "", err: "" });
+exports.getAddFlower = (req, res, next) => {
+    res.render('admin/addFlower', { msg: "", err: "" });
 }
 
 
-exports.postAddCar = (req, res, next) => {
+exports.postAddFlower = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
         host: host,
@@ -159,68 +98,31 @@ exports.postAddCar = (req, res, next) => {
     });
 
     //var
-   var make = "", model = "", type = "",year = "", price = 0, seats = 0, fuel="",transmission="",purpose=""
-   consumption=0, year="",reliability=0,utility=0,economy=0,performance=0,luxury=0,maintenance=0,offroading=0
+   var type = "", nm = "", color = "",quantity = 0, price = 0;
+   
 
    var imgPath=""
     var wrong = 0;
 
     new formidable.IncomingForm().parse(req)
         .on('field', (name, field) => {
-            if (name === "make") {
-                make = field;
-            }
-            else if (name === "type") {
+            if (name === "type") {
                 type = field;
+            }
+            else if (name === "name") { 
+                nm = field;
             }
             else if (name === "price") {
                 price = parseInt(field);
             }
-            else if (name === "seats") {
-                seats = parseInt(field);
+            else if (name === "quantity") {
+                quantity = parseInt(field);
             }
-            else if (name === "model") {
-                model = field
+            else if (name === "color") {
+                color = field
             }
-            else if (name === "fuel") {
-                fuel = field
-            }
-            else if (name === "year") {
-                year = field
-            }
-            else if (name === "transmission") {
-                transmission = field
-            }
-            else if (name === "purpose") {
-                purpose = field
-            }
-            else if (name === "consumption") {
-                consumption = parseInt(field);
-            }
-            else if (name === "year") {
-                year = field
-            }
-            else if (name === "offroading") {
-                offroading = field
-            }
-            else if (name === "utility") {
-                utility = field
-            }
-            else if (name === "economy") {
-                economy = field
-            }
-            else if (name === "maintenance") {
-                maintenance = field
-            }
-            else if (name === "luxury") {
-                luxury = field
-            }
-            else if (name === "performance") {
-                performance = field
-            }
-            else if (name === "reliability") {
-                reliability = field
-            }
+
+            
             
 
         })
@@ -238,17 +140,17 @@ exports.postAddCar = (req, res, next) => {
                 ///  console.log(__dirname)
                 //  console.log(a)
                 if (name === "img") {
-                    imgPath = (make + type + price + "." + fileType);
+                    imgPath = (name + color + "." + fileType);
                 }
-                imgPath ='/assets/img/cars/' + (make + type + price + "." + fileType)
-                file.path = a + '/public/assets/img/cars/' + (make + type + price + "." + fileType); // __dirname
+                imgPath ='/assets/img/flowers/' + (name + color + "." + fileType)
+                file.path = a + '/public/assets/img/flowers/' + (name + color + "." + fileType); // __dirname
             } else {
                 console.log("Wrong File type")
                 wrong = 1;
-                res.render('admin/addCar', { msg: "", err: "Wrong File type" });
+                res.render('admin/addFlower', { msg: "", err: "Wrong File type" });
             }
         })
-        .on('aborted', () => {
+        .on('aborted', () => { 
             console.error('Request aborted by the user')
         })
         .on('error', (err) => {
@@ -265,33 +167,26 @@ exports.postAddCar = (req, res, next) => {
                 var roomNo = Math.floor(Math.random() * 100) + 1;
                 //saveDir = __dirname + '/uploads/';
                 
-                data = "INSERT INTO `cars`( `make`, `model`, `price`,`seats`,`type`,`fuel`,`transmission`, `consumption`,`year`,  `image`, `listing_user`) "+
-                         "VALUES('" +make + "','" + model + "', '" + price + "','" +seats + "','" + type + "', '" + fuel + "','" +transmission + "', '" + consumption + "','" + year + "', '" +imgPath + "' ,'" + null+ "' )"
+                data = "INSERT INTO `flowers`( `type`, `name`, `color`,`price`,`quantity`,`rating`,`image`,`listing_user`) "+
+                         "VALUES('" +type + "','" + nm + "', '" + color + "','" + price + "','" + quantity + "', ' 0 ','" +imgPath + "',' 1 ')"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {
-                        throw err;
+                        throw err; 
                     }
                     else {
-                      
+                       
                         carQ = "SELECT * " + 
-                        "FROM  cars " +
-                        "WHERE make = " + mysql.escape( make) +
-                        " AND model = " + mysql.escape( model);
+                        "FROM  flowers " +
+                        "WHERE type = " + mysql.escape( type) +
+                        " AND name = " + mysql.escape( nm);
                         connectDB.query(carQ, (err2, thisCar) => {
                             if (err2) {
                                 throw err2;
                             }
                             
 
-                            statQ = "INSERT INTO `carExtras`(`reliability`,`Utility`,`economy`,`maintenance`,`luxury`,`performance`,`car_listing`,`offroading`) "+
-                            "VALUES('"+reliability+"','"+utility+"','"+economy+"','"+maintenance+"','"+luxury+"','"+performance+"','"+ thisCar[0].id+"','"+offroading+"')"
-                            connectDB.query(statQ, (statErr, statRes) => {
-                                if (statErr) {
-                                    throw statErr;
-                                }
-                                res.render('admin/addCar', { msg: "Car Added Successfuly", err: "" });
-                            })
+                            res.render('admin/addFlower', { msg: "Flower Added Successfuly", err: "" });
                         })
 
                     }
@@ -307,7 +202,7 @@ exports.postAddCar = (req, res, next) => {
 
 //get view room 
 
-exports.viewCar = (req, res, next) => {
+exports.viewFlower = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
         host: host,
@@ -317,22 +212,22 @@ exports.viewCar = (req, res, next) => {
     });
 
     carQuery = "SELECT * " + 
-    " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-    " WHERE cars.id =" + mysql.escape(req.body.id);
+    " FROM  flowers" +
+    " WHERE flowers.id =" + mysql.escape(req.body.id);
     ; 
     
 
     connectDB.query(carQuery, (err, carResult) => {
         if (err) throw err; 
         
-        res.render('admin/viewCar', { car: carResult[0],msg:"",err:""});
+        res.render('admin/viewFlower', { flower: carResult[0],msg:"",err:""});
 
     })
 }
 
 
 
-exports.updateCar = (req, res, next) => {
+exports.updateFlower = (req, res, next) => {
    console.log(req.body.id);
     var connectDB = mysql.createConnection({
         host: host,
@@ -342,21 +237,18 @@ exports.updateCar = (req, res, next) => {
     });
 
     carQuery = "SELECT * " + 
-    " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-    " WHERE cars.id =" + mysql.escape(req.body.id);
+    " FROM  flowers" +
+    " WHERE flowers.id =" + mysql.escape(req.body.id);
     ; 
 
-    updateQuery = "UPDATE cars " +
-        "SET make = " + mysql.escape(req.body.make) +
-        ", model = " + mysql.escape(req.body.model) +
+    updateQuery = "UPDATE flowers " +
+        "SET type = " + mysql.escape(req.body.type) +
+        ", name = " + mysql.escape(req.body.name) +
+        ", color = " + mysql.escape(parseInt(req.body.color)) +
         ", price = " + mysql.escape(parseInt(req.body.price)) +
-        ", seats = " + mysql.escape(parseInt(req.body.seats)) +
-        ", type = " + mysql.escape(req.body.type) +
-        ", fuel = " + mysql.escape(req.body.fuel) +
-        ", transmission = " + mysql.escape(req.body.transmission) +
-        ", consumption = " + mysql.escape(parseInt(req.body.consumption)) +
-        ", year = " + mysql.escape(req.body.year) +
-        " WHERE id = " + mysql.escape(req.body.id);
+        ", image = " + mysql.escape(req.body.image) +
+        ", quantity = " + mysql.escape(req.body.quantity);
+
     
 
     connectDB.query(updateQuery, (err, updateResult) => {
@@ -365,7 +257,7 @@ exports.updateCar = (req, res, next) => {
             connectDB.query(carQuery, (err2, carResult) => {
                 if (err2) throw err2;
                 
-                    return res.render('admin/viewCar', { car: carResult[0],msg:"Car updated Successfully",err:""});
+                    return res.render('admin/viewFlower', { flower: carResult[0],msg:"Car updated Successfully",err:""});
                 
             })
 
@@ -373,7 +265,7 @@ exports.updateCar = (req, res, next) => {
 
 }
 
-exports.deleteCar = (req, res, next) => {
+exports.deleteFlower = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
         host: host,
@@ -383,39 +275,17 @@ exports.deleteCar = (req, res, next) => {
     });
 
     delQuery = "DELETE  " + 
-    " FROM  cars" +
+    " FROM  flowers" +
     " WHERE id =" + mysql.escape(req.body.id);
 
-    extraQuery = "DELETE " + 
-    " FROM  carExtras" +
-    " WHERE car_listing =" + mysql.escape(req.body.id);
-
-    carsQuery = "SELECT *"+ 
-        " FROM cars";
-    
-
-    connectDB.query(extraQuery, (err1, carResult1) => {
-        if (err1) throw err1; 
+     
         
-        connectDB.query(delQuery, (err2, carResult2) => {
-        if (err2) throw err2; 
-        
-        connectDB.query(carsQuery, (err, result) => {
+        connectDB.query(delQuery, (err, result) => {
             if (err) throw err; 
             else { 
-                return res.render('admin/cars', { msg: "Car deleted successfully", err: "", cars: result });
+                return res.render('admin/flowers', { msg: "Flower deleted successfully", err: "", flowers: result });
             }
         })
 
-    })
-    })
+    
 }
-
-
-
-
-
-
-
-
-
