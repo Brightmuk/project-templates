@@ -96,7 +96,7 @@ exports.postAddFlower = (req, res, next) => {
         password: password,
         database: database
     });
-
+   
     //var
    var type = "", nm = "", color = "",quantity = 0, price = 0;
    
@@ -106,22 +106,22 @@ exports.postAddFlower = (req, res, next) => {
 
     new formidable.IncomingForm().parse(req)
         .on('field', (name, field) => {
-            if (name === "type") {
-                type = field;
+            if (name === "color") {
+                color = field;
             }
             else if (name === "name") { 
                 nm = field;
             }
-            else if (name === "price") {
+            else if (name === "price") { 
                 price = parseInt(field);
             }
             else if (name === "quantity") {
                 quantity = parseInt(field);
             }
-            else if (name === "color") {
-                color = field
+            else if (name === "type") {
+                type = field;
+              
             }
-
             
             
 
@@ -158,17 +158,21 @@ exports.postAddFlower = (req, res, next) => {
             throw err
         })
         .on('end', () => {
+            
 
             if (wrong == 1) {
                 console.log("Error")
 
             }
+           
             else {
+                
+                
                 var roomNo = Math.floor(Math.random() * 100) + 1;
                 //saveDir = __dirname + '/uploads/';
                 
                 data = "INSERT INTO `flowers`( `type`, `name`, `color`,`price`,`quantity`,`rating`,`image`,`listing_user`) "+
-                         "VALUES('" +type + "','" + nm + "', '" + color + "','" + price + "','" + quantity + "', ' 0 ','" +imgPath + "',' 1 ')"
+                         "VALUES('" + type + "','" + nm + "', '" + color + "','" + price + "','" + quantity + "', ' 0 ','" +imgPath + "',' 1 ')"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {
