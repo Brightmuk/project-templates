@@ -175,11 +175,7 @@
                                         <a href="/account">
                                             <input type="submit" class="btn btn-login" value="Account">
                                             </a>
-                                            <form action="/cart" method="POST" id="cartForm">
-                                                <input id="cart-values" type="text" name="flowers" value="" hidden>
-                                                
-                                                <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i><span id="cart-count"> 0</span></button>
-                                                </form>
+                                            <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
 
                                         <% }%>
                                     </form>
@@ -229,7 +225,7 @@
                                     <br> 
                                     <br>
                                     <br> 
-                                        <a href="#"><img class="car-img" src="<%=car.image%>" alt="" height="200px"></a>
+                                        <a href="#"><img class="car-img" src="<%=flower.image%>" alt="" height="200px"></a>
                                 </div>
                                 
                             </div>
@@ -243,12 +239,12 @@
                 <div class="stats col-6">
                     <div class="room-caption">
                         
-                        <h3><a href="#"> <%=car.model%></a></h3>
-                        <h4><%=car.make%></h4>
-                        <h5>⭐ <%=car.year%> </h5>
+                        <h3><a href="#"> <%=flower.name%></a></h3>
+                        <h4><%=flower.type%></h4>
+                        <h5>⭐ <%=flower.rating%> </h5>
                         
                         <br>
-                        <h3><b>Ksh. <%=car.price%></b></h3>
+                        <h3><b>Ksh. <%=flower.price%></b></h3>
                         
                         <hr>
                         <div class="perks">
@@ -261,7 +257,7 @@
                             <span></span>
                         </div>
                        
-                        <button type="button" onclick="addToCart('<%- JSON.stringify(car.id) %>' )" class="btn btn-buy">Add to cart</button>
+                        <button type="button" onclick="addToCart('<%- JSON.stringify(flower.id) %>' )" class="btn btn-buy">Add to cart</button>
                         <div id="toast" onclick="this.style.display='none'"></div>
                     </div>
                    
@@ -417,38 +413,24 @@
 
 
 
-        var count = 0;
-        var cars= [];
-
         function addToCart(carId){
+            var cart = localStorage.getItem('cart')??[];
             var id =JSON.parse(carId);
-            if(cars.includes(id)){
-                var i = cars.indexOf(id);
-                cars.splice(i, 1);
-                count-=1;
-                document.getElementById("cart-count").innerHTML=count;
+            if(cart.includes(id)){
+                var arr = cart.split(',');
+                var index = arr.indexOf(id);
+                arr.splice(index,1);
+
+                localStorage.setItem('cart',arr.join());
                 toast("Removed from cart");
             }else{
-                cars.push(id);
-                console.log("Added flower: "+id+" to cart");
-                document.getElementById("cart-count").innerHTML=count+=1;
+                cart+=','+id;
+                localStorage.setItem('cart',cart);
                 toast("Added to cart");
-            }
+            };
 
         }
 
-        function compare(){
-            if(cars.length<1){
-                toast("Add at least one item to cart");
-            }else{
-                var compareForm = document.getElementById("cartForm");
-            var inputField = document.getElementById("cart-values");
-            inputField.value = cars;
-            console.log(inputField.value);
-            compareForm.submit();
-            }
-
-        }
 
         function toast (msg) {
             document.getElementById('toast').innerHTML=msg
@@ -460,27 +442,6 @@
             });
         }
 
-        function setCookie(cname, cvalue, exdays) {
-            const d = new Date();
-            d.setTime(d.getTime() + (exdays*24*60*60*1000));
-            let expires = "expires="+ d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-        function getCookie(cname) {
-            let name = cname + "=";
-            let decodedCookie = decodeURIComponent(document.cookie);
-            let ca = decodedCookie.split(';');
-            for(let i = 0; i <ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
     </script>
 
 </body>

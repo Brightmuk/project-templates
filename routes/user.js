@@ -12,9 +12,9 @@ router.route('/login')
        .get(userControler.getLogin)  
        .post(userControler.postLogin)
 
-router.route('/search') 
-       .get(userControler.getSearch)  
-       .post(userControler.postSearch)
+router.route('/cart') 
+       .post(userControler.postCart)  
+
  
 
 router.route('/account',)

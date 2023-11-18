@@ -23,7 +23,7 @@ exports.home = (req, res, next) => {
    connectDB.query(carQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
       else {
-         return res.render('user/home', { cars: filterResult ,user:req.session.user, userCars:false  })
+         return res.render('user/home', { flowers: filterResult ,user:req.session.user, userCars:false  })
       }
    })
 
@@ -54,7 +54,7 @@ exports.postLogin = (req, res, next) => {
 
          req.session.user = result[0].id;
        connectDB.query(carQuery, (err, carResult) => {
-         return res.render('user/home',{user:result[0].username,cars:carResult})
+         return res.render('user/home',{user:result[0].username,flowers:carResult})
        })
          
       }else{
@@ -114,54 +114,22 @@ exports.postViewFlower = (req, res, next) => {
       password: password,
       database: database
    });
-   var car = mysql.escape(req.body.carId);
-
-   hiringQuery =  "SELECT * FROM orders "+
-   "WHERE order_id="+car
 
    query = "SELECT * " + 
-      " FROM  cars  INNER JOIN carExtras ON cars.id=carExtras.car_listing" +
-      " INNER JOIN hiring ON cars.id=hiring.order_id" +
-      " WHERE cars.id = (" + car + 
-      ")"; 
+      " FROM  flowers  " +
+      " WHERE flowers.id = " + mysql.escape(req.body.flowerId) 
+      ; 
    
-      connectDB.query(query, (err, hireResult) => {
-         if (err) throw err; 
-
-         if(hireResult.length<1){
-            console.log('Not hired');
-
-            query = "SELECT * " + 
-            " FROM  flowers " +
-            " WHERE flowers.id = (" + car + 
-            ")"; 
-            connectDB.query(query, (err2, carResult) => {
-               console.log('Doing here');
-               if (err2) throw err2; 
-               
-               else {
-                  console.log(carResult);
-                  return res.render('user/viewFlower', {car: carResult[0],user:req.session.user, isHired: false });
-               }
-            })
-         }else{
-            
-            console.log('hired!');
-            query = "SELECT * " + 
-            " FROM  flowers " +
-            " INNER JOIN orders ON flowers.id=orders.order_id" +
-            " WHERE flowers.id = (" + car + 
-            ")"; 
-            connectDB.query(query, (err2, carResult) => {
-               console.log('Doing there')
-               if (err2) throw err2; 
-               else {
-                  return res.render('user/viewFlower', {car: carResult[0], user:req.session.user, isHired: true });
-               }
-            })
+      connectDB.query(query, (err2, carResult) => {
+         console.log('Doing here');
+         if (err2) throw err2; 
+         
+         else {
+            console.log(carResult);
+            return res.render('user/viewFlower', {flower: carResult[0],user:req.session.user, isHired: false });
          }
-})
-
+      })
+         
 }
 
 //post view user cars
@@ -240,7 +208,7 @@ exports.hireCar = (req, res, next) => {
 
    if(req.session.user==null){
       return res.render('user/login', { msg: "", err: "Your session expired, please login again!" });
-   }
+   } 
 
    hiringQueryInsert = "INSERT INTO `orders`(`car_id`, `user_id`,`start_date`,`end_date`,`returned`) "+
    "VALUES(" + carId + ",'" + userId + "', " + startDate + "," + endDate+ "," + 0 + " )"
@@ -279,9 +247,29 @@ exports.hireCar = (req, res, next) => {
 
 
 //get the search screen
-exports.getSearch = (req, res, next) => {
+exports.postCart = (req, res, next) => {
 
-   res.render('user/search',{user:req.session.user });
+   var connectDB = mysql.createConnection({
+      host: host,
+      user: user,
+      password: password,
+      database: database 
+  });
+  var items = (req.body.items).split(',');
+  console.log(items)
+ 
+  query = 
+ `SELECT * FROM flowers WHERE id IN (${items})`;
+
+  
+  connectDB.query(query, (err1, result1) => {
+   if (err1) throw err1; 
+   else {
+
+      return res.render('user/cart', {flowers: result1, user:req.session.user });
+
+   }
+})
 }
 
 
@@ -311,7 +299,7 @@ exports.logout = (req, res, next) => {
 connectDB.query(carQuery, (filterErr, filterResult) => {
    if (filterErr) throw filterErr; 
    else {
-      return res.render('user/home', { cars: filterResult ,user:null, userCars:false  })
+      return res.render('user/home', { flowers: filterResult ,user:null, userCars:false  })
    }
 })
    
