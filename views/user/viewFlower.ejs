@@ -175,10 +175,15 @@
                                         <a href="/account">
                                             <input type="submit" class="btn btn-login" value="Account">
                                             </a>
-                                            <button class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
+
+                                             <form action="/cart" method="POST" id="cartForm">
+                                                <input id="cart-values" type="text" name="items" value="" hidden>
+                                                
+                                                <button onclick="cart()" class="btn btn-cart"><i class="fa fa-shopping-cart"></i></button>
+                                            </form>   
 
                                         <% }%>
-                                    </form>
+                                 
                                     </ul>
                                     
                                 </nav>
@@ -414,7 +419,7 @@
 
 
         function addToCart(carId){
-            var cart = localStorage.getItem('cart')??[];
+            var cart = localStorage.getItem('cart')??'0';
             var id =JSON.parse(carId);
             if(cart.includes(id)){
                 var arr = cart.split(',');
@@ -424,8 +429,9 @@
                 localStorage.setItem('cart',arr.join());
                 toast("Removed from cart");
             }else{
-                cart+=','+id;
-                localStorage.setItem('cart',cart);
+                var arr = cart.split(',');
+                arr.push(id);
+                localStorage.setItem('cart',arr.join());
                 toast("Added to cart");
             };
 
@@ -441,7 +447,15 @@
                
             });
         }
-
+        function cart(){
+            
+            var cartForm = document.getElementById("cartForm");
+            var inputField = document.getElementById("cart-values");
+            inputField.value = localStorage.getItem('cart');
+            console.log(inputField.value);
+            cartForm.submit();
+            
+        }
     </script>
 
 </body>

@@ -80,6 +80,52 @@ exports.getFlowers = (req, res, next) => {
 
 }
 
+exports.getOrders = (req, res, next) => {
+    //console.log(req.body);
+
+    var connectDB = mysql.createConnection({
+        host: host,
+        user: user,
+        password: password,
+        database: database
+    });
+
+    carsQuery = "SELECT * FROM orders"
+
+    connectDB.query(carsQuery, (err, result) => {
+        if (err) throw err;
+        else {
+            return res.render('admin/orders', { msg: "", err: "",orders:result});
+        }
+    })
+
+}
+exports.fulfillOrder = (req, res, next) => {
+    
+    var connectDB = mysql.createConnection({
+        host: host,
+        user: user,
+        password: password,
+        database: database
+    });
+
+    updateQuery = "UPDATE  orders SET status = 'fulfilled' where orders.id = " +mysql.escape(req.body.id)
+    carsQuery = "SELECT * FROM orders"
+        
+        connectDB.query(updateQuery, (err, result) => {
+            if (err) throw err; 
+            else { 
+                connectDB.query(carsQuery, (er2, result2) => {
+                    if (er2) throw err2; 
+                    else {
+                        return res.render('admin/orders', { msg: "", err: "", orders:result2});
+                    }
+                })
+            }
+        })
+
+    
+}
 
 
 
@@ -228,11 +274,8 @@ exports.viewFlower = (req, res, next) => {
 
     })
 }
-
-
-
-exports.updateFlower = (req, res, next) => {
-   console.log(req.body.id);
+exports.viewOrder = (req, res, next) => {
+    
     var connectDB = mysql.createConnection({
         host: host,
         user: user,
@@ -240,18 +283,62 @@ exports.updateFlower = (req, res, next) => {
         database: database
     });
 
-    carQuery = "SELECT * " + 
-    " FROM  flowers" +
-    " WHERE flowers.id =" + mysql.escape(req.body.id);
+    orderQuery = "SELECT * " + 
+    " FROM  orders" +
+    " WHERE orders.id =" + mysql.escape(req.body.id);
     ; 
+    itemsQuery = "SELECT * " + 
+    " FROM  order_items" +
+    " WHERE order_items.order_id =" + mysql.escape(req.body.id);
+    ; 
+    
+    flowersQuery = "SELECT * " + 
+    " FROM  flowers" +
+    " WHERE flowers.id IN (?)";
+    
+
+    connectDB.query(orderQuery, (err, result) => {
+        if (err) throw err; 
+        
+        connectDB.query(itemsQuery, (err2, result2) => {
+            if (err2) throw err2;
+            var items = result2;
+            var values = items.map(item=>item.flower_id)
+
+            connectDB.query(flowersQuery,[values], (err3, result3) => {
+                if (err3) throw err3;
+                
+                    return res.render('admin/viewOrder', { order: result[0], flowers: result3, msg:"",err:""});
+                
+            })
+            
+        })
+
+    })
+}
+
+
+
+exports.updateFlower = (req, res, next) => {
+   
+    var connectDB = mysql.createConnection({
+        host: host,
+        user: user,
+        password: password,
+        database: database
+    }); 
+    
+    carQuery = "SELECT * FROM  flowers WHERE flowers.id = " + mysql.escape(req.body.id);
+    
 
     updateQuery = "UPDATE flowers " +
         "SET type = " + mysql.escape(req.body.type) +
         ", name = " + mysql.escape(req.body.name) +
-        ", color = " + mysql.escape(parseInt(req.body.color)) +
+        ", color = " + mysql.escape(req.body.color) +
         ", price = " + mysql.escape(parseInt(req.body.price)) +
         ", image = " + mysql.escape(req.body.image) +
-        ", quantity = " + mysql.escape(req.body.quantity);
+        ", quantity = " + mysql.escape(req.body.quantity)
+        " WHERE flowers.id = "+mysql.escape(req.body.id);
 
     
 
@@ -261,7 +348,7 @@ exports.updateFlower = (req, res, next) => {
             connectDB.query(carQuery, (err2, carResult) => {
                 if (err2) throw err2;
                 
-                    return res.render('admin/viewFlower', { flower: carResult[0],msg:"Car updated Successfully",err:""});
+                    return res.render('admin/viewFlower', { flower: carResult[0],msg:"Flower updated Successfully",err:""});
                 
             })
 

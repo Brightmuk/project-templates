@@ -13,17 +13,16 @@ router.route('/login')
        .post(userControler.postLogin)
 
 router.route('/cart') 
-       .post(userControler.postCart)  
-
- 
+       .post(userControler.postCart) 
+router.route('/filter') 
+       .post(userControler.postFilter)  
+router.route('/postOrder') 
+       .post(userControler.postOrder) 
 
 router.route('/account',)
        .get(userControler.account)     
       
 router.post('/view',userControler.postViewFlower);  
-router.post('/hireCar',userControler.hireCar); 
-router.post('/returnCar', userControler.returnHire);
- 
 router.get('/contact',userControler.getContact);       
 router.get('/about',userControler.getAbout);    
 router.post('/logout',userControler.logout);  

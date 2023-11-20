@@ -61,13 +61,13 @@
             </a>
           </li>
           <h5 class ="nav-title">MANAGAEMENT</h5>
-          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
+          <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="/admin/orders">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">User orders</span>
             </a>
           </li>
-          <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
+          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="/admin/flowers">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">Flowers</span>
@@ -102,36 +102,32 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
-                  <% if(flowers.length) {  %>
+                  <% if(orders.length) {  %>
                   <thead class="bg-primary text-white">
                     <tr>
                       <th>No.</th>
-                      <th>Type</th>
-                      <th>Name</th>
+                      <th>Delivery</th>
+                      <th>Date</th>
                       <th>Price</th>
-                      <th>Quantity</th>
-                      
-                      <th>Rating</th>
+                      <th>Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <% for (i in flowers) { %>
+                    <% for (i in orders) { %>
                     <tr>
                       <td><%=i%></td>
-                      <td><%=flowers[i].type%></td>
-                      <td><%=flowers[i].name%></td>
-                      <td><%=flowers[i].price%></td>
+                      <td><%=orders[i].delivery==1?'Yes':'No'%></td>
+                      <td><%=orders[i].date%></td>
+                      <td><%=orders[i].price%></td>
     
-                      <td><%=flowers[i].quantity%></td>
+                      <td><%=orders[i].status%></td>
                       
-                      <td><%=flowers[i].rating%></td>
-
 
                       <th>
-                      <form action="/admin/viewFlower" method="POST">
-                        <input type="hidden" name="id" value="<%=flowers[i].id%>">
+                      <form action="/admin/viewOrder" method="POST">
+                        <input type="hidden" name="id" value="<%=orders[i].id%>">
                         <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        
                       </form>

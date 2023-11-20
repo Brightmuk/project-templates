@@ -65,9 +65,43 @@
   .logo{
     margin-right: 10px;
   }
- .delete{
-   float:right
- }
+  .order{
+    border: 1px solid rgb(230, 230, 230);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .room{
+      margin-top: 50px;
+      
+  }
+  .single-item{
+      display: flex;
+      width: 80%;
+      border: 1px solid rgb(236, 236, 236);
+      border-radius: 5px;
+      padding: 10px;
+  }
+  .single-item .room-caption{
+      width: 80%;
+      margin-left: 50px;
+  }
+.pricing{
+   
+    width: 150px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-weight: bold;
+}
+.id{
+    width: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+ 
     </style>
   </head>
 
@@ -131,77 +165,91 @@
           <% if(err) { %>
           <h3 style="color: #ff304f;" class="text-center"><%=err%></h3><br>
           <%   } %>
-          <form class="view-room" action="/admin/updateFlower" method="POST"> 
-        <div class="row">
           
-          <div class="col-lg-4  ">
             
-            <br/>
-            <div class="car-header">
-              <div class="header-left">
-                <img class="car-image" src="<%=flower.image%>" alt="image">
-              </div>
-              <div class="header-right">
-
-
-              </div>
+          <div class="room mb-50">
+                                        
+                                      
+            <div class="order ">
+                
+                <div class="left">
+                    <h3 class="">order#<%=order.id%></h3>
+                    <h5><%=order.status%></h5>
+                    <div class="per-night">
+                        
+                        <h5>ksh. <%=order.price%> </h5>
+                        <br>
+                        Created on: <small> <%=order.date%> </small>
+                    </div> 
+                </div>
+                <div class="right">
+                    <% if(order.status==" submitted ") { %>
+                    <form action="/admin/fulfill" method="POST">
+                        <input hidden value="<%=order.id%>" name="id">
+                    <input type="submit"  class="btn btn-lg btn-success mt-3 add-room-btn" value="Fulfill order">
+                    </form>
+                    <%   } %>
+                </div>             
             </div>
+            <br>
+            <h3>Order Items</h3>
+            <% if(flowers.length) { %>
+                        
+                <% for(i=0;i<flowers.length;i++){  %>
+                    
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <!-- Single Room -->
+                        
+                   
+
+                            <input id="carId" type="text" name="flowerId" value="<%=flowers[i].id%>" hidden>
+                            
+                            <div class="single-item mb-50">
+                                <div class="id"><%=i+1%></div>
+                                <div class="room-img p-2">        
+                                        <a href="#"><img class="car-img" src="<%=flowers[i].image%>" alt="" height="200px"></a>
+                                </div>
+                              
+                                <div class="room-caption ">
+
+                                   
+                                    <h3><%=flowers[i].name%></h3>
+                                    <h5><%=flowers[i].type%></h5>
+
+                                    
+                                </div>
+                              <div class="pricing">
+                                  
+                                
+                                    <span>ksh. <%=flowers[i].price%> </span>
+                                
+                              </div>
+                              
+
+                            </div>
+<br>
+                    
+                    
+                </div>
+                
+                <% } %>
+
+                <br>
+             
+
+                <% } else{  %>
+              <br>
             
-            <br>
-            <br>
-
-          </div>
-         
-          
-          <div class="col-lg-4  details">
-            <br/>
-            
-            <p>Type</p>
-            <input type="text" class="form-control" name="type" value="<%=flower.type%>" >
-            <p>Name</p>
-            <input type="text" class="form-control" name="name" value="<%=flower.name%>" >
-            <p>Color</p>
-            <select class="form-control"  name="color" value="<%=flower.color%>">
-                <option value="red">red</option>
-                <option value="yellow">yellow</option>
-                <option value="mixed">mixed</option>
-                <option value="red-white">red-white</option>
-                <option value="red-yellow">red-yellow</option>
-                <option value="white-purple">white-purple</option>
-            </select>
-           
-
-            <input type="hidden" class="form-control" name="id" value="<%=flower.id%>">
-            <input type="hidden" class="form-control" name="image" value="<%=flower.image%>">
-            
-            <br>
-            <br>
-            <div class="action-row">
-
-
-              <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
-
-            </div>
-           
-         
-          
-          </div>
-          <div class="col-lg-4  details">
-            <br>
-            
-            <p>Quantity</p>
-            <input type="number" class="form-control" name="quantity"  value="<%=flower.quantity%>">
-            <p>Price</p>
-            <input type="number" class="form-control" name="price"  value="<%=flower.price%>">
-            <p>Rating</p>
-            <input type="text" class="form-control" name="year" value="<%=flower.rating%>" disabled>
-          </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+              <h2 style="color: #ff304f;" class="text-center mt-5 mb-5">No items in order</h2>
         </div>
-      </form>
-      <form id="delForm" action="/admin/deleteFlower" method="POST">
-        <input type="hidden" class="form-control" name="id" value="<%=flower.id%>">    
-        <input type="button" onclick="submitDelete()" class="btn btn-lg btn-danger mt-3 delete" value="Delete">
-      </form>
+            <br>
+            <%  }  %>
+          
+
+        </div>
+
       </div>
     </div>
     <!-- /.container-fluid-->

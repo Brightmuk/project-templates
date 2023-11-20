@@ -70,6 +70,46 @@
 .btn-cart i{
     font-size: 20px;
 }
+.single-room{
+    display: flex;
+    width: 100%;
+    height: 120px;
+    justify-content: space-between;
+
+    box-shadow: none;
+    border-bottom: 1px solid rgb(243, 243, 243);
+}
+.single-room:hover{
+    border: none;
+    transform: none;
+}
+.room-caption{
+    width: 50%;
+    border: none;
+}
+
+.room-img img{
+    height: 100px;
+    width: 100px;
+}
+.summary{
+    margin-top: 100px;
+}
+.summary .total{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(243, 243, 243);
+    margin-bottom: 100px;
+
+}
+.btn-warning{
+        background-color: rgb(155, 26, 127);
+        margin-bottom: 10px;
+    }
+    .btn-warning:hover{
+        background-color: rgb(103, 9, 122);
+    }
 </style>
 <body>
 
@@ -101,7 +141,7 @@
                         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                             <!-- main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
-                                <form action="/compare" method="POST" id="compareForm">
+                                
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/">Home</a></li>                                      
@@ -115,7 +155,7 @@
                                                 </a>
                                       <%   }else{ %>
                                         <a href="/account">
-                                            <input type="submit" class="btn btn-login" value="My cars">
+                                            <input type="submit" class="btn btn-login" value="Account">
                                             </a>
                                             <a href="/cart">
                         
@@ -127,7 +167,7 @@
                                     </ul>
                                     
                                 </nav>
-                            </form>
+                           
                                 
                             </div>
                         </div>
@@ -154,18 +194,20 @@
                         <!--font-back-tittle  -->
                         <div class="font-back-tittle mb-45">
                             <div class="archivment-front">
-                                <h3>Results</h3>
+                                <h3>Cart</h3>
                             </div>
                             <h3 class="archivment-back">Popular matches</h3>
                         </div>
                     </div>
-
+                    
+                        
+                   
                     <% if(flowers.length) { %>
                         
                         <% for(i=0;i<flowers.length;i++){  %>
+                            
     
-    
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
                                 <!-- Single Room -->
                                 <form action="/view" method="POST">
                            
@@ -173,40 +215,61 @@
                                     <input id="carId" type="text" name="flowerId" value="<%=flowers[i].id%>" hidden>
                                     
                                     <div class="single-room mb-50">
+                                        <div class="id"><%=i+1%></div>
                                         <div class="room-img p-2">        
                                                 <a href="#"><img class="car-img" src="<%=flowers[i].image%>" alt="" height="200px"></a>
                                         </div>
                                       
-                                        <div class="room-caption text-center">
+                                        <div class="room-caption ">
         
                                            
-                                            <h5><%=flowers[i].name%></h5>
-                                            <div class="per-night">
-                                                <span>ksh. <%=flowers[i].price%> </span>
-                                            </div>
-                                            <br>
-                                           
-                                                <input type="submit" class="btn btn-warning" value="View">
-                                          
+                                            <h3><%=flowers[i].name%></h3>
+                                            <h5><%=flowers[i].type%></h5>
+
                                             
                                         </div>
-                                      
+                                      <div class="pricing">
+                                          
+                                        <div class="per-night">
+                                            <span>ksh. <%=flowers[i].price%> </span>
+                                        </div>
+                                      </div>
+
                                     </div>
         
                             
                             </form>
                         </div>
-                    
+                        
                         <% } %>
-               
+                        <br>
+                        <br>
+                        <div class="summary col-12">
+                            <h2>Order Summary</h2>
+                            <p><%=flowers.length%> Items</p>
+                            <div class="total">
+                                <h3>Total</h3>
+                                <form action="/postOrder" method="POST" id=checkoutForm>
+                                    <input id="flowers-value" name="items" value="<%=items%>" hidden>
+                                    <input name="total" value=" <%=total%>" hidden>
+                                  
+                                    <button type="submit" class="btn btn-warning" onclick="checkout()">Checkout Ksh.<%=total%></button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                        <br>
+                     
+
                         <% } else{  %>
                       <br>
+                    
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                      <h2 style="color: #ff304f;" class="text-center mt-5 mb-5">No results match the search</h2>
+                      <h2 style="color: #ff304f;" class="text-center mt-5 mb-5">No items in cart</h2>
                 </div>
                     <br>
                     <%  }  %>
-
+                
                 </div>
             </div>
             
@@ -342,54 +405,17 @@
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
- 
-        var count = 0;
-        var cars= [];
-
-        function addComparison(carId){
-            var id =JSON.parse(carId);
-            if(cars.includes(id)){
-                var i = cars.indexOf(id);
-                cars.splice(i, 1);
-                count-=1;
-                document.getElementById("compares").innerHTML=count;
-                toast("Removed from comparison");
-            }else if(count<3){
-                cars.push(id);
-                console.log("Added car: "+id+" to comparison");
-                document.getElementById("compares").innerHTML=count+=1;
-                toast("Added to comparison");
-            }else{
-                toast("You can compare a maximum of 3 cars");
-            }
+        function checkout(){
+            localStorage.setItem('cart',0);
+            var field = document.getElementById('cart-values');
             
-
-
+            var form = document.getElementById('checkoutForm');
+            console.log(field.value)
+            
+            
         }
 
-        function compare(){
-            if(cars.length<2){
-                toast("Add at least two cars");
-            }else{
-                var compareForm = document.getElementById("compareForm");
-            var inputField = document.getElementById("compare-values");
-            inputField.value = cars;
-            console.log(inputField.value);
-            compareForm.submit();
-            }
-
-        }
-
-        function toast (msg) {
-            document.getElementById('toast').innerHTML=msg
-            $(document).ready(function(){
-                $("#toast").fadeTo("slow", 1.0);
-                $("#toast").fadeTo("slow", 1.0);
-                $("#toast").fadeTo("slow", 0.0);
-               
-            });
-        }
-
+        
     </script>
 
 </body>

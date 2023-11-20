@@ -13,7 +13,8 @@ router.route('/')
 
 router.route('/flowers') 
       .get(adminControler.getFlowers)
-
+router.route('/orders') 
+      .get(adminControler.getOrders)
 
 router.get('/logout',adminControler.logout)  
 
@@ -24,7 +25,11 @@ router.route('/addFlower')
 
 router.route('/viewFlower')
       .post(adminControler.viewFlower)  
-      
+router.route('/viewOrder')
+      .post(adminControler.viewOrder) 
+router.route('/fulfill')
+      .post(adminControler.fulfillOrder)
+
 router.route('/deleteFlower')
       .post(adminControler.deleteFlower)  
 

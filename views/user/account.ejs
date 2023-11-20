@@ -116,11 +116,57 @@
                         <h2 class="contact-title">Account</h2>
                     </div>
                     <div class="col-lg-8">
-                      <h3>Mercy Wairimu</h3>
-                      <p>Member since 19/30/2022</p>
+                      <h3><%=account.first_name%> <%=account.last_name%></h3>
+                      <small><%=account.username%></small>
+                      <p>Phone:  <%=account.phone%></p>
 
                       <br>
-                      Orders made: <b>5</b>
+                      <h3>Orders</h3>
+                      <br>
+
+                      <% if(orders.length) { %>
+                        
+                        <% for(i=0;i<orders.length;i++){  %>
+                            
+    
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <!-- Single Room -->
+                                
+                                    
+                                    <div class="single-room mb-50">
+                                        
+                                      
+                                        <div class="room-caption ">
+                                            <div class="id">order#<%=orders[i].id%></div>
+                                            <h3><%=orders[i].status%></h3>
+                                            <div class="per-night">
+                                                
+                                                <span>ksh. <%=orders[i].price%> </span>
+                                                <br>
+                                                Created on: <small> <%=orders[i].date%> </small>
+                                            </div>                                 
+                                        </div>
+                                      
+
+                                    </div>
+        
+                            
+                         
+                        </div>
+                        
+                        <% } %>
+                        <br>
+
+                     
+
+                        <% } else{  %>
+                      <br>
+                    
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                      <h2 style="color: #ff304f;" class="text-center mt-5 mb-5">No items orders</h2>
+                </div>
+                    <br>
+                    <%  }  %>
                     </div>
                     
                 </div>
