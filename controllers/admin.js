@@ -17,10 +17,15 @@ exports.getLogin = (req, res, next) => {
         res.render('admin/login', { msg: "", err: "" });
     }
     else {
-        res.render('admin/index',{ data:'My name' })
-       
-    }
+        carsQuery = "SELECT * FROM orders";
 
+        connectDB.query(carsQuery, (err, result) => {
+            if (err) throw err;
+            else {
+                return res.render('admin/orders', { msg: "", err: "",orders: result});
+            }
+        })
+    }
 } 
 //logout
 exports.logout = (req, res, next) => {
@@ -37,6 +42,7 @@ exports.postLogin = (req, res, next) => {
         password: password,
         database: database
     });
+    carsQuery = "SELECT * FROM orders"
 
     data = "SELECT * " +
         "FROM users " +
@@ -49,7 +55,12 @@ exports.postLogin = (req, res, next) => {
         else {
             if (result.length) {
 
-                res.render('admin/index',{data:'My name' })
+                connectDB.query(carsQuery, (err, result) => {
+                    if (err) throw err;
+                    else {
+                        return res.render('admin/orders', { msg: "", err: "",orders:result});
+                    }
+                })
 
             }else {
                 return res.render('admin/login', { msg: "", err: "Please check your information  and try again" });

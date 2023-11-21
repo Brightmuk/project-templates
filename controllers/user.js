@@ -23,12 +23,12 @@ exports.home = (req, res, next) => {
    });
 
    carQuery = "SELECT * " +
-      " FROM  flowers";
+      " FROM  flowers WHERE quantity > 0";
 
    connectDB.query(carQuery, (filterErr, filterResult) => {
       if (filterErr) throw filterErr; 
       else {
-         return res.render('user/home', { flowers: filterResult ,user:req.session.user, userCars:false  })
+         return res.render('user/home', { flowers: filterResult ,user:req.session.user, userCars:false,msg:''  })
       }
    })
 
@@ -51,7 +51,7 @@ exports.postLogin = (req, res, next) => {
       "AND password = " + mysql.escape(req.body.password);
 
       carQuery = "SELECT * " +
-      " FROM  flowers";
+      " FROM  flowers WHERE quantity > 0";
 
    connectDB.query(query, (err, result) => {
       if (err) throw err; 
@@ -59,7 +59,7 @@ exports.postLogin = (req, res, next) => {
 
          req.session.user = result[0].id;
        connectDB.query(carQuery, (err, carResult) => {
-         return res.render('user/home',{user:result[0].username,flowers:carResult})
+         return res.render('user/home',{user:result[0].username,flowers:carResult,msg:''})
        })
          
       }else{
@@ -94,7 +94,7 @@ exports.postFilter = (req, res, next) => {
       " FROM  flowers " +
       " WHERE type = " + mysql.escape(req.body.type) +
       " AND color = " + mysql.escape(req.body.color) +
-      " AND price BETWEEN " + mysql.escape(parseInt(req.body.price_start)) +
+      " AND quantity > 0 AND price BETWEEN " + mysql.escape(parseInt(req.body.price_start)) +
       " AND "+ mysql.escape(parseInt(req.body.price_end));
       
 
@@ -103,7 +103,7 @@ exports.postFilter = (req, res, next) => {
       if (filterErr) throw filterErr; 
       else { 
     
-         return res.render('user/home',{user:req.session.user, flowers:filterResult})
+         return res.render('user/home',{user:req.session.user, flowers:filterResult,msg:''})
       }
    })
 
@@ -219,15 +219,16 @@ exports.postOrder = (req, res, next) => {
   var total = mysql.escape(req.body.total);
   const values = items.split(',');
   values.splice(values.indexOf('0'),1)
- 
+
   var arr = values.map(val=>[orderId,val]);
  
-  flowersQuery = "SELECT * " + 
-  " FROM  flowers"; 
+  flowersQuery = "SELECT * " +
+  " FROM  flowers WHERE quantity>0"; 
 
   orderItemsQuery = 
  'INSERT INTO order_items (order_id, flower_id) VALUES ?';
- 
+  
+  editQuantityQuery = "UPDATE flowers SET quantity=quantity-1 WHERE id IN (?)";
 
   query = "INSERT INTO `orders`(`id`,`user_id`,`delivery`,`price`,`status`) "+
    "VALUES(" + orderId + "," + req.session.user + ", 1 ," + total + ",' submitted ' )"
@@ -243,7 +244,12 @@ exports.postOrder = (req, res, next) => {
             connectDB.query(orderItemsQuery,[arr], (err3, res3) => {
                if (err3) throw err3; 
                else {
-                  return res.render('user/home', { flowers: res2 ,user:req.session.user, userCars:false  })
+                  connectDB.query(editQuantityQuery,[values], (err4, res4) => {
+                     if (err4) throw err4; 
+                     else {
+                        return res.render('user/home', { flowers: res2 ,user:req.session.user, userCars:false, msg:"Order placed successfully"  })
+                     }
+                  })
                }
             })
          }
@@ -274,12 +280,12 @@ exports.logout = (req, res, next) => {
    });
    req.session.destroy();
    carQuery = "SELECT * " +
-   " FROM  flowers";
+   " FROM  flowers WHERE quantity>0";
 
 connectDB.query(carQuery, (filterErr, filterResult) => {
    if (filterErr) throw filterErr; 
-   else {
-      return res.render('user/home', { flowers: filterResult ,user:null, userCars:false  })
+   else { 
+      return res.render('user/home', { flowers: filterResult ,user:null, userCars:false, msg:"Logout succesful"  })
    }
 })
    
