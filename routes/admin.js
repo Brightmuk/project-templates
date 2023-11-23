@@ -11,6 +11,9 @@ router.route('/')
    .get(adminControler.getLogin) 
    .post(adminControler.postLogin) 
 
+router.route('/orders') 
+   .get(adminControler.getOrders)
+
 router.route('/cars') 
       .get(adminControler.getCars)
 
@@ -24,7 +27,9 @@ router.route('/addCar')
 
 router.route('/viewCar')
       .post(adminControler.viewCar)  
-      
+router.route('/viewOrder')
+      .post(adminControler.viewOrder)  
+
 router.route('/deleteCar')
       .post(adminControler.deleteCar)  
 

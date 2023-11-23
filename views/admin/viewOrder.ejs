@@ -120,7 +120,7 @@
       </div>
     </nav>
     <div class="content-wrapper">
-      <br><br><br>
+        <br><br><br>
       <div class="container-fluid">
         <% if(msg) { %>
           <h3 style="color: #17b978;" class="text-center"><%=msg%></h3><br>
@@ -139,30 +139,12 @@
                 <img class="car-image" src="<%=car.image%>" alt="image">
               </div>
               <div class="header-right">
-                <div class="item">
-                <label for="file">Reliability</label>
-                <progress   value="<%=car.reliability%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Economy</label>
-                <progress   value="<%=car.economy%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Perfromance</label>
-                <progress   value="<%=car.perfromance%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Maintenance</label>
-                <progress   value="<%=car.maintenance%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                <label for="file">Luxury</label>
-                <progress   value="<%=car.luxury%>" max="10">  </progress>
-                </div>
-                <div class="item">
-                  <label for="file">Utility</label>
-                  <progress   value="<%=car.Utility%>" max="10">  </progress>
-                </div>
+                
+                <p>Who hired</p>
+                <input type="text" class="form-control" name="model" value="<%=car.last_name %> <%=car.first_name %>"  disabled>
+                <p>Contact</p>
+                <input type="text" class="form-control" name="model" value="<%=car.phone%> %>"  disabled>
+
 
               </div>
             </div>
@@ -171,14 +153,15 @@
             <br>
            <form class="view-room" action="/admin/updateCar" method="POST">
             <p>Make</p>
-            <input type="text" class="form-control" name="make" value="<%=car.make%>" >
+            <input type="text" class="form-control" name="make" value="<%=car.make%>"  disabled>
             <p>Model</p>
-            <input type="text" class="form-control" name="model" value="<%=car.model%>" >
+            <input type="text" class="form-control" name="model" value="<%=car.model%>"  disabled>
             <p>Type</p>
-            <input type="text" class="form-control" name="type"  value="<%=car.type%>">
+            <input type="text" class="form-control" name="type"  value="<%=car.type%>" disabled>
             <p>Transmission</p>
-            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>">
-          
+            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>" disabled>
+            <p>Current bill</p>
+            <input type="text" class="form-control" name="transmission"  value="<%=car.transmission%>" disabled>
        
           </div>
           <div class="col-lg-2 "></div>
@@ -187,32 +170,28 @@
 
 
             <p>Fuel</p>
-            <input type="text" class="form-control" name="fuel"  value="<%=car.fuel%>">
+            <input type="text" class="form-control" name="fuel"  value="<%=car.fuel%>" disabled>
             <p>Seats</p>
-            <input type="number" class="form-control" name="seats"  value="<%=car.seats%>">
+            <input type="number" class="form-control" name="seats"  value="<%=car.seats%>" disabled>
             <p>Consumption</p>
-            <input type="number" class="form-control" name="consumption"  value="<%=car.consumption%>">
+            <input type="number" class="form-control" name="consumption"  value="<%=car.consumption%>" disabled>
             <p>price</p>
-            <input type="number" class="form-control" name="price"  value="<%=car.price%>">
+            <input type="number" class="form-control" name="price"  value="<%=car.price%>" disabled>
             <p>Year</p>
-            <input type="text" class="form-control" name="year" value="<%=car.year%>">
+            <input type="text" class="form-control" name="year" value="<%=car.year%>" disabled>
 
-            <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
+            <input type="hidden" class="form-control" name="id" value="<%=car.id%>" disabled>
+
             <br>
             <br>
-            <div class="action-row">
+            Current Bill
+            <h3 id="currentBill">0</h3>
+            <p>Return status</p>
+                <input type="text" class="form-control" name="model" value="<%=car.returned==0?'Returned':'Not returned' %> "  disabled>
 
-
-             
-
-              <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
-            </div>
-           
-          </form>
-          <form id="delForm" action="/admin/deleteCar" method="POST">
-            <input type="hidden" class="form-control" name="id" value="<%=car.id%>">
-            <input type="button" onclick="submitDelete()" class="btn btn-lg btn-danger mt-3 add-room-btn" value="Delete">
-          </form>
+            <hr>
+            <h3></h3>
+            <h3 class="text-center" style="color: rgb(124, 7, 7);">This car has been hired from<br> <b ><%=car.start_date.toString().substring(0,16)%></b> to <b><%=car.end_date.toString().substring(0,16)%></b> </h3>
           </div>
         </div>
         
@@ -275,10 +254,25 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script>
-    function submitDelete(){
-      document.getElementById("delForm").submit();
-     
-    }
+
+        
+        var startDate = Date.parse(JSON.parse('<%- JSON.stringify(car.start_date) %>'));
+        var endDate = Date.parse(JSON.parse('<%- JSON.stringify(car.end_date) %>'));
+            
+        var days = Math.floor((endDate-startDate)/(24*3600*1000));
+
+
+        var price = JSON.parse('<%- JSON.stringify(car.price) %>');
+        console.log(price)
+        var total = days* price;
+
+
+        var currentBill = Math.floor((endDate-Date.now())/(24*3600*1000))*price;
+        
+        
+        document.getElementById('currentBill').innerHTML = 'ksh.'+currentBill;
+
+
   </script>
 </body>
 

@@ -30,7 +30,7 @@
 </head>
 <style>
   .card{
-    width: 300px;
+    width: 400px;
     margin-right:10px;
   }
   .card h4{
@@ -70,6 +70,12 @@
             <span class="nav-link-text">Trending</span>
           </a>
         </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="/admin/orders">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Orders</span>
+          </a>
+        </li>
         <h5 class ="nav-title">CAR MANAGAEMENT</h5>
         <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="/admin/cars">
@@ -97,13 +103,13 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-
+      <br><br><br>
       <h1>Automotive News</h1>
       
        <br>
        <div class="news ">
         <% for (i in articles) { %>
-          <div class="card mb-3">
+          <div class="card mb-4">
             <div class="card-header">
               <h4> <%=articles[i].title%></h4>
           <div class="card-body">

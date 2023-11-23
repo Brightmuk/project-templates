@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Admin: cars</title>
+  <title>Admin: Orders</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
   <link rel="stylesheet" href="./style.css">
 
@@ -60,14 +60,14 @@
               <span class="nav-link-text">Trending</span>
             </a>
           </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Dashboard">
             <a class="nav-link" href="/admin/orders">
               <i class="fa fa-fw fa-dashboard"></i>
               <span class="nav-link-text">Orders</span>
             </a>
           </li>
           <h5 class ="nav-title">CAR MANAGAEMENT</h5>
-          <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="/admin/cars">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">Cars</span>
@@ -92,7 +92,7 @@
       </div>
     </nav>
     <div class="content-wrapper">
-      <br><br><br>
+        <br><br><br>
       <div class="container-fluid">
 
         <div class="card mb-3">
@@ -101,40 +101,33 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
-                  <% if(cars.length) {  %>
+                  <% if(orders.length) {  %>
                   <thead class="bg-primary text-white">
                     <tr>
                       <th>No.</th>
-                      <th>Make</th>
-                      <th>Model</th>
-                      <th>Price</th>
-                      <th>Seats</th>
-                      <th>Type</th>
-                      <th>Fuel</th>
-                      <th>Transmission</th>
-                      <th>km/l</th>
-                      <th>Year</th>
+                      <th>User</th>
+                      <th>Car</th>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Returned</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <% for (i in cars) { %>
+                    <% for (i in orders) { %>
                     <tr>
                       <td><%=i%></td>
-                      <td><%=cars[i].make%></td>
-                      <td><%=cars[i].model%></td>
-                      <td><%=cars[i].price%></td>
-                      <td><%=cars[i].seats%>+</td>
-                      <td><%=cars[i].type%></td>
-                      <td><%=cars[i].fuel%></td>
-                      <td><%=cars[i].transmission%></td>
-                      <td><%=cars[i].consumption%></td>
-                      <td><%=cars[i].year%></td>
+                      <td><%=orders[i].first_name%> <%=orders[i].last_name %></td>
+                      <td><%=orders[i].make%> <%=orders[i].model%></td>
+                      <td><%=orders[i].start_date.toString().substring(0,16)%></td>
+                      <td><%=orders[i].end_date.toString().substring(0,16)%></td>
+                      <td><%=orders[i].returned==0?'True':'False' %></td>
 
                       <th>
-                      <form action="/admin/viewCar" method="POST">
-                        <input type="hidden" name="id" value="<%=cars[i].id%>">
+                      <form action="/admin/viewOrder" method="POST">
+                        <input type="hidden" name="car_id" value="<%=orders[i].car_id%>">
+                        <input type="hidden" name="user_id" value="<%=orders[i].user_id%>">
                         <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        
                       </form>

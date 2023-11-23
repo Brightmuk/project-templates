@@ -21,7 +21,7 @@ exports.getLogin = (req, res, next) => {
             "method": "GET",
             "hostname": "news-api14.p.rapidapi.com",
             "port": null,
-            "path": "/search?q=car%20industry&country=us&language=en&pageSize=10",
+            "path": "/search?q=car%20industry&country=us&language=en&pageSize=6",
             "headers": {
                 "x-rapidapi-subscription": "cars",
                 "x-rapidapi-proxy-secret": "c02cea90-4588-11eb-add9-c577b8ecdc8e",
@@ -84,7 +84,7 @@ exports.postLogin = (req, res, next) => {
                     "method": "GET",
                     "hostname": "news-api14.p.rapidapi.com",
                     "port": null,
-                    "path": "/search?q=car%20industry&country=us&language=en&pageSize=10",
+                    "path": "/search?q=car%20industry&country=us&language=en&pageSize=6",
                     "headers": {
                         "x-rapidapi-subscription": "cars",
                         "x-rapidapi-proxy-secret": "c02cea90-4588-11eb-add9-c577b8ecdc8e",
@@ -140,7 +140,28 @@ exports.getCars = (req, res, next) => {
     })
 
 }
+exports.getOrders = (req, res, next) => {
+    //console.log(req.body);
 
+    var connectDB = mysql.createConnection({
+        host: host,
+        user: user,
+        password: password,
+        database: database
+    });
+
+    carsQuery = "SELECT * FROM hiring INNER JOIN users ON hiring.user_id=users.id"+
+    " INNER JOIN cars ON hiring.car_id=cars.id"
+
+    connectDB.query(carsQuery, (err, result) => {
+        if (err) throw err;
+        else {
+            console.log(result)
+            return res.render('admin/orders', { msg: "", err: "",orders:result});
+        }
+    })
+
+}
 
 
 
@@ -329,7 +350,31 @@ exports.viewCar = (req, res, next) => {
 
     })
 }
+exports.viewOrder = (req, res, next) => {
+    
+    var connectDB = mysql.createConnection({
+        host: host,
+        user: user,
+        password: password,
+        database: database
+    });
+    console.log(req.body.id)
 
+    carQuery = "SELECT * " + 
+    " FROM  hiring  INNER JOIN cars ON hiring.car_id=cars.id" +
+    " INNER JOIN users ON hiring.user_id=users.id" +
+    " WHERE hiring.car_id =" + mysql.escape(req.body.car_id)+
+    " AND hiring.user_id = "+mysql.escape(req.body.user_id)
+    ;
+    
+
+    connectDB.query(carQuery, (err, carResult) => {
+        if (err) throw err; 
+        
+        res.render('admin/viewOrder', { car: carResult[0],msg:"",err:""});
+
+    })
+}
 
 
 exports.updateCar = (req, res, next) => {

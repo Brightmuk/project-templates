@@ -260,7 +260,7 @@
                                       Return this car</a>
                                   </div>
                                 <% }else if(isHired){%>
-                                    <h3>This car has been hired from <b><%=car.start_date%></b> to <b><%=car.end_date%></b> </h3>
+                                    <h3 class="text-center" style="color: rgb(124, 7, 7);">This car has been hired from<br> <b><%=car.start_date.toString().substring(0,16)%></b> to <b><%=car.end_date.toString().substring(0,16)%></b> </h3>
                                     
                                 <% }else{%>
                                     <div class="text-center">
@@ -278,12 +278,12 @@
                     <% if(isHired&&user==car.user_id) { %>
                     <div class=" single-room car-extras">
                         <h5 class="feature">Start date:</h5>
-                        <h5 class="value"><b><%=car.start_date%></b></h5>
+                        <h5 class="value"><b><%=car.start_date.toString().substring(0,16)%></b></h5>
                     </div>
                     <hr>
                     <div class="car-extras">
                         <h5 class="feature">End date:</h5>
-                        <h5 class="value"><b><%=car.end_date%></b></h5>
+                        <h5 class="value"><b><%=car.end_date.toString().substring(0,16)%></b></h5>
                     </div>
                     
                     <hr>
@@ -295,7 +295,7 @@
                     <hr>
                     <div class="car-extras">
                         <h5 class="feature">Current bill</h5>
-                        <h5 class="value" id="currentBill"><b>0</b></h5>
+                        <h5 class="value" id="currentBill"><b> 0</b></h5>
                     </div>
                     <% }else{%>
                         <div class=" single-room car-extras">
@@ -321,10 +321,7 @@
                             <h5 class="value" id="days"><b><%=car.offroading%></b></h5>
                         </div>
                         <hr>
-                        <div class="car-extras">
-                            <h5 class="feature">Luxury</h5>
-                            <h5 class="value" id="currentBill"><b><%=car.luxury%></b></h5>
-                        </div>
+                       
                         <% } %>
                     <hr>
                     
@@ -497,9 +494,8 @@
 
         var currentBill = Math.floor((endDate-Date.now())/(24*3600*1000))*price;
         
-        document.getElementById('currentBilling').value = currentBill;
-        document.getElementById('currentBill').innerHTML = currentBill;
-
+        document.getElementById('currentBilling').value = 'ksh.'+currentBill;
+        document.getElementById('currentBill').innerHTML = 'ksh.'+currentBill;
 
 
 
