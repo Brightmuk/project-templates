@@ -6,6 +6,7 @@ var mysql = require('mysql');
 //authentication check
 exports.authentication = (req, res, next) => {
 
+
    if (req.session.mail != undefined) {
       next();
    }
@@ -16,13 +17,48 @@ exports.authentication = (req, res, next) => {
 
 // show the home page
 exports.getHome = (req, res, next) => {
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "hotel"
+   });
 
-   if (req.session.mail != undefined) {
-      return res.render('user/home', { user: req.session.mail });
-   }
-   else {
-      return res.render('user/home', { user: "" });
-   }
+   data = "SELECT * " +
+      " FROM  category ";
+
+   connectDB.query(data, (err, result) => {
+      if (err) throw err; //show if error found
+      else {
+         return res.render('user/home', { user: "" ,properties: result, filter:null });
+        
+      } 
+   })
+}
+
+exports.filterResults = (req, res, next) => {
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "hotel"
+   });
+
+   data = "SELECT * " +
+      " FROM  category " +
+      " WHERE  category = " + mysql.escape(req.body.category) +
+      " AND type = " + mysql.escape(req.body.type) +
+      " AND location = " + mysql.escape(req.body.location);
+
+
+   connectDB.query(data, (err, result) => {
+      if (err) throw err; //show if error found
+      else {
+         return res.render('user/home', { user: "" ,properties: result,filter:{} });
+        
+      }
+   })
+
 }
 
 //show the login page
@@ -95,16 +131,10 @@ exports.postCreateAccount = (req, res, next) => {
       }
    })
 }
+ 
+exports.viewProperty = (req, res, next) => {
 
-//get request for category
-exports.getCategory = (req, res, next) => {
-
-   res.render('user/category', { user: req.session.mail });
-}
-
-//post request of category
-exports.postCategory = (req, res, next) => {
-   //console.log(req.body);
+   //console.log(req.body); 
    var connectDB = mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -112,21 +142,19 @@ exports.postCategory = (req, res, next) => {
       database: "hotel"
    });
 
-   data = "SELECT * " +
+   query = "SELECT * " + 
       " FROM  category " +
-      " WHERE name = " + mysql.escape(req.body.cat) +
-      " AND type = " + mysql.escape(req.body.type) +
-      " AND available = 1";
-
-   connectDB.query(data, (err, result) => {
-      if (err) throw err; //show if error found
+      " WHERE name = " + mysql.escape(req.body.name);
+      
+   connectDB.query(query, (err, result) => {
+      if (err) throw err;
       else {
-         //console.log(result);
-         return res.render('user/showCategory', { user: req.session.mail, rooms: result })
+        
+         res.render('user/viewProperty', { property: result[0], err: "", });
       }
    })
-
 }
+
 
 // get booking data 
 exports.postBooking = (req, res, next) => {
@@ -139,7 +167,7 @@ exports.postBooking = (req, res, next) => {
 
 exports.postStatus = (req, res, next) => {
 
-   //console.log(req.body);
+   //console.log(req.body); 
    var connectDB = mysql.createConnection({
       host: "localhost",
       user: "root",

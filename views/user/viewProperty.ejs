@@ -1,47 +1,63 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Diamond || Category</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Hotel</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- CSS here -->
-            <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="/assets/css/gijgo.css">
-            <link rel="stylesheet" href="/assets/css/slicknav.css">
-            <link rel="stylesheet" href="/assets/css/animate.min.css">
-            <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="/assets/css/themify-icons.css">
-            <link rel="stylesheet" href="/assets/css/slick.css">
-            <link rel="stylesheet" href="/assets/css/nice-select.css">
-            <link rel="stylesheet" href="/assets/css/style.css">
-            <link rel="stylesheet" href="/assets/css/responsive.css">
-            <style media="screen">
-              .position{
-                margin-top: 50px;
-                width: 100%;
-                height: 300px;
-                display: inline;
-                margin-left: 50%;
-                transform: translate(-50%,0);
-              }
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/gijgo.css">
+    <link rel="stylesheet" href="/assets/css/slicknav.css">
+    <link rel="stylesheet" href="/assets/css/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<style>
+
+    .room-img{
+        margin: auto;
+        width: 30vw;
+        height: 30vw;
+    }
+    .room-img img{
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .room-caption input{
+        max-width: 300px;
+    }
+
 .selectone{
   float: left;
 }
 .positionbtn{
   margin-top: 42px;
 }
-            </style>
-   </head>
+input{
+    border: 1px solid rgb(196, 129, 4);
+    padding: 12px;
+    border-radius: 4px;
+    color: grey;
+}
 
-   <body>
+
+</style>
+<body>
 
     <!-- Preloader Start -->
     <div id="preloader-active">
@@ -58,37 +74,34 @@
 
     <header>
         <!-- Header Start -->
-       <div class="header-area header-sticky">
+        <div class="header-area header-sticky">
             <div class="main-header ">
                 <div class="container">
                     <div class="row align-items-center">
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                               <a href="/"><img src="/assets/img/logo/fivestar.jpg" alt=""></a>
+                                <a href="/"><img src="/assets/img/logo/fivestar.jpg" alt=""></a>
                             </div>
                         </div>
-                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                        <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                             <!-- main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
+                                      
                                         <li><a href="/">Home</a></li>
-                                        <% if(user.length){ %>
-                                        <li><a href="/category">Book</a></li>
-                                        <li><a href="/showStatus">Reservations</a></li>
-                                        <li><a href="/contact">Contact</a></li>
-                                        <li><a href="/logout">Logout</a></li>
-                                        <%  } else { %>
+                                       
+                                                                          
                                         <li><a href="/login">Login</a></li>
                                         <li><a href="/createaccount">Create Account</a></li>
                                         <li><a href="/contact">Contact</a></li>
-                                        <% } %>
+                                       
                                     </ul>
                                 </nav>
                             </div>
                         </div>
-              
+
                         <!-- Mobile Menu -->
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
@@ -96,53 +109,50 @@
                     </div>
                 </div>
             </div>
-       </div>
+        </div>
         <!-- Header End -->
     </header>
     <main>
+        <section class="room-area">
+            <div class="container">
+                <div class="row">
 
-        <!-- Booking Room Start-->
-        <section class="login">
-            <div class="container mt-5 mb-5">
-                <form action="/category" method="POST">
-              <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                        <!-- Single Room -->
+                        
+                            <input type="text" name="name" value="<%=property.name%>" hidden>
+                            <input type="text" name="type" value="<%=property.type%>" hidden>
+                            <input type="text" name="cost" value="<%=property.cost%>" hidden>
+                            <input type="text" name="roomNo" value="<%=property.roomNo%>" hidden>
 
-                  <div class="position">
-                    <div class="col-lg-12">
-                      <div class="selectone">
-                       <p>Category</p>
-                       <select name="cat">
-                           <option value="Business Class">Business Class</option>
-                           <option value="First class">First class</option>
-                           <option value="Seceond class">Seceond class</option>
-                       </select>
-                     </div>
-                    <div class="selectone ml-3">
-                         <p>Room Type</p>
-                       <select name="type">
-                           <option value="Single Bed">Single Bed</option>
-                           <option value="Double Bed">Double Bed</option>
-                       </select>
+                        <div class="room-img p-2">        
+                                <a href="#"><img src="<%=property.img%>" alt="" height="200px"></a>
+                        </div>
+                            <div class="single-room mb-50">
+                                
+                                <div class="room-caption text-center">
 
-                     </div>
+                                    <h3><a href="#"><%=property.type%></a></h3>
+                                    <h5><%=property.dec%></h5>
+                                    <div class="per-night">
+                                        <span> Ksh. <%=property.price%> <span></span></span>
+                                    </div>
+                                    <br>
+                                    <input type="submit" class="btn btn-danger" value="View Property">
+                                </div>
+                            </div>
+
                     </div>
+                   
 
-               <input type="submit" value="Search" class="btn btn-info btn-sm positionbtn ml-3">
-                  </div>
-
-
-
-
-
-        </form>
-              </div>
+                </div>
             </div>
-          </section>
-        <!-- Booking Room End-->
 
-
+        </section>
+        
+        <!-- Gallery img End-->
     </main>
-   <footer>
+    <footer>
         <!-- Footer Start-->
         <div class="footer-area black-bg footer-padding">
             <div class="container">
@@ -175,7 +185,7 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About Diamond Five Star Hotel</a></li>
+                                    <li><a href="#">About World Hotel</a></li>
                                     <li><a href="#">Our Best Rooms</a></li>
                                     <li><a href="#">Our Photo Gellary</a></li>
                                     <li><a href="#">Pool Service</a></li>
@@ -188,8 +198,8 @@
                             <div class="footer-tittle">
                                 <h4>Reservations</h4>
                                 <ul>
-                                    <li><a href="#">Tel: 453-3251</a></li>
-                                    <li><a href="#">Phone No: 09125673251</a></li>
+                                    <li><a href="#">Tel: 003-3251</a></li>
+                                    <li><a href="#">Phone No: 0712567321</a></li>
                                     <li><a href="#">Skype: DiamondhotelBooking</a></li>
                                     <li><a href="#">reservations@diamondhotel.com</a></li>
                                 </ul>
@@ -201,8 +211,8 @@
                             <div class="footer-tittle">
                                 <h4>Our Location</h4>
                                 <ul>
-                                    <li><a href="#">Purok Daisy, Brgy.Enclaro</a></li>
-                                    <li><a href="#">Binalbagan, Negros Occidental</a></li>
+                                    <li><a href="#">Nairobi, Kenya</a></li>
+                                    <li><a href="#">Alpha tomwers 45th floor</a></li>
                                 </ul>
                                 <!-- Form -->
                                 <div class="footer-form">
@@ -232,43 +242,44 @@
         <!-- Footer End-->
     </footer>
 
-	<!-- JS here -->
+    <!-- JS here -->
 
-		<!-- All JS Custom Plugins Link Here here -->
-        <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="/assets/js/popper.min.js"></script>
-        <script src="/assets/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="/assets/js/jquery.slicknav.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="/assets/js/jquery.slicknav.min.js"></script>
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="/assets/js/owl.carousel.min.js"></script>
-        <script src="/assets/js/slick.min.js"></script>
-        <!-- Date Picker -->
-        <script src="/assets/js/gijgo.min.js"></script>
-		<!-- One Page, Animated-HeadLin -->
-        <script src="/assets/js/wow.min.js"></script>
-		<script src="/assets/js/animated.headline.js"></script>
-        <script src="/assets/js/jquery.magnific-popup.js"></script>
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+    <!-- Date Picker -->
+    <script src="/assets/js/gijgo.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/animated.headline.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.js"></script>
 
-		<!-- Scrollup, nice-select, sticky -->
-        <script src="/assets/js/jquery.scrollUp.min.js"></script>
-        <script src="/assets/js/jquery.nice-select.min.js"></script>
-		<script src="/assets/js/jquery.sticky.js"></script>
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="/assets/js/jquery.scrollUp.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.min.js"></script>
+    <script src="/assets/js/jquery.sticky.js"></script>
 
-        <!-- contact js -->
-        <script src="/assets/js/contact.js"></script>
-        <script src="/assets/js/jquery.form.js"></script>
-        <script src="/assets/js/jquery.validate.min.js"></script>
-        <script src="/assets/js/mail-script.js"></script>
-        <script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+    <!-- contact js -->
+    <script src="/assets/js/contact.js"></script>
+    <script src="/assets/js/jquery.form.js"></script>
+    <script src="/assets/js/jquery.validate.min.js"></script>
+    <script src="/assets/js/mail-script.js"></script>
+    <script src="/assets/js/jquery.ajaxchimp.min.js"></script>
 
-		<!-- Jquery Plugins, main Jquery -->
-        <script src="/assets/js/plugins.js"></script>
-        <script src="/assets/js/main.js"></script>
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/main.js"></script>
 
-    </body>
+</body>
+
 </html>
