@@ -96,20 +96,13 @@ input{
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <!-- <% if(user.length){ %>
-                                            <li>User: <%=user%></li>
-                                            <% } %> -->
+                                       
                                         <li><a href="/">Home</a></li>
-                                        <% if(user.length){ %>
-                                        <li><a href="/category">Book</a></li>
-                                        <li><a href="/showStatus">Reservations</a></li>
-                                        <li><a href="/contact">Contact</a></li>
-                                        <li><a href="/logout">Logout</a></li>
-                                        <%  } else { %>
+                                    
                                         <li><a href="/login">Login</a></li>
                                         <li><a href="/createaccount">Create Account</a></li>
                                         <li><a href="/contact">Contact</a></li>
-                                        <% } %>
+                                        
                                     </ul>
                                 </nav>
                             </div>
@@ -191,7 +184,7 @@ input{
                         <!-- Single Room -->
                         <form action="/viewProperty" method="POST">
                             <input type="text" name="name" value="<%=properties[i].name%>" hidden>
-                            
+                            <input type="text" name="lister" value="<%=properties[i].lister%>" hidden>
 
                             <div class="single-room mb-50">
                                 <div class="room-img p-2">        
@@ -200,6 +193,7 @@ input{
                                 <div class="room-caption text-center">
 
                                     <h3><a href="#"><%=properties[i].type%></a></h3>
+                                    <small style="color: green;"><%=properties[i].lister%></small>
                                     <h5><%=properties[i].dec%></h5>
                                     <div class="per-night">
                                         <span> Ksh. <%=properties[i].price%> <span></span></span>

@@ -6,58 +6,50 @@ const session=require('express-session');
 // login get request
 exports.getLogin = (req, res, next) => {
     
-    if (req.session.admin == undefined) {
-        res.render('admin/login', { msg: "", err: "" });
-    }
-    else {
-        var connectDB = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "@Beatsbydre99",
-            database: "hotel"
-        });
-
-
-    reservationsQ = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 1 "; 
-
-    guestQuery = "SELECT * " +
-        "FROM  user " +
-        "WHERE name != 'admin'";
-
-    roomQuery = "SELECT * " +
-    "FROM  category " +
-    "WHERE available = 1 "; 
-        data1 = "SELECT * " +
-            "FROM  bookingstatus " +
-            "WHERE status = 0 ";
-
-                connectDB.query(data1, (err1, result1) => {
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "hotel"
+    });
+    console.log(req.body.mail);
+    console.log(req.body.pass);
+ 
+    data = "SELECT * " +
+        "FROM user " +
+        "WHERE email = " + mysql.escape(req.body.mail) +
+        " AND password = " + mysql.escape(req.body.pass);
+ 
+    connectDB.query(data, (err, result) => {
+        if (err) throw err;
+        else {
+            if (result.length) {
+                req.session.admin = result[0].name;
+                req.session.mail = result[0].email;
+                connectDB.query(
+                   "SELECT * " +
+                "FROM requests " +
+                "WHERE lister = ?", [result[0].name] , (err1, requestsResult) => {
                     if (err1) throw err1;
                     else {
-                        for (i in result1)  {
-                            var a = result1[i].date;
-                            result1[i].date = a.toString().slice(0, 15);
-                        }
-                        connectDB.query(guestQuery, (err2, guestResult) => {
+                         
+                        connectDB.query(
+                           "SELECT * " +
+                        "FROM category WHERE lister = ?",[result[0].name], (err2, listingResults) => {
                             if (err2) throw err2;
-                            connectDB.query(roomQuery, (err3, roomResult) => {
-                                if (err3) throw err3;
-                                connectDB.query(reservationsQ, (err4, reservations) => {
-                                    if (err3) throw err3;
-                                    return res.render('admin/index', { msg: "", err: "", data: result1, 
-                                    guests:guestResult.length, rooms:roomResult.length, reservations: reservations.length});
-                                })
-                               
-                            })
+                            return res.render('admin/index', { msg: "", err: "",user: result[0] , listings: listingResults, requests: requestsResult});
                            
                         })
                        
                     }
                 })
-
-    }
+ 
+            }
+            else {
+                return res.render('user/loginAccount', { msg: "", err: "Please Check Your Information Again" });
+            }
+        }
+    })
 
 }
 
@@ -72,9 +64,9 @@ exports.postLogin = (req, res, next) => {
     });
 
     data = "SELECT * " +
-        "FROM admin " +
-        "WHERE name = " + mysql.escape(req.body.name) +
-        "AND pass = " + mysql.escape(req.body.pass);
+        "FROM user " +
+        "WHERE email = " + mysql.escape(req.body.name) +
+        " AND password = " + mysql.escape(req.body.pass);
 
     data1 = "SELECT * " +
         "FROM  bookingstatus " +
@@ -83,7 +75,7 @@ exports.postLogin = (req, res, next) => {
     reservationsQ = "SELECT * " +
         "FROM  bookingstatus " +
         "WHERE status = 1 "; 
-
+ 
     guestQuery = "SELECT * " +
         "FROM  user " +
         "WHERE name != 'admin'";
@@ -123,7 +115,7 @@ exports.postLogin = (req, res, next) => {
 
             }
             else {
-                return res.render('admin/login', { msg: "", err: "Please Check Your Information Again" });
+                return res.render('user/loginAccount', { msg: "", err: "Please Check Your Information Again" });
             }
         }
     })
@@ -602,6 +594,21 @@ exports.updateRoom = (req, res, next) => {
 //logout
 exports.logout = (req, res, next) => {
     req.session.destroy();
-    res.render('admin/login', { msg: "", err: "" });
+    var connectDB = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "@Beatsbydre99",
+        database: "hotel"
+     });
+   data = "SELECT * " +
+   " FROM  category ";
+
+       connectDB.query(data, (err, result) => {
+      if (err) throw err; //show if error found
+      else {
+         return res.render('user/home', { user: "" ,properties: result, filter:null });
+        
+      } 
+   })
 }
 

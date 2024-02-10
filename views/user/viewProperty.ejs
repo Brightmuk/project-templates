@@ -10,7 +10,10 @@
 
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
-
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- CSS here -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
@@ -133,12 +136,13 @@ input{
                                 <div class="room-caption text-center">
 
                                     <h3><a href="#"><%=property.type%></a></h3>
+                                    <p style="color: green;"><%=property.lister%></p>
                                     <h5><%=property.dec%></h5>
                                     <div class="per-night">
                                         <span> Ksh. <%=property.price%> <span></span></span>
                                     </div>
                                     <br>
-                                    <input type="submit" class="btn btn-danger" value="View Property">
+                                    <input type="submit" class="btn btn-warning"  data-toggle="modal" data-target="#myModal" value="View Contact">
                                 </div>
                             </div>
 
@@ -149,7 +153,31 @@ input{
             </div>
 
         </section>
-        
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  
+                  <h4 class="modal-title">Contact <%=lister.name%></h4>
+                </div>
+                <div class="modal-body">
+                  <p>Phone: <%=lister.phone%></p>
+                  <p>Email: <%=lister.email%></p>
+                  <hr>
+                  <h5>Request full details to your email</h5>
+                  <input type="email" name="email" >
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Request</button>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>    
         <!-- Gallery img End-->
     </main>
     <footer>

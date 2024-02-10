@@ -23,7 +23,7 @@ exports.getHome = (req, res, next) => {
       password: "@Beatsbydre99",
       database: "hotel"
    });
-
+ 
    data = "SELECT * " +
       " FROM  category ";
 
@@ -65,38 +65,55 @@ exports.filterResults = (req, res, next) => {
 exports.getLogin = (req, res, next) => {
    res.render('user/loginAccount', { user: "", msg: [], err: [] });
 }
-
-//post page of login
+//login post request
 exports.postLogin = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+       host: "localhost",
+       user: "root",
+       password: "@Beatsbydre99",
+       database: "hotel"
    });
+   console.log(req.body.mail);
+   console.log(req.body.pass);
 
    data = "SELECT * " +
-      "FROM  user " +
-      "WHERE email = " + mysql.escape(req.body.mail) +
-      " AND password = " + mysql.escape(req.body.pass);
-
+       "FROM user " +
+       "WHERE email = " + mysql.escape(req.body.mail) +
+       " AND password = " + mysql.escape(req.body.pass);
 
    connectDB.query(data, (err, result) => {
-      if (err) throw err; // show if any error have
-      else {
-         if (result.length) {
-            req.session.mail = result[0].email;
-            res.render('user/home', {user: result[0].email});
-         }
-         else {
-            res.render('user/loginAccount', { user: "", msg: [], err: ["Please Check Your information again"] });
-         }
+       if (err) throw err;
+       else {
+           if (result.length) {
+               req.session.admin = result[0].name;
+               req.session.mail = result[0].email;
+               connectDB.query(
+                  "SELECT * " +
+               "FROM requests " +
+               "WHERE lister = ?", [result[0].name] , (err1, requestsResult) => {
+                   if (err1) throw err1;
+                   else {
+                       
+                       connectDB.query(
+                          "SELECT * " +
+                       "FROM category WHERE lister = ?",[result[0].name], (err2, listingResults) => {
+                           if (err2) throw err2;
+                           return res.render('admin/index', { msg: "", err: "",user: result[0] , listings: listingResults, requests: requestsResult});
+                          
+                       })
+                      
+                   }
+               })
 
-      }
+           }
+           else {
+               return res.render('user/loginAccount', { msg: "", err: "Please Check Your Information Again" });
+           }
+       }
    })
-
 }
+
 
 
 // show create account page
@@ -145,12 +162,19 @@ exports.viewProperty = (req, res, next) => {
    query = "SELECT * " + 
       " FROM  category " +
       " WHERE name = " + mysql.escape(req.body.name);
+
+   query2 = "SELECT * " +  
+      " FROM  user " +
+      " WHERE name = " + mysql.escape(req.body.lister);
       
    connectDB.query(query, (err, result) => {
       if (err) throw err;
       else {
+         connectDB.query(query2, (err2, result2) => {
+            if (err2) throw err2;
+           return  res.render('user/viewProperty', { property: result[0], err: "", lister: result2[0] });
+         })
         
-         res.render('user/viewProperty', { property: result[0], err: "", });
       }
    })
 }

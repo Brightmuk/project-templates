@@ -19,12 +19,12 @@ router.route('/createaccount')
 router.get('/contact',userControler.getContact);   
 
 router.get('/logout',userControler.logout); //logout
-
+ 
 
 router.route('/viewProperty')
        .post(userControler.viewProperty) 
 
-router.route('/filter')
+router.route('/filter') 
        .post(userControler.filterResults)   
         
 router.route('/status') 
