@@ -35,7 +35,7 @@
   <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <a class="navbar-brand"  href="/admin/">Admin</a>
+      <a class="navbar-brand"  href="/login">Admin</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-            <a class="nav-link" href="/admin/">
+            <a class="nav-link" href="/login">
               <i class="fa fa-fw fa-dashboard"></i>
               <span class="nav-link-text">Dashboard</span>
             </a>
@@ -53,7 +53,7 @@
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="/admin/reservations">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Reservations</span>
+              <span class="nav-link-text">Requests</span>
             </a>
           </li>
 
@@ -84,74 +84,58 @@
     </nav>
     <div class="content-wrapper">
       <div class="container-fluid">
+        <% if(msg.length) { %>
+
+          <h3 style="color: #17b978;" class="text-center"><%=msg%></h3><br>
+
+          <%   } %>
         <div class="row">
           
           <div class="col-lg-4  ">
-            <h2>Room <%=room.roomNo%></h2>
+            <h2>Property </h2>
             <br/>
-           <form class="view-room" action="/admin/updateRoom" method="POST">
-            <p>Category</p>
-            <input type="text" class="form-control" name="cat" value="<%=room.name%>" readonly>
-            <p>Room Type</p>
-            <input type="text" class="form-control" name="type" value="<%=room.type%>" readonly>
-            <p>Per Night Cost</p>
-            <input type="number" class="form-control" name="cost" value="<%=room.cost%>">
-            <p>Room Availablility</p>
-            <% if(room.available==1){ %>
-            <select name="available" class="form-control">
-              <option value="0">Booked</option>
-              <option value="1" selected>Available</option>
-          </select>
-          <% }else{%>
-            <select name="available" class="form-control">
-              <option value="0"selected>Booked</option>
-              <option value="1" >Available</option>
-          </select>
-          <% }%>
-            
-            <p>Add Some Description</p>
-            <input type="text" class="form-control" name="description"  value="<%=room.dec%>">
-            <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
-            <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
-        </form>
+            <img src="<%=room.img%>" alt="">
+
           </div>
-          <div class="col-lg-2  "></div>
+          <div class="col-lg-1  "></div>
           <div class="col-lg-4  occupant">
-            <h2>Occupant</h2>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <% if(room.available==1){ %>
-              <p>No current Occupant</p>
-              <% }else{%>
-                <p>Email: <%=user.email%></p>
-                <p>Phone:<%=user.phone%></p>
-                <p>Bookig Date: <%=booking.date%></p>
-              <% }%>
-              <br/>
-              <% if(room.available==0){ %>
+            <form class="view-room" action="/admin/updateRoom" method="POST">
+              <p>Name</p>
+              <input type="text" class="form-control" name="name" value="<%=room.name%>" readonly>
+              <p>Type</p>
+              <input type="text" class="form-control" name="type" value="<%=room.type%>" readonly>
+              <p>Category</p>
+              <input type="text" class="form-control" name="category" value="<%=room.category%>" readonly>
+              <p>Location</p>
+              
+              <input type="text" class="form-control" name="location" value="<%=room.location%>" >
+              <p>Price</p>
+              <input type="number" class="form-control" name="price" value="<%=room.price%>">
              
-                
-               
-                <button class="btn btn-lg btn-success mt-3 add-room-btn" onclick="chekout()">Checkout</button>
+  
+              
+              <p>Add Some Description</p>
+              <input type="text" class="form-control" name="description"  value="<%=room.dec%>">
+              
+              <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
+          </form>
+          <form action="/admin/deleteRoom" method="POST">
+            <input type="submit" class="btn btn-lg btn-danger mt-3 " value="Delete">
+          </form>
+            
              
-              <% }%>
           </div>
         </div>
-
+        <hr>
+        <h2>Inquiries</h2>
+        <br/>
+        <br/>
+        <br/>
+        <br/>  
 
       </div>
     </div>
-    <dialog id="checkoutDialogue" class="checkoutDialog">
-       <form action="/admin/checkout" method="POST">
-        <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
-        <input type="hidden" class="form-control" name="email"  value="<%=user.email%>">
-      <h3>Are you sure you want to checkout this reservation?</h3>
-      <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Checkout">
-       </form>
-      
-    </dialog>
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">

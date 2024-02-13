@@ -3,19 +3,13 @@ const path = require('path');
 
 
 const router = express.Router();
-
+const userController = require('../controllers/user');
 const adminControler = require('../controllers/admin');
 
-
-router.route('/')
-   .get(adminControler.getLogin) //get request
-   .post(adminControler.postLogin) // post request
 
 router.route('/reservations')
 .get(adminControler.getReservations)//get reservations
 
-router.route('/pending')
-.get(adminControler.getPending)//get pending
 
 router.route('/rooms')
 .get(adminControler.getRooms)//get pending
@@ -28,17 +22,8 @@ router.route('/addhotel')
       .get(adminControler.getAddHotel) // get request for hotel add page
       .post(adminControler.postAddHotel) // post request for hotel add to db
 
-router.route('/search')
-      .get(adminControler.getSearch)   // get request   
-      .post(adminControler.postSearch) // post request
-
 router.route('/viewRoom')
       .post(adminControler.viewRoom) //view room page
-
-router.route('/viewReservation')
-      .post(adminControler.viewReservation) //view room page
-router.route('/checkout')
-      .post(adminControler.checkout) //view room page  
 
 router.route('/updateRoom')
       .post(adminControler.updateRoom) // update prev data      

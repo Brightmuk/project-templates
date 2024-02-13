@@ -35,7 +35,7 @@
   <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <a class="navbar-brand" href="/admin/">Admin</a>
+      <a class="navbar-brand" href="/login">Admin</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-            <a class="nav-link" href="/admin/">
+            <a class="nav-link" href="/login">
               <i class="fa fa-fw fa-dashboard"></i>
               <span class="nav-link-text">Dashboard</span>
             </a>
@@ -94,31 +94,35 @@
             <%   } %>
             <form class="add-room" action="/admin/addhotel" method="POST" enctype="multipart/form-data">
               <div class="form-left">
-                <p>Category</p>
-                <select name="cat" class="form-control">
-                  <option value="Business Class">Business Class</option>
-                  <option value="First class">First class</option>
-                  <option value="Seceond class">Seceond class</option>
+                <p>Name</p>
+                <input type="text" class="form-control" name="name" placeholder="Name">
+                <p>Type</p>
+                <select name="type" class="form-control">
+                  <option value="For Rent">For Rent</option>
+                  <option value="For Sale">For Sale</option>
+                  
               </select>
                 <!-- <input type="text" class="form-control" name="cat" placeholder="Category name"> -->
-                <p>Room Type</p>
-                <select name="type" class="form-control">
-                  <option value="Single Bed">Single Bed</option>
-                  <option value="Double Bed">Double Bed</option>
+                <p>Category</p>
+                <select name="category" class="form-control">
+                  <option value="Apartment">Apartment</option>
+                  <option value="House">House</option>
+                  <option value="Land">Land</option>
               </select>
               <p>Add Some Description</p>
-              <input type="text" class="form-control" name="des" placeholder="Add Some Description">
+              <textarea type="text" class="form-control" name="description" placeholder="Add Some Description"></textarea>
 
               </div>
 
               <div class="form-right">
                 <p>Add Image</p>
                 <input type="file" class="form-control" name="img" placeholder="Add Image">
-                <p>Per Night Cost</p>
-                <input type="number" class="form-control" name="cost" placeholder="Per Night Cost">
-                <p>Room Available</p>
-                <input type="number" class="form-control" name="avlvl" placeholder="Room Availavle">
-                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Room">
+                <p>Price</p>
+                <input type="number" class="form-control" name="price" placeholder="Price">
+                <p>Location</p>
+                <input type="text" class="form-control" name="location" placeholder="Location">
+               
+                <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Listing">
               </div>
 
               <!-- <input type="text" class="form-control" name="type" placeholder="Room Type"> -->

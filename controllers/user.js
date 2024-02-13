@@ -1,8 +1,6 @@
 //moduler 
 var mysql = require('mysql');
 
-
-
 //authentication check
 exports.authentication = (req, res, next) => {
 
@@ -14,56 +12,53 @@ exports.authentication = (req, res, next) => {
       res.render('user/home', { user: "" });
    }
 }
-
-// show the home page
-exports.getHome = (req, res, next) => {
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
-   });
- 
-   data = "SELECT * " +
-      " FROM  category ";
-
-   connectDB.query(data, (err, result) => {
-      if (err) throw err; //show if error found
-      else {
-         return res.render('user/home', { user: "" ,properties: result, filter:null });
-        
-      } 
-   })
-}
-
-exports.filterResults = (req, res, next) => {
-   var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
-   });
-
-   data = "SELECT * " +
-      " FROM  category " +
-      " WHERE  category = " + mysql.escape(req.body.category) +
-      " AND type = " + mysql.escape(req.body.type) +
-      " AND location = " + mysql.escape(req.body.location);
-
-
-   connectDB.query(data, (err, result) => {
-      if (err) throw err; //show if error found
-      else {
-         return res.render('user/home', { user: "" ,properties: result,filter:{} });
-        
-      }
-   })
-
-}
-
 //show the login page
 exports.getLogin = (req, res, next) => {
-   res.render('user/loginAccount', { user: "", msg: [], err: [] });
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "hotel"
+  });
+
+   if(req.session.mail != undefined){
+      data = "SELECT * " +
+      "FROM user " +
+      "WHERE email = " + mysql.escape(req.session.mail);
+
+      connectDB.query(data, (err, result) => {
+         if (err) throw err;
+         else {
+             if (result.length) {
+                 
+                 connectDB.query(
+                    "SELECT * " +
+                 "FROM requests " +
+                 "WHERE lister = ?", [result[0].name] , (err1, requestsResult) => {
+                     if (err1) throw err1;
+                     else {
+                         
+                         connectDB.query(
+                            "SELECT * " +
+                         "FROM category WHERE lister = ?",[result[0].name], (err2, listingResults) => {
+                             if (err2) throw err2;
+                             return res.render('admin/index', { msg: "", err: "",user: result[0] , listings: listingResults, requests: requestsResult});
+                            
+                         })
+                        
+                     }
+                 })
+  
+             }
+             else {
+                 return res.render('user/loginAccount', { msg: "", err: "Please Check Your Information Again" });
+             }
+         }
+     })
+   }else{
+      res.render('user/loginAccount', { user: "", msg: [], err: [] });
+   }
+   
 }
 //login post request
 exports.postLogin = (req, res, next) => {
@@ -112,6 +107,51 @@ exports.postLogin = (req, res, next) => {
            }
        }
    })
+}
+// show the home page
+exports.getHome = (req, res, next) => {
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "hotel"
+   });
+ 
+   data = "SELECT * " +
+      " FROM  category ";
+
+   connectDB.query(data, (err, result) => {
+      if (err) throw err; //show if error found
+      else {
+         return res.render('user/home', { user: "" ,properties: result, filter:null });
+        
+      } 
+   })
+}
+
+exports.filterResults = (req, res, next) => {
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "hotel"
+   });
+
+   data = "SELECT * " +
+      " FROM  category " +
+      " WHERE  category = " + mysql.escape(req.body.category) +
+      " AND type = " + mysql.escape(req.body.type) +
+      " AND location = " + mysql.escape(req.body.location);
+
+
+   connectDB.query(data, (err, result) => {
+      if (err) throw err; //show if error found
+      else {
+         return res.render('user/home', { user: "" ,properties: result,filter:{} });
+        
+      }
+   })
+
 }
 
 
