@@ -23,6 +23,9 @@ router.get('/logout',userControler.logout); //logout
 
 router.route('/viewProperty')
        .post(userControler.viewProperty) 
+       
+router.route('/requestDetails')
+       .post(userControler.postRequestDetails) 
 
 router.route('/filter') 
        .post(userControler.filterResults)   

@@ -118,6 +118,11 @@ input{
     <main>
         <section class="room-area">
             <div class="container">
+                <% if(msg.length) { %>
+
+                    <h3 style="color: #17b978;" class="text-center"><%=msg%></h3><br>
+          
+                    <%   } %>
                 <div class="row">
 
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -167,8 +172,13 @@ input{
                   <p>Email: <%=lister.email%></p>
                   <hr>
                   <h5>Request full details to your email</h5>
-                  <input type="email" name="email" >
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Request</button>
+                  <form action="/requestDetails" method="POST">
+                    <input type="email" name="email" >
+                    <input  name="property" hidden value ="<%=property.name%>">
+                    <input  name="lister" hidden value ="<%=lister.name%>">
+                    <input type="submit" class="btn btn-default"value = "Request">
+                  </form>
+                  
                 </div>
 
                 <div class="modal-footer">

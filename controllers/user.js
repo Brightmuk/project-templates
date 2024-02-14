@@ -1,5 +1,6 @@
-//moduler 
+ 
 var mysql = require('mysql');
+var nodemailer = require('nodemailer');
 
 //authentication check
 exports.authentication = (req, res, next) => {
@@ -212,7 +213,7 @@ exports.viewProperty = (req, res, next) => {
       else {
          connectDB.query(query2, (err2, result2) => {
             if (err2) throw err2;
-           return  res.render('user/viewProperty', { property: result[0], err: "", lister: result2[0] });
+           return  res.render('user/viewProperty', { property: result[0], err: "",msg:'', lister: result2[0] });
          })
         
       }
@@ -262,6 +263,86 @@ exports.postStatus = (req, res, next) => {
    })
 }
 
+
+exports.postRequestDetails = (req, res, next) => {
+
+   //console.log(req.body); 
+   var connectDB = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Beatsbydre99",
+      database: "hotel"
+   });
+   
+   var requester = req.body.email;
+   var lister = req.body.lister
+   var property = req.body.property
+
+   
+   data = "INSERT INTO requests " +
+      " VALUES ('" + property + "','" + lister + "','" + requester + "')";
+
+      data1 = 
+      "SELECT * "
+       + " FROM  category "
+       +" WHERE name = '"+ property + 
+      "'";
+
+      data2 = "SELECT * "+ 
+      " FROM  user "+
+   " WHERE name = '"+ lister + 
+   "'"; 
+
+   var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: '2103086@students.kcau.ac.ke',
+        pass: 'angw jlfz icps stie'
+      }
+    });
+
+      
+   connectDB.query(data, (err, result) => {
+       
+      if (err) throw err; 
+      else {
+         connectDB.query(data1, (err1, result1) => {
+            if (err1) throw err1;
+            else{
+               
+               connectDB.query(data2, (err2, result2) => {
+                 
+                  if (err2) throw err2;
+                  else{
+                     var mailOptions = {
+                        from: '2103086@students.kcau.ac.ke',
+                        to: requester,
+                        subject: 'Detiails of the '+ property + " property",
+                        text: 'Name: '+result1[0].name+" \n"+
+                        "Type: "+result1[0].type+" \n"+
+                        "Price: ksh."+result1[0].price+" \n"+
+                        "Category: "+result1[0].category+" \n"+
+                        "Location: "+result1[0].location+" \n"+
+                        "Description: "+result1[0].dec+" \n\n"+
+                        "Price: "+result1[0].price+" \n"
+                      };
+                      transporter.sendMail(mailOptions, function(error, info){
+                        if (error) {
+                          console.log(error);
+                        } else {
+                          console.log('Email sent: ' + info.response);
+                        }
+                      });
+
+                     res.render('user/viewProperty', { user: req.session.mail, msg: "Details sent to your email", err: "", property: result1[0], lister:result2[0] });
+                  } 
+               })
+            }
+            
+         })
+      }
+   })
+}
 
 //get status
 exports.getShowStatus = (req, res, next) => {
