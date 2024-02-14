@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Hotel</title>
+    <title>Properties</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -97,8 +97,12 @@ input{
                                 <nav>
                                     <ul id="navigation">
                                        
+                                      
+                                        <li><a href="/">Ruai</a></li>
+                                        <li><a href="/">Kileleshwa</a></li>   
+                                        <li><a href="/">Runda</a></li> 
+                                        <li style="color: red;">|</li> 
                                         <li><a href="/">Home</a></li>
-                                    
                                         <li><a href="/login">Login</a></li>
                                         <li><a href="/createaccount">Create Account</a></li>
                                         <li><a href="/contact">Contact</a></li>
@@ -134,6 +138,9 @@ input{
                                       <div class="selectone">
                                        <p>Type</p>
                                        <select name="type">
+                                        <%if(filter!=null){%>
+                                            <option hidden selected><%=filter.type%></option>
+                                            <%}%>
                                            <option value="For Sale">For Sale</option>
                                            <option value="For Rent">For Rent</option>
                                            
@@ -142,6 +149,9 @@ input{
                                     <div class="selectone ml-3">
                                          <p>Category</p>
                                        <select name="category">
+                                        <%if(filter!=null){%>
+                                            <option hidden selected><%=filter.category%></option>
+                                            <%}%>
                                            <option value="Apartment">Apartment</option>
                                            <option value="Land">Land</option>
                                            <option value="House">House</option>
@@ -151,7 +161,10 @@ input{
                                      </div>
                                      <div class="selectone ml-3">
                                         <p>Location</p>
-                                      <select name="location">
+                                      <select name="location" >
+                                          <%if(filter!=null){%>
+                                        <option hidden selected><%=filter.location%></option>
+                                        <%}%>
                                           <option value="Ruiru">Ruiru</option>
                                           <option value="Kiambu">Kiambu</option>
                                           <option value="Kileleshwa">Kileleshwa</option>
@@ -164,7 +177,11 @@ input{
                                     </div>
                                      <div class="selectone ml-3">
                                         <p>Max Price</p>
+                                        <%if(filter!=null){%>
+                                            <input value="<%=filter.price%>" type="number" name="price">
+                                            <%}else{%>
                                       <input type="number" name="price">
+                                      <%}%>
                 
                                     </div>
                                     </div>

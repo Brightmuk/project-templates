@@ -139,7 +139,7 @@ exports.filterResults = (req, res, next) => {
       password: "@Beatsbydre99",
       database: "hotel"
    });
-
+ 
    data = "SELECT * " +
       " FROM  category " +
       " WHERE  category = " + mysql.escape(req.body.category) +
@@ -150,7 +150,9 @@ exports.filterResults = (req, res, next) => {
    connectDB.query(data, (err, result) => {
       if (err) throw err; //show if error found
       else {
-         return res.render('user/home', { user: "" ,properties: result,filter:{} });
+         return res.render('user/home', { user: "" ,properties: result, filter:{category:req.body.category,
+            type:req.body.type,location:req.body.location, price:req.body.price
+         } });
         
       }
    })
