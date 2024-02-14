@@ -6,38 +6,29 @@ const router = express.Router();
 
 const userControler = require('../controllers/user');
 
-router.get('/',userControler.getHome); //home page 
+router.get('/',userControler.getHome); 
 
 router.route('/login')
-       .get(userControler.getLogin) // get request for login
-       .post(userControler.postLogin)// post request for login
+       .get(userControler.getLogin)
+       .post(userControler.postLogin)
 
 router.route('/createaccount') 
-       .get(userControler.getCreateAccount)    //get request for create account   
-       .post(userControler.postCreateAccount); //post request for create account   
+       .get(userControler.getCreateAccount)      
+       .post(userControler.postCreateAccount);  
 
 router.get('/contact',userControler.getContact);   
 
-router.get('/logout',userControler.logout); //logout
+router.get('/logout',userControler.logout); 
  
 
 router.route('/viewProperty')
        .post(userControler.viewProperty) 
-       
+
 router.route('/requestDetails')
        .post(userControler.postRequestDetails) 
 
 router.route('/filter') 
        .post(userControler.filterResults)   
-        
-router.route('/status') 
-       .post(userControler.postStatus); 
-
-router.route('/showStatus')
-       .get(userControler.authentication,userControler.getShowStatus);// get show status
-
-router.post('/deletereq',userControler.deleteBooking,userControler.getShowStatus);       
-       
-       
+                  
 
 module.exports = router;

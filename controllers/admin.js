@@ -62,81 +62,15 @@ exports.dashboard = (req, res, next) => {
  }
 
 
-//change booking status
-exports.postChangeStatus = (req, res, next) => {
-    //console.log(req.body);
-
-    var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
-    });
-
-    var value = 0;
-
-    if (req.body.click == "Approve") {
-        value = 1;
-        
-        data = "UPDATE bookingstatus " +
-        " SET  status = 1"
-        " WHERE roomNo = " + mysql.escape(req.body.roomNo) +
-        " AND type = " + mysql.escape(req.body.type) +
-        " AND category = " + mysql.escape(req.body.cat) +
-        " AND roomWant = " + mysql.escape(req.body.want)
-
-        data2 = "UPDATE category " +
-        "SET available = 0" +
-        " WHERE roomNo = " + mysql.escape(req.body.roomNo)
-
-    } else {
-        data = "DELETE FROM bookingstatus " +
-        " WHERE email = " + mysql.escape(req.body.mail) +
-        " AND type = " + mysql.escape(req.body.type) +
-        " AND category = " + mysql.escape(req.body.cat) +
-        " AND roomWant = " + mysql.escape(req.body.want)
-    }
-    
-
-    data = "SELECT * " +
-        "FROM  bookingstatus " +
-        "WHERE status = 1 ";
-
-    connectDB.query(data, (err, result) => {
-        if (err) throw err;
-
-        else {
-            connectDB.query(data1, (err1, result1) => {
-                if (err1) throw err1;
-                else {
-                    connectDB.query(data2, (err3,res) => {
-                        if (err3) throw err3;
-                        else{
-                            for (i in result1) {
-                                var a = result1[i].date; 
-                                result1[i].date = a.toString().slice(0, 15);
-                            }
-                        } 
-                    })
-
-                    return res.render('admin/reservations', { msg: "", err: "", data: result1 });
-                }
-            }) 
-        }
-    })
-
-}
-
-
 
 //get add hotel page
 
-exports.getAddHotel = (req, res, next) => {
-    res.render('admin/addRoom', { msg: "", err: "" });
+exports.getAddListing = (req, res, next) => {
+    res.render('admin/addListing', { msg: "", err: "" });
 }
 
 //add new hotel info
-exports.postAddHotel = (req, res, next) => {
+exports.postAddListing = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
         host: "localhost",
@@ -221,7 +155,7 @@ exports.postAddHotel = (req, res, next) => {
                         throw err;
                     }
                     else {
-                        res.render('admin/addRoom', { msg: "Data Inserted Successfuly", err: "" });
+                        res.render('admin/addListing', { msg: "Data Inserted Successfuly", err: "" });
                     }
                 });
             }
@@ -229,7 +163,7 @@ exports.postAddHotel = (req, res, next) => {
 }
 
 //post request
-exports.getRooms = (req, res, next) => {
+exports.getListings = (req, res, next) => {
     //console.log(req.body);
 
     var connectDB = mysql.createConnection({
@@ -245,7 +179,7 @@ exports.getRooms = (req, res, next) => {
     connectDB.query(data, (err, result) => {
         if (err) throw err;
         else {
-            return res.render('admin/rooms', { msg: "", err: "", data: result });
+            return res.render('admin/listings', { msg: "", err: "", data: result });
         }
     })
 
@@ -253,7 +187,7 @@ exports.getRooms = (req, res, next) => {
 
 //get view room 
 
-exports.viewRoom = (req, res, next) => {
+exports.viewListing = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
         host: "localhost",
@@ -271,7 +205,7 @@ exports.viewRoom = (req, res, next) => {
         if (err) throw err; 
         
         else {
-            return res.render('admin/viewRoom', { room: roomResult[0], msg:"" });
+            return res.render('admin/viewListing', { room: roomResult[0], msg:"" });
     } 
 
 
@@ -282,7 +216,7 @@ exports.viewRoom = (req, res, next) => {
 
 
 //get reserved rooms
-exports.getReservations = (req, res, next) => {
+exports.getRequests = (req, res, next) => {
     // console.log(req.body);
     var connectDB = mysql.createConnection({
         host: "localhost",
@@ -298,11 +232,8 @@ exports.getReservations = (req, res, next) => {
     connectDB.query(data, (err, result) => {
         if (err) throw err;
         else {
-            for (i in result) {
-                var a = result[i].date;
-                result[i].date = a.toString().slice(0, 15);
-            }
-            res.render('admin/reservations', { data: result });
+            
+            res.render('admin/requests', { data: result });
         }
     })
 

@@ -36,6 +36,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       <a class="navbar-brand"  href="/login">Admin</a>
+      <a class="" href="/">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -43,30 +44,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
             <a class="nav-link" href="/login">
               <i class="fa fa-fw fa-dashboard"></i>
               <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <h5 class ="nav-title">RESERVATIONS</h5>
-          <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/reservations">
+          <h5 class ="nav-title">REQUESTS</h5>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+            <a class="nav-link" href="/admin/requests">
               <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Requests</span>
+              <span class="nav-link-text">Detail Requests</span>
             </a>
           </li>
 
           <h5 class ="nav-title ">LISTING MANAGAEMENT</h5>
-          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Charts">
-            <a class="nav-link" href="/admin/rooms">
+          <li class="nav-item nav-item-active" data-toggle="tooltip" data-placement="right" title="Charts">
+            <a class="nav-link" href="/admin/listings">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">Listings</span>
             </a>
           </li>
   
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="/admin/addhotel">
+            <a class="nav-link" href="/admin/addListing">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">Add Listing</span>
             </a>
@@ -84,53 +85,58 @@
     </nav>
     <div class="content-wrapper">
       <div class="container-fluid">
+        <% if(msg.length) { %>
+
+          <h3 style="color: #17b978;" class="text-center"><%=msg%></h3><br>
+
+          <%   } %>
         <div class="row">
-            <div class="col-lg-4  occupant">
-                <h2>Guest</h2>
-                <br/>
-                
-                <br/>
-                <br/>
-                    <h4><%=user.name%></h4>
-                    <p>Email: <%=booking.email%></p>
-                    <p>Phone: <%=user.phone%></p>
-                    <hr/>
-                    <p>Bookig Date: <%=booking.date%></p>
-                  
-                  <br/>
-
-                  
-              </div>
-              <div class="col-lg-2  "></div>
+          
           <div class="col-lg-4  ">
-            <h2>Room <%=room.roomNo%></h2>
+            <h2>Property </h2>
             <br/>
-           <form class="view-room" action="" method="POST">
-            <p>Category</p>
-            <input type="text" class="form-control" name="cat" value="<%=room.name%>" readonly>
-            <p>Room Type</p>
-            <input type="text" class="form-control" name="type" value="<%=room.type%>" readonly>
-            <p>Per Night Cost</p>
-            <input type="number" class="form-control" name="cost" value="<%=room.cost%>"readonly>
-            
-            <p>Description</p>
-            <input type="text" class="form-control" name="description"  value="<%=room.dec%>"readonly>
-        </form>
-          </div>
-         
+            <img src="<%=room.img%>" alt="">
 
-        </div>
-        <br>
-        <hr>
-        <h4>Current Billing</h4>
-        <p>Days: <%=days%></p>
-        <p>Amount: <%=cost%></p>
-        <form action="/admin/checkout" method="POST">
-            <input type="hidden" class="form-control" name="roomNo"  value="<%=room.roomNo%>">
-            <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Checkout">
+          </div>
+          <div class="col-lg-1  "></div>
+          <div class="col-lg-4  occupant">
+            <form class="view-room" action="/admin/updateRoom" method="POST">
+              <p>Name</p>
+              <input type="text" class="form-control" name="name" value="<%=room.name%>" readonly>
+              <p>Type</p>
+              <input type="text" class="form-control" name="type" value="<%=room.type%>" readonly>
+              <p>Category</p>
+              <input type="text" class="form-control" name="category" value="<%=room.category%>" readonly>
+              <p>Location</p>
+              
+              <input type="text" class="form-control" name="location" value="<%=room.location%>" >
+              <p>Price</p>
+              <input type="number" class="form-control" name="price" value="<%=room.price%>">
+             
+  
+              
+              <p>Add Some Description</p>
+              <input type="text" class="form-control" name="description"  value="<%=room.dec%>">
+              
+              <input type="submit" class="btn btn-lg btn-success mt-3 add-room-btn" value="Update">
           </form>
+          <form action="/admin/deleteRoom" method="POST">
+            <input type="submit" class="btn btn-lg btn-danger mt-3 " value="Delete">
+          </form>
+            
+             
+          </div>
+        </div>
+        <hr>
+        <h2>Inquiries</h2>
+        <br/>
+        <br/>
+        <br/>
+        <br/>  
+
       </div>
     </div>
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -177,7 +183,11 @@
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
-
+    <script>
+      function chekout() { 
+        document.getElementById("checkoutDialogue").showModal(); 
+      } 
+      </script>
   </body>
 
   </html>
