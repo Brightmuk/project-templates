@@ -2,6 +2,11 @@
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 
+var host = "localhost";
+var user =  "root";
+var password = "";
+var database = "";
+
 //authentication check
 exports.authentication = (req, res, next) => {
 
@@ -15,10 +20,10 @@ exports.authentication = (req, res, next) => {
 //Show the login page
 exports.getLogin = (req, res, next) => {
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
   });
 
    if(req.session.mail != undefined){
@@ -65,10 +70,10 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-       host: "localhost",
-       user: "root",
-       password: "@Beatsbydre99",
-       database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
    console.log(req.body.mail);
    console.log(req.body.pass);
@@ -113,10 +118,10 @@ exports.postLogin = (req, res, next) => {
 //Show the home page
 exports.getHome = (req, res, next) => {
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
  
    data = "SELECT * " +
@@ -134,10 +139,10 @@ exports.getHome = (req, res, next) => {
 //Filter results
 exports.filterResults = (req, res, next) => {
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
    var data;
    if(req.body.location==undefined){
@@ -181,10 +186,10 @@ exports.getCreateAccount = (req, res, next) => {
 exports.postCreateAccount = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    var p1 = req.body.pass;
@@ -210,10 +215,10 @@ exports.viewProperty = (req, res, next) => {
 
    
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    query = "SELECT * " + 
@@ -241,10 +246,10 @@ exports.viewProperty = (req, res, next) => {
 exports.postRequestDetails = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
    
    var requester = req.body.email;

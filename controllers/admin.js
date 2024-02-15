@@ -3,6 +3,10 @@ var formidable = require('formidable');
 const path = require('path');
 const session=require('express-session');
 
+var host = "localhost";
+var user =  "root";
+var password = "";
+var database = "";
 
 exports.getContact =(req,res,next)=>{
     if(req.session.mail== undefined){
@@ -17,10 +21,10 @@ exports.getContact =(req,res,next)=>{
 exports.dashboard = (req, res, next) => {
 
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
+        host: host,
+        user: user,
+        password: password,
+        database: database
     });
     
  
@@ -73,10 +77,10 @@ exports.getAddListing = (req, res, next) => {
 exports.postAddListing = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
+        host: host,
+        user: user,
+        password: password,
+        database: database
     });
 
     //var
@@ -167,10 +171,10 @@ exports.getListings = (req, res, next) => {
     //console.log(req.body);
 
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
+        host: host,
+        user: user,
+        password: password,
+        database: database
     });
 
     data = "SELECT * " +
@@ -190,10 +194,10 @@ exports.getListings = (req, res, next) => {
 exports.viewListing = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel" 
+        host: host,
+        user: user,
+        password: password,
+        database: database
     });
 
     roomQuery = "SELECT * " +
@@ -219,10 +223,10 @@ exports.viewListing = (req, res, next) => {
 exports.getRequests = (req, res, next) => {
     // console.log(req.body);
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
+        host: host,
+        user: user,
+        password: password,
+        database: database
     });
 
     data = "SELECT * " +
@@ -244,10 +248,10 @@ exports.getRequests = (req, res, next) => {
 
 exports.updateRoom = (req, res, next) => {
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
+        host: host,
+        user: user,
+        password: password,
+        database: database
     });
 
     updateQuery = "UPDATE category " +
@@ -282,10 +286,10 @@ exports.updateRoom = (req, res, next) => {
 exports.logout = (req, res, next) => {
     req.session.destroy();
     var connectDB = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "@Beatsbydre99",
-        database: "hotel"
+        host: host,
+        user: user,
+        password: password,
+        database: database
      });
    data = "SELECT * " +
    " FROM  category ";
