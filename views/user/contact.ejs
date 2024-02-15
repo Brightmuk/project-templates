@@ -27,7 +27,19 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
-
+<style>
+    #navigation{
+    
+    display: flex;
+    align-items: center;
+}
+#navigation input{
+    background-color: white;
+    border: none;
+    color: rgb(32, 32, 46);
+    cursor: pointer;
+}
+</style>
 <body>
     
     <!-- Preloader Start -->
@@ -60,17 +72,35 @@
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
+                                        <form action="/filter" method="POST">
+                                            <input  name="price" hidden value ="100000000">
+                                            
+                                            <input  name="type" hidden value ="For Rent">
+                                            <input  name="category" hidden value ="Apartment">
+                                            <input  type="submit" value="Apartments For Rent">
+                                        </form>
+                                        
+                                        <form action="/filter" method="POST">
+                                            <input  name="price" hidden value ="100000000">
+                                            
+                                            <input  name="type" hidden value ="For Sale">
+                                            <input  name="category" hidden value ="House">
+                                            <input  type="submit" value="Houses For Sale">
+                                        </form>
+                                          
+                                        <form action="/filter" method="POST">
+                                            <input  name="price" hidden value ="100000000">
+                                            
+                                            <input  name="type" hidden value ="For Sale">
+                                            <input  name="category" hidden value ="Land">
+                                            <input  type="submit" value="Land For Sale">
+
+                                        </form>
+                                        <li style="color: red;">|</li> 
                                         <li><a href="/">Home</a></li>
-                                        <% if(user.length){ %>
-                                        <li><a href="/category">Book</a></li>
-                                        <li><a href="/showStatus">Reservations</a></li>
-                                        <li><a href="/contact">Contact</a></li>
-                                        <li><a href="/logout">Logout</a></li>
-                                        <%  } else { %>
                                         <li><a href="/login">Login</a></li>
                                         <li><a href="/createaccount">Create Account</a></li>
                                         <li><a href="/contact">Contact</a></li>
-                                        <% } %>
                                     </ul>
                                 </nav>
                             </div>
@@ -132,7 +162,7 @@
     
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
+        <div class="footer-area  bg-light footer-padding">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">

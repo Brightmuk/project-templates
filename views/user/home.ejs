@@ -61,7 +61,17 @@ input{
     border-radius: 4px;
     color: grey;
 }
-
+#navigation{
+    
+    display: flex;
+    align-items: center;
+}
+#navigation input{
+    background-color: white;
+    border: none;
+    color: rgb(32, 32, 46);
+    cursor: pointer;
+}
 
 </style>
 <body>
@@ -97,10 +107,31 @@ input{
                                 <nav>
                                     <ul id="navigation">
                                        
-                                      
-                                        <li><a href="/">Ruai</a></li>
-                                        <li><a href="/">Kileleshwa</a></li>   
-                                        <li><a href="/">Runda</a></li> 
+                                        <form action="/filter" method="POST">
+                                            <input  name="price" hidden value ="100000000">
+                                            
+                                            <input  name="type" hidden value ="For Rent">
+                                            <input  name="category" hidden value ="Apartment">
+                                            <input  type="submit" value="Apartments For Rent">
+                                        </form>
+                                        
+                                        <form action="/filter" method="POST">
+                                            <input  name="price" hidden value ="100000000">
+                                            
+                                            <input  name="type" hidden value ="For Sale">
+                                            <input  name="category" hidden value ="House">
+                                            <input  type="submit" value="Houses For Sale">
+                                        </form>
+                                          
+                                        <form action="/filter" method="POST">
+                                            <input  name="price" hidden value ="100000000">
+                                            
+                                            <input  name="type" hidden value ="For Sale">
+                                            <input  name="category" hidden value ="Land">
+                                            <input  type="submit" value="Land For Sale">
+
+                                        </form>
+                                       
                                         <li style="color: red;">|</li> 
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/login">Login</a></li>
@@ -240,7 +271,7 @@ input{
     </main>
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area black-bg footer-padding">
+        <div class="footer-area bg-light footer-padding">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">

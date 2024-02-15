@@ -28,7 +28,7 @@ router.route('/requestDetails')
        .post(userControler.postRequestDetails) 
 
 router.route('/filter') 
-       .post(userControler.filterResults)   
-                  
+       .post(userControler.filterResults)  
+
 
 module.exports = router;

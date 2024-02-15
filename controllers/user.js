@@ -139,15 +139,26 @@ exports.filterResults = (req, res, next) => {
       password: "@Beatsbydre99",
       database: "hotel"
    });
- 
-   data = "SELECT * " +
+   var data;
+   if(req.body.location==undefined){
+      data = "SELECT * " + 
       " FROM  category " +
       " WHERE  category = " + mysql.escape(req.body.category) +
       " AND type = " + mysql.escape(req.body.type) +
+      " AND price <= " + mysql.escape(parseInt(req.body.price)) +
+      " AND location is NOT NULL";
+   }else{
+      data = "SELECT * " + 
+      " FROM  category " +
+      " WHERE  category = " + mysql.escape(req.body.category) +
+      " AND type = " + mysql.escape(req.body.type) +
+      " AND price <= " + mysql.escape(parseInt(req.body.price)) +
       " AND location = " + mysql.escape(req.body.location);
+   }
 
 
-   connectDB.query(data, (err, result) => {
+      console.log(data)
+   connectDB.query(data, (err, result) => { 
       if (err) throw err; //show if error found
       else {
          return res.render('user/home', { user: "" ,properties: result, filter:{category:req.body.category,
