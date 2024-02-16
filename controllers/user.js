@@ -1,9 +1,10 @@
 //moduler 
 var mysql = require('mysql');
 var dateFormat = require('dateformat');
-const host =  "localhost";
-const user =  "root";
-const password = "@Beatsbydre99";
+
+const host =  process.env.DB_HOST;
+const user =  process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
 const database = "flowers";
 
 function orderIdGen() {
