@@ -1,6 +1,11 @@
 //moduler 
 var mysql = require('mysql');
 
+var host = process.env.DB_HOST;
+var user = process.env.DB_USER;
+var password = process.env.DB_PASSWORD;
+var database = "hotel";
+
 
 
 //authentication check
@@ -34,10 +39,10 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    data = "SELECT * " +
@@ -72,10 +77,10 @@ exports.getCreateAccount = (req, res, next) => {
 exports.postCreateAccount = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    var p1 = req.body.pass;
@@ -106,10 +111,10 @@ exports.getCategory = (req, res, next) => {
 exports.postCategory = (req, res, next) => {
    //console.log(req.body);
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    data = "SELECT * " +
@@ -141,10 +146,10 @@ exports.postStatus = (req, res, next) => {
 
    //console.log(req.body);
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
    var date = req.body.date;
    //console.log(date) 
@@ -175,10 +180,10 @@ exports.postStatus = (req, res, next) => {
 exports.getShowStatus = (req, res, next) => {
 
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    data = "SELECT * " +
@@ -209,10 +214,10 @@ exports.getShowStatus = (req, res, next) => {
 exports.deleteBooking =(req,res,next)=>{
    //console.log(req.body);
    var connectDB = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "@Beatsbydre99",
-      database: "hotel"
+      host: host,
+      user: user,
+      password: password,
+      database: database
    });
 
    data = "DELETE FROM bookingstatus " +
