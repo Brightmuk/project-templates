@@ -3,10 +3,10 @@ var formidable = require('formidable');
 const path = require('path');
 const session=require('express-session');
 
-var host = "localhost";
-var user =  "root";
-var password = "";
-var database = "";
+var host = process.env.DB_HOST;
+var user = process.env.DB_USER;
+var password = process.env.DB_PASSWORD;
+var database = "property";
 
 exports.getContact =(req,res,next)=>{
     if(req.session.mail== undefined){

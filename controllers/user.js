@@ -2,10 +2,10 @@
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 
-var host = "localhost";
-var user =  "root";
-var password = "";
-var database = "";
+var host = process.env.DB_HOST;
+var user = process.env.DB_USER;
+var password = process.env.DB_PASSWORD;
+var database = "property";
 
 //authentication check
 exports.authentication = (req, res, next) => {
