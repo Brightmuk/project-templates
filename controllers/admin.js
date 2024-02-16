@@ -1,13 +1,12 @@
 var mysql = require('mysql');
 var formidable = require('formidable');
 const path = require('path');
-const session=require('express-session');
 const http = require('https');
 
-const host =  "localhost";
-const user =  "root";
-const password = "@Beatsbydre99";
-const database = "cars";
+var host = process.env.DB_HOST;
+var user = process.env.DB_USER;
+var password = process.env.DB_PASSWORD;
+var database = "carhire";
 
 // login get request
 exports.getLogin = (req, res, next) => {

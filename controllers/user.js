@@ -1,10 +1,10 @@
 //moduler 
 var mysql = require('mysql');
 
-const host =  "localhost";
-const user =  "root";
-const password = "@Beatsbydre99";
-const database = "cars";
+var host = process.env.DB_HOST;
+var user = process.env.DB_USER;
+var password = process.env.DB_PASSWORD;
+var database = "carhire";
 
 // show the home page
 exports.getHome = (req, res, next) => {
