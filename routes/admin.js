@@ -11,30 +11,30 @@ router.route('/')
    .get(adminControler.getLogin) 
    .post(adminControler.postLogin) 
 
-router.route('/flowers') 
-      .get(adminControler.getFlowers)
+router.route('/records') 
+      .get(adminControler.getRecords)
 router.route('/orders') 
       .get(adminControler.getOrders)
 
 router.get('/logout',adminControler.logout)  
 
-router.route('/addFlower')
-      .get(adminControler.getAddFlower) 
-      .post(adminControler.postAddFlower) 
+router.route('/addRecord')
+      .get(adminControler.getAddRecord) 
+      .post(adminControler.postAddRecord) 
  
 
-router.route('/viewFlower')
-      .post(adminControler.viewFlower)  
+router.route('/viewRecord')
+      .post(adminControler.viewRecord)  
 router.route('/viewOrder')
       .post(adminControler.viewOrder) 
 router.route('/fulfill')
       .post(adminControler.fulfillOrder)
 
-router.route('/deleteFlower')
-      .post(adminControler.deleteFlower)  
+router.route('/deleteRecord')
+      .post(adminControler.deleteRecord)  
 
-router.route('/updateFlower')
-      .post(adminControler.updateFlower)   
+router.route('/updateRecord')
+      .post(adminControler.updateRecord)   
 
  
 module.exports = router;

@@ -3,12 +3,12 @@ var formidable = require('formidable');
 const path = require('path');
 const session=require('express-session');
 const http = require('https');
-
+ 
 const host =  process.env.DB_HOST;
 const user =  process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
-const database = "flowers";
-
+const database = "pharmacy";
+ 
 // login get request
 exports.getLogin = (req, res, next) => {
     
@@ -17,7 +17,7 @@ exports.getLogin = (req, res, next) => {
         res.render('admin/login', { msg: "", err: "" });
     }
     else {
-        carsQuery = "SELECT * FROM orders";
+        carsQuery = "SELECT * FROM records";
 
         connectDB.query(carsQuery, (err, result) => {
             if (err) throw err;
@@ -70,7 +70,7 @@ exports.postLogin = (req, res, next) => {
 }
 
 //post request
-exports.getFlowers = (req, res, next) => {
+exports.getRecords = (req, res, next) => {
     //console.log(req.body);
 
     var connectDB = mysql.createConnection({
@@ -80,12 +80,12 @@ exports.getFlowers = (req, res, next) => {
         database: database
     });
 
-    carsQuery = "SELECT * FROM flowers"
+    carsQuery = "SELECT * FROM records"
 
     connectDB.query(carsQuery, (err, result) => {
         if (err) throw err;
         else {
-            return res.render('admin/flowers', { msg: "", err: "",flowers:result});
+            return res.render('admin/records', { msg: "", err: "",flowers:result});
         }
     })
 
@@ -140,12 +140,12 @@ exports.fulfillOrder = (req, res, next) => {
 
 
 
-exports.getAddFlower = (req, res, next) => {
-    res.render('admin/addFlower', { msg: "", err: "" });
+exports.getAddRecord = (req, res, next) => {
+    res.render('admin/addRecord', { msg: "", err: "" });
 }
 
 
-exports.postAddFlower = (req, res, next) => {
+exports.postAddRecord = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
         host: host,
@@ -200,11 +200,11 @@ exports.postAddFlower = (req, res, next) => {
                     imgPath = (name + color + "." + fileType);
                 }
                 imgPath ='/assets/img/flowers/' + (name + color + "." + fileType)
-                file.path = a + '/public/assets/img/flowers/' + (name + color + "." + fileType); // __dirname
+                file.path = a + '/public/assets/img/' + (name + color + "." + fileType); // __dirname
             } else {
                 console.log("Wrong File type")
                 wrong = 1;
-                res.render('admin/addFlower', { msg: "", err: "Wrong File type" });
+                res.render('admin/addRecord', { msg: "", err: "Wrong File type" });
             }
         })
         .on('aborted', () => { 
@@ -228,7 +228,7 @@ exports.postAddFlower = (req, res, next) => {
                 var roomNo = Math.floor(Math.random() * 100) + 1;
                 //saveDir = __dirname + '/uploads/';
                 
-                data = "INSERT INTO `flowers`( `type`, `name`, `color`,`price`,`quantity`,`rating`,`image`,`listing_user`) "+
+                data = "INSERT INTO `records`( `type`, `name`, `color`,`price`,`quantity`,`rating`,`image`,`listing_user`) "+
                          "VALUES('" + type + "','" + nm + "', '" + color + "','" + price + "','" + quantity + "', ' 0 ','" +imgPath + "',' 1 ')"
                 connectDB.query(data, (err, result) => {
 
@@ -238,7 +238,7 @@ exports.postAddFlower = (req, res, next) => {
                     else {
                        
                         carQ = "SELECT * " + 
-                        "FROM  flowers " +
+                        "FROM  records " +
                         "WHERE type = " + mysql.escape( type) +
                         " AND name = " + mysql.escape( nm);
                         connectDB.query(carQ, (err2, thisCar) => {
@@ -247,7 +247,7 @@ exports.postAddFlower = (req, res, next) => {
                             }
                             
 
-                            res.render('admin/addFlower', { msg: "Flower Added Successfuly", err: "" });
+                            res.render('admin/addRecord', { msg: "Record Added Successfuly", err: "" });
                         })
 
                     }
@@ -263,7 +263,7 @@ exports.postAddFlower = (req, res, next) => {
 
 //get view room 
 
-exports.viewFlower = (req, res, next) => {
+exports.viewRecord = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
         host: host,
@@ -273,15 +273,15 @@ exports.viewFlower = (req, res, next) => {
     });
 
     carQuery = "SELECT * " + 
-    " FROM  flowers" +
-    " WHERE flowers.id =" + mysql.escape(req.body.id);
+    " FROM  records" +
+    " WHERE records.id =" + mysql.escape(req.body.id);
     ; 
     
 
     connectDB.query(carQuery, (err, carResult) => {
         if (err) throw err; 
         
-        res.render('admin/viewFlower', { flower: carResult[0],msg:"",err:""});
+        res.render('admin/viewRecord', { flower: carResult[0],msg:"",err:""});
 
     })
 }
@@ -304,8 +304,8 @@ exports.viewOrder = (req, res, next) => {
     ; 
     
     flowersQuery = "SELECT * " + 
-    " FROM  flowers" +
-    " WHERE flowers.id IN (?)";
+    " FROM  records" +
+    " WHERE records.id IN (?)";
     
 
     connectDB.query(orderQuery, (err, result) => {
@@ -330,7 +330,7 @@ exports.viewOrder = (req, res, next) => {
 
 
 
-exports.updateFlower = (req, res, next) => {
+exports.updateRecord = (req, res, next) => {
    
     var connectDB = mysql.createConnection({
         host: host,
@@ -339,17 +339,17 @@ exports.updateFlower = (req, res, next) => {
         database: database
     }); 
     
-    carQuery = "SELECT * FROM  flowers WHERE flowers.id = " + mysql.escape(req.body.id);
+    carQuery = "SELECT * FROM  records WHERE records.id = " + mysql.escape(req.body.id);
     
 
-    updateQuery = "UPDATE flowers " +
+    updateQuery = "UPDATE records " +
         "SET type = " + mysql.escape(req.body.type) +
         ", name = " + mysql.escape(req.body.name) +
         ", color = " + mysql.escape(req.body.color) +
         ", price = " + mysql.escape(parseInt(req.body.price)) +
         ", image = " + mysql.escape(req.body.image) +
         ", quantity = " + mysql.escape(req.body.quantity)
-        " WHERE flowers.id = "+mysql.escape(req.body.id);
+        " WHERE records.id = "+mysql.escape(req.body.id);
 
     
 
@@ -359,7 +359,7 @@ exports.updateFlower = (req, res, next) => {
             connectDB.query(carQuery, (err2, carResult) => {
                 if (err2) throw err2;
                 
-                    return res.render('admin/viewFlower', { flower: carResult[0],msg:"Flower updated Successfully",err:""});
+                    return res.render('admin/viewRecord', { flower: carResult[0],msg:"Record updated Successfully",err:""});
                 
             })
 
@@ -367,7 +367,7 @@ exports.updateFlower = (req, res, next) => {
 
 }
 
-exports.deleteFlower = (req, res, next) => {
+exports.deleteRecord = (req, res, next) => {
     
     var connectDB = mysql.createConnection({
         host: host,
@@ -377,7 +377,7 @@ exports.deleteFlower = (req, res, next) => {
     });
 
     delQuery = "DELETE  " + 
-    " FROM  flowers" +
+    " FROM  records" +
     " WHERE id =" + mysql.escape(req.body.id);
 
      
@@ -385,7 +385,7 @@ exports.deleteFlower = (req, res, next) => {
         connectDB.query(delQuery, (err, result) => {
             if (err) throw err; 
             else { 
-                return res.render('admin/flowers', { msg: "Flower deleted successfully", err: "", flowers: result });
+                return res.render('admin/records', { msg: "Record deleted successfully", err: "", flowers: result });
             }
         })
 

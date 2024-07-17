@@ -22,7 +22,7 @@ router.route('/postOrder')
 router.route('/account',)
        .get(userControler.account)     
       
-router.post('/view',userControler.postViewFlower);  
+router.post('/view',userControler.postViewRecord);  
 router.get('/contact',userControler.getContact);       
 router.get('/about',userControler.getAbout);    
 router.post('/logout',userControler.logout);  
