@@ -108,10 +108,11 @@
                       <th>No.</th>
                       <th>Type</th>
                       <th>Name</th>
+                      <th>Brand</th>
                       <th>Price</th>
                       <th>Quantity</th>
                       
-                      <th>Rating</th>
+                      
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -122,15 +123,16 @@
                       <td><%=i%></td>
                       <td><%=flowers[i].type%></td>
                       <td><%=flowers[i].name%></td>
+                      <td><%=flowers[i].color%></td>
                       <td><%=flowers[i].price%></td>
     
                       <td><%=flowers[i].quantity%></td>
                       
-                      <td><%=flowers[i].rating%></td>
+                     
 
 
                       <th>
-                      <form action="/admin/viewFlower" method="POST">
+                      <form action="/admin/viewRecord" method="POST">
                         <input type="hidden" name="id" value="<%=flowers[i].id%>">
                         <input type="submit" class="btn btn-info btn-ml" name="click" value="View">
                        

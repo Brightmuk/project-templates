@@ -277,9 +277,9 @@ label {
 /* button style */
 .btn {
   -moz-user-select: none;
-  background: purple;
+  background: rgb(243, 98, 122);
   border: medium none;
-  border-radius: 5px;
+  border-radius: 30px;
   color: #fff;
   cursor: pointer;
   display: inline-block;
@@ -297,7 +297,7 @@ label {
   white-space: nowrap; }
 
 .btn:hover {
-  background: rgb(131, 11, 131);
+  background: rgb(243, 98, 122);
   color: #fff; }
 
 .border-btn {
@@ -2681,7 +2681,7 @@ label {
   border: 1px solid transparent; }
 
 .footer-area .footer-pera p {
-  color: #868c98;
+  color: #ffffff;
   font-size: 14px;
   padding-right: 52px; }
   .footer-area .footer-pera p span a {
@@ -2696,10 +2696,10 @@ label {
   font-weight: 500; }
 
 .footer-area .footer-tittle ul li {
-  color: #868c98;
+  color: #ffffff;
   margin-bottom: 14px; }
   .footer-area .footer-tittle ul li a {
-    color: #868c98;
+    color: #ffffff;
     font-weight: 300; }
     .footer-area .footer-tittle ul li a:hover {
       color: #dca73a;
@@ -5027,3 +5027,7 @@ h6 {
 
 .switch-wrap {
   margin-bottom: 10px; }
+
+.footer-area{
+  background-color: rgb(243, 98, 122);
+}

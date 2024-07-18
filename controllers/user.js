@@ -92,7 +92,7 @@ exports.postFilter = (req, res, next) => {
    console.log(mysql.escape(req.body.price_end));
 
    filterQuery = "SELECT * " +
-      " FROM  meds " +
+      " FROM  records " +
       " WHERE type = " + mysql.escape(req.body.type) +
       " AND color = " + mysql.escape(req.body.color) +
       " AND quantity > 0 AND price BETWEEN " + mysql.escape(parseInt(req.body.price_start)) +
@@ -126,8 +126,8 @@ exports.postViewRecord = (req, res, next) => {
    });
 
    query = "SELECT * " + 
-      " FROM  meds  " +
-      " WHERE meds.id = " + mysql.escape(req.body.flowerId) 
+      " FROM  records  " +
+      " WHERE records.id = " + mysql.escape(req.body.flowerId) 
       ; 
    
       connectDB.query(query, (err2, carResult) => {
@@ -188,7 +188,7 @@ exports.postCart = (req, res, next) => {
   console.log(items)
   
   query = 
- `SELECT * FROM meds WHERE id IN (${items})`;
+ `SELECT * FROM records WHERE id IN (${items})`;
 
   
   connectDB.query(query, (err1, result1) => {
@@ -224,12 +224,12 @@ exports.postOrder = (req, res, next) => {
   var arr = values.map(val=>[orderId,val]);
  
   flowersQuery = "SELECT * " +
-  " FROM  meds WHERE quantity>0"; 
+  " FROM  records WHERE quantity>0"; 
 
   orderItemsQuery = 
  'INSERT INTO order_items (order_id, flower_id) VALUES ?';
   
-  editQuantityQuery = "UPDATE meds SET quantity=quantity-1 WHERE id IN (?)";
+  editQuantityQuery = "UPDATE records SET quantity=quantity-1 WHERE id IN (?)";
 
   query = "INSERT INTO `orders`(`id`,`user_id`,`delivery`,`price`,`status`) "+
    "VALUES(" + orderId + "," + req.session.user + ", 1 ," + total + ",' submitted ' )"
@@ -281,7 +281,7 @@ exports.logout = (req, res, next) => {
    });
    req.session.destroy();
    carQuery = "SELECT * " +
-   " FROM  meds WHERE quantity>0";
+   " FROM  records WHERE quantity>0";
 
 connectDB.query(carQuery, (filterErr, filterResult) => {
    if (filterErr) throw filterErr; 

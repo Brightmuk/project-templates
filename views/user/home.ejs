@@ -35,7 +35,7 @@
 
     }
     .btn-warning{
-        background-color: rgb(155, 26, 127);
+        background-color: rgb(243, 98, 122);
     }
     .btn-warning:hover{
         background-color: rgb(103, 9, 122);
@@ -89,9 +89,17 @@
 .purpose{
     color: grey;
 }
+.logo{
+    width: 220px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgb(243, 98, 122);
+}
 .logo a{
-    color: purple;
+    color: white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+    
 }
 .btn-cart{
     height: 50px;
@@ -108,14 +116,11 @@
     font-size: 20px;
 }
 .filter{
-    border-bottom: 1px solid rgb(199, 199, 199);
-    
+    padding-left: 0px;
+   
     
 }
-.filter button{
-    margin-left: 20px;
-    color: grey;
-}
+
 .flexer{
     display: flex;
     justify-content: space-around;
@@ -154,7 +159,7 @@
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="/"><img src="/assets/img/logo/logo.png" alt="">Flora Joy</a>
+                                <a href="/"><img src="/assets/img/logo/logo.png" alt="">Gathimaini Pharmacy</a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
@@ -209,7 +214,7 @@
             <h3 style="color: #17b978;" class="text-center"><%=msg%></h3><br>
             <%   } %>
             <div class="container">
-                <div class="filte">
+                <div class="filter">
                     <div class="containers ">
                         <form action="/filter" method="POST">
                       <div class="row ">
@@ -240,21 +245,24 @@
                              <div class="selectone ml-3">
                                 <p>Price - min</p>
                                 <select name="price_start">
-                                    <option value="1000">Ksh.1,000</option>
-                                    <option value="3000">Ksh.3,000</option>
-                                    <option value="5000">Ksh.5,000</option>
-                                    <option value="10000">Ksh.10,000</option>
-                                    <option value="20000">ksh.20,000</option>
+                                    <option value="10">Ksh.10</option>
+                                    <option value="100">Ksh.100</option>
+                                    <option value="200">Ksh.200</option>
+                                    <option value="500">Ksh.500</option>
+                                    <option value="1000">ksh.1,000</option>
+                                    <option value="5000">ksh.5,000</option>
                                 </select>
                               </div>
                               <div class="selectone ml-3">
                                 <p>price - max</p>
                                 <select name="price_end">
-                                    <option value="3,000">Ksh.3,000</option>
-                                    <option value="5000">Ksh.5,000</option>
-                                    <option value="10000">Ksh.10,000</option>
-                                    <option value="20000">Ksh.20,000</option>
-                                    <option value="30000">ksh.30,000</option>
+                                    <option value="10">Ksh.10</option>
+                                    <option value="100">Ksh.100</option>
+                                    <option value="200">Ksh.200</option>
+                                    <option value="500">Ksh.500</option>
+                                    <option value="1000">ksh.1,000</option>
+                                    <option value="5000">ksh.5,000</option>
+
                                 </select>
                               </div>
                               

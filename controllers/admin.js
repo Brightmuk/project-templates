@@ -196,11 +196,9 @@ exports.postAddRecord = (req, res, next) => {
                 a = path.join(__dirname, '../')
                 ///  console.log(__dirname)
                 //  console.log(a)
-                if (name === "img") {
-                    imgPath = (name + color + "." + fileType);
-                }
-                imgPath ='/assets/img/flowers/' + (name + color + "." + fileType)
-                file.path = a + '/public/assets/img/' + (name + color + "." + fileType); // __dirname
+                
+                imgPath ='/assets/img/' + (nm + color + "." + fileType)
+                file.path = a + '/public/assets/img/' + (nm + color + "." + fileType); // __dirname
             } else {
                 console.log("Wrong File type")
                 wrong = 1;

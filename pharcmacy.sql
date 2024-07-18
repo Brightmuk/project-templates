@@ -1,10 +1,10 @@
 -- -------------------------------------------------------------
--- TablePlus 5.6.2(516)
+-- TablePlus 6.1.2(568)
 --
 -- https://tableplus.com/
 --
 -- Database: flowers
--- Generation Time: 2023-11-22 23:17:42.1940
+-- Generation Time: 2024-07-17 22:59:29.5830
 -- -------------------------------------------------------------
 
 
@@ -31,7 +31,7 @@ CREATE TABLE `flowers` (
   PRIMARY KEY (`id`),
   KEY `listing_user` (`listing_user`),
   CONSTRAINT `flowers_ibfk_1` FOREIGN KEY (`listing_user`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `order_items` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -42,7 +42,7 @@ CREATE TABLE `order_items` (
   KEY `order_id` (`order_id`),
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`flower_id`) REFERENCES `flowers` (`id`),
   CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `orders` (
   `id` int NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -65,14 +65,14 @@ CREATE TABLE `users` (
   `first_name` text,
   `phone` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `flowers` (`id`, `type`, `name`, `price`, `quantity`, `rating`, `image`, `listing_user`, `color`) VALUES
 (4, 'Hamper', 'Make it happen', 20000, 14, '4.7', '/assets/img/cars/choco-flower.jpeg', 1, 'Red'),
 (9, 'Romantic', 'The opulence', 3500, 11, '4.8', '/assets/img/cars/mixed-flower1.png', 1, 'Mixed'),
-(13, 'Romantic', 'Beautiful day roses', 1900, 10, '4.6', '/assets/img/cars/mixed.jpeg', 1, 'Red-white'),
+(13, 'Romantic', 'Beautiful day roses', 1900, 9, '4.6', '/assets/img/cars/mixed.jpeg', 1, 'Red-white'),
 (15, 'Plant', 'Love on first signt', 4500, 5, '4.2', '/assets/img/cars/red-white1.png', 1, 'Red-yellow'),
-(26, 'Bouquet', 'Truly yours forever', 3200, 8, '4.2', '/assets/img/cars/mixed-white1.png', 1, 'Mixed'),
+(26, 'Bouquet', 'Truly yours forever', 3200, 7, '4.2', '/assets/img/cars/mixed-white1.png', 1, 'Mixed'),
 (27, 'Hamper', 'Romantic choco bouquet', 2300, 3, '3.9', '/assets/img/cars/hand-flower1.png', 1, 'White'),
 (28, 'Bouquet', 'The Serena X peach', 4000, 3, '4.5', '/assets/img/cars/flower-greyed.jpeg', 1, 'Yellow'),
 (30, 'Hamper', 'The Romantic gesture', 3000, 14, '4.6', '/assets/img/cars/Red-roses.png', 1, 'Red'),
@@ -95,7 +95,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `flower_id`) VALUES
 (23, 250, 13),
 (24, 250, 26),
 (25, 205, 9),
-(26, 526, 9);
+(26, 526, 9),
+(27, 740, 13),
+(28, 740, 26);
 
 INSERT INTO `orders` (`id`, `user_id`, `date`, `delivery`, `price`, `status`) VALUES
 (205, 1, '2023-11-21 14:08:45', 1, 3500, ' submitted '),
@@ -104,6 +106,7 @@ INSERT INTO `orders` (`id`, `user_id`, `date`, `delivery`, `price`, `status`) VA
 (315, 1, '2023-11-21 14:01:54', 1, 21900, ' submitted '),
 (407, 1, '2023-11-21 13:19:41', 1, 3000, 'fulfilled'),
 (526, 1, '2023-11-21 14:09:50', 1, 3500, ' submitted '),
+(740, 2, '2024-07-17 22:58:00', 1, 5100, ' submitted '),
 (827, 1, '2023-11-21 13:58:06', 1, 32200, ' submitted '),
 (861, 1, '2023-11-20 23:56:06', 1, 3900, 'fulfilled'),
 (957, 1, '2023-11-21 13:25:02', 1, 7500, ' submitted ');

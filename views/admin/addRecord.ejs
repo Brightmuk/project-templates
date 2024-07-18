@@ -114,7 +114,7 @@
             <% if(err) { %>
             <h3 style="color: #ff304f;" class="text-center"><%=err%></h3><br>
             <%   } %>
-            <form class="add-room" action="/admin/addFlower" method="POST" enctype="multipart/form-data">
+            <form class="add-room" action="/admin/addRecord" method="POST" enctype="multipart/form-data">
               <div class="form-left" id="form-left">
                 <p>Type</p>
                 <select name="type" class="form-control" required>
@@ -151,7 +151,7 @@
                 <p>Image</p>
                 <input type="file" class="form-control" name="image" placeholder="Add Image" required>
                 <br>
-                <input type="submit"  class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Flower">
+                <input type="submit"  class="btn btn-lg btn-success mt-3 add-room-btn" value="Add Record">
               </div>
 
             </form>
