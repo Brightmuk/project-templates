@@ -155,7 +155,7 @@ exports.postAddRecord = (req, res, next) => {
     });
    
     //var
-   var type = "", nm = "", color = "",quantity = 0, price = 0;
+   var type = "", description="", nm = "", color = "",quantity = 0, price = 0;
    
 
    var imgPath=""
@@ -168,6 +168,9 @@ exports.postAddRecord = (req, res, next) => {
             }
             else if (name === "name") { 
                 nm = field;
+            }
+            else if (name === "description") { 
+                description = field;
             }
             else if (name === "price") { 
                 price = parseInt(field);
@@ -226,8 +229,8 @@ exports.postAddRecord = (req, res, next) => {
                 var roomNo = Math.floor(Math.random() * 100) + 1;
                 //saveDir = __dirname + '/uploads/';
                 
-                data = "INSERT INTO `records`( `type`, `name`, `color`,`price`,`quantity`,`rating`,`image`,`listing_user`) "+
-                         "VALUES('" + type + "','" + nm + "', '" + color + "','" + price + "','" + quantity + "', ' 0 ','" +imgPath + "',' 1 ')"
+                data = "INSERT INTO `records`( `type`, `name`, `description`, `color`,`price`,`quantity`,`rating`,`image`,`listing_user`) "+
+                         "VALUES('" + type + "','" + nm + "', '" + description + "', '"  + color + "','" + price + "','" + quantity + "', ' 0 ','" +imgPath + "',' 1 ')"
                 connectDB.query(data, (err, result) => {
 
                     if (err) {
@@ -338,11 +341,12 @@ exports.updateRecord = (req, res, next) => {
     }); 
     
     carQuery = "SELECT * FROM  records WHERE records.id = " + mysql.escape(req.body.id);
-    
+    console.log(req.body.id);
 
     updateQuery = "UPDATE records " +
         "SET type = " + mysql.escape(req.body.type) +
         ", name = " + mysql.escape(req.body.name) +
+        ", description = " + mysql.escape(req.body.description) +
         ", color = " + mysql.escape(req.body.color) +
         ", price = " + mysql.escape(parseInt(req.body.price)) +
         ", image = " + mysql.escape(req.body.image) +

@@ -49,6 +49,7 @@
   color: white;
 
     }
+    .btn
     .btn-warning{
         background-color: rgb(65, 55, 38);
     }
@@ -136,7 +137,9 @@
         font-size: 12px;
         margin: auto;
     }
-
+.type{
+    color:#e428a5;
+}
 </style>
 <body>
 
@@ -253,7 +256,8 @@
                     <div class="room-caption">
                         
                         <h3><a href="#"> <%=flower.name%></a></h3>
-                        <h4><%=flower.type%></h4>
+                        <h4 class="type"><%=flower.type%></h4>
+                        <h4><%=flower.description%></h4>
                         <h5>⭐ <%=flower.rating%> </h5>
                         
                         <br>

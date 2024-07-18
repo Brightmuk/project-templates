@@ -5031,3 +5031,13 @@ h6 {
 .footer-area{
   background-color: rgb(243, 98, 122);
 }
+.main-header{
+  background-color: rgb(243, 98, 122);
+}
+#navigation a{
+  color:white
+}
+.btn-login{
+  background-color: white;
+  color: rgb(243, 98, 122);
+}

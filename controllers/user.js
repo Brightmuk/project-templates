@@ -52,7 +52,7 @@ exports.postLogin = (req, res, next) => {
       "AND password = " + mysql.escape(req.body.password);
 
       carQuery = "SELECT * " +
-      " FROM  meds WHERE quantity > 0";
+      " FROM  records WHERE quantity > 0";
 
    connectDB.query(query, (err, result) => {
       if (err) throw err; 
