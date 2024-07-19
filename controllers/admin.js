@@ -200,18 +200,18 @@ exports.postAddRecord = (req, res, next) => {
                 ///  console.log(__dirname)
                 //  console.log(a)
                 
-                imgPath ='/assets/img/' + (nm + color + "." + fileType)
-                file.path = a + '/public/assets/img/' + (nm + color + "." + fileType); // __dirname
+                imgPath ='/assets/img/' + (nm.replace(/\s/g,'') + color + "." + fileType)
+                file.path = a + '/public/assets/img/' + (nm.replace(/\s/g,'') + color + "." + fileType); // __dirname
             } else {
                 console.log("Wrong File type")
                 wrong = 1;
                 res.render('admin/addRecord', { msg: "", err: "Wrong File type" });
-            }
+            }  
         })
         .on('aborted', () => { 
             console.error('Request aborted by the user')
         })
-        .on('error', (err) => {
+        .on('error', (err) => { 
             console.error('Error', err)
             throw err
         })
