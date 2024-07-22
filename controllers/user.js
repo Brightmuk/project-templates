@@ -234,7 +234,7 @@ exports.postOrder = (req, res, next) => {
   query = "INSERT INTO `orders`(`id`,`user_id`,`delivery`,`price`,`status`) "+
    "VALUES(" + orderId + "," + req.session.user + ", 1 ," + total + ",' submitted ' )"
 
-   
+    
   connectDB.query(query, (err1, result1) => { 
    if (err1) throw err1;    
    else { 

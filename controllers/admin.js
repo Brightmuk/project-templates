@@ -350,7 +350,7 @@ exports.updateRecord = (req, res, next) => {
         ", color = " + mysql.escape(req.body.color) +
         ", price = " + mysql.escape(parseInt(req.body.price)) +
         ", image = " + mysql.escape(req.body.image) +
-        ", quantity = " + mysql.escape(req.body.quantity)
+        ", quantity = " + mysql.escape(req.body.quantity) +
         " WHERE records.id = "+mysql.escape(req.body.id);
 
     
